@@ -1,0 +1,229 @@
+{
+  "notes": [
+    {
+      "ts": "2026-10-24T23:02:55.877Z",
+      "step": "landing",
+      "status": "pass",
+      "observed": {
+        "url": "http://localhost:3106/",
+        "title": "UNSPIN — Drop your data. Make it usable.",
+        "hasWordmark": true,
+        "hasUpload": true,
+        "geminiNote": true,
+        "sessionNote": true,
+        "excerpt": "UNSPIN\nDrop your data. Make it usable.\n\nTurn a chart, PDF figure, or spreadsheet into a dataset you can check against its source, correct, chart, and export with its full history.\n\nDrop a chart, PDF, or spreadsheet here\nChoose a file\n\nPNG, JPEG, WebP, PDF, CSV, XLSX · up to 10 MB\n\nSpreadsheets: up to 20,000 rows and 64 columns per import · PDFs: up to 200 pages · Images: up to 40 megapixels\n\nLegacy .xls, macro-enabled .xlsm, password-protected files, archives, and executables are refused. The file name is shown to you only; the type is decided from the file's contents.\n\nSpreadsheets (CSV, XLSX)\nParsed on this server. Nothing is sent to an AI model.\nCharts and PDFs (PNG, JPEG, WebP, PDF)\nOnly the region you select is sent to Google Gemini, after you confirm. Values read from charts are marked as estimates.\n\nChart and PDF extraction is not configured: GEMINI_API_KEY and GEMINI_MODEL are not set on the server. CSV and XLSX import still work.\n\nWork is kept for this session only and is lost when the server restarts. Export your results to keep them."
+      }
+    },
+    {
+      "ts": "2026-10-24T23:02:57.458Z",
+      "step": "upload",
+      "status": "pass",
+      "observed": {
+        "url": "http://localhost:3106/?source=src_182cb9e947c74eba8afcd209a976870b",
+        "excerpt": "UNSPIN\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · 29.1 KB\nCHOOSE WHAT TO USE FROM THIS CSV\nUpload a different file\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv\nCSV\n29.1 KB\nDelimiter\nComma (suggested)\nSemicolon\nTab\nPipe\nSkip leading records\nRecord 41\nIs a header\nIs data\n\n670 records · 8 columns · UTF-8\n\nSuggested: comma, skip 40 leading records, header record. The first record is text above a mostly numeric column (\"year\").\n\n• The first 40 records start with “#” (lines 1–40) and look like comments; skipping them is suggested.\nPreview of the first 20 data records as written in the file\n#\t\nyear\n\t\nmonth\n\t\ndecimal date\n\t\naverage\n\t\ndeseasonalized\n\t\nndays\n\t\nsdev\n\t\nunc\n\n1\t1974\t5\t1974.3750\t333.19\t330.22\t13\t0.31\t0.16\n2\t1974\t6\t1974.4583\t332.20\t329.79\t25\t0.37\t0.14\n3\t1974\t7\t1974.5417\t331.07\t330.21\t24\t0.24\t0.09\n4\t1974\t8\t1974.6250\t329.15\t330.54\t26\t0.31\t0.12\n5\t1974\t9\t1974.7083\t327.33\t330.44\t22\t0.47\t0.19\n6\t1974\t10\t1974.7917\t327.28\t330.53\t24\t0.22\t0.09\n7\t1974\t11\t1974.8750\t328.31\t330.50\t26\t0.43\t0.16\n8\t1974\t12\t1974.9583\t329.58\t330.55\t29\t0.29\t0.10\n9\t1975\t1\t1975.0417\t330.73\t330.84\t29\t0.43\t0.15\n10\t1975\t2\t1975.1250\t331.46\t330.85\t26\t0.46\t0.17\n11\t1975\t3\t1975.2083\t331.94\t330.37\t17\t0.33\t0.15\n12\t1975\t4\t1975.2917\t333.11\t330.53\t23\t0.59\t0.24\n13\t1975\t5\t1975.3750\t333.95\t330.98\t28\t0.35\t0.13\n14\t1975\t6\t1975.4583\t333.42\t331.01\t27\t0.48\t0.18\n15\t1975\t7\t1975.5417\t331.97\t331.12\t24\t0.45\t0.18\n16\t1975\t8\t1975.6250\t329.95\t331.33\t24\t0.47\t0.18\n17\t1975\t9\t1975.7083\t328.49\t331.60\t22\t0.53\t0.22\n18\t1975\t10\t1975.7917\t328.36\t331.61\t11\t0.21\t0.12\n19\t1975\t11\t1975.8750\t329.38\t331.57\t18\t0.31\t0.14\n20\t1975\t12\t1975.9583\t330.77\t33"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:02:57.465Z",
+      "step": "select-suggested-skip",
+      "status": "observed",
+      "observed": {
+        "skipInputValue": "40",
+        "suggestedSkip": "40",
+        "hasHeaderControl": true,
+        "hasPreview": true,
+        "excerpt": "UNSPIN\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · 29.1 KB\nCHOOSE WHAT TO USE FROM THIS CSV\nUpload a different file\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv\nCSV\n29.1 KB\nDelimiter\nComma (suggested)\nSemicolon\nTab\nPipe\nSkip leading records\nRecord 41\nIs a header\nIs data\n\n670 records · 8 columns · UTF-8\n\nSuggested: comma, skip 40 leading records, header record. The first record is text above a mostly numeric column (\"year\").\n\n• The first 40 records start with “#” (lines 1–40) and look like comments; skipping them is suggested.\nPreview of the first 20 data records as written in the file\n#\t\nyear\n\t\nmonth\n\t\ndecimal date\n\t\naverage\n\t\ndeseasonalized\n\t\nndays\n\t\nsdev\n\t\nunc\n\n1\t1974\t5\t1974.3750\t333.19\t330.22\t13\t0.31\t0.16\n2\t1974\t6\t1974.4583\t332.20\t329.79\t25\t0.37\t0.14\n3\t1974\t7\t1974.5417\t331.07\t3"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:02:57.557Z",
+      "step": "select-csv",
+      "status": "pass",
+      "observed": {
+        "excerpt": "UNSPIN\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · 29.1 KB\nCHOOSE WHAT TO USE FROM THIS CSV\nUpload a different file\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv\nCSV\n29.1 KB\nDelimiter\nComma (suggested)\nSemicolon\nTab\nPipe\nSkip leading records\nRecord 41\nIs a header\nIs data\n\n670 records · 8 columns · UTF-8\n\nSuggested: comma, skip 40 leading records, header record. The first record is text above a mostly numeric column (\"year\").\n\n• The first 40 records start with “#” (lines 1–40) and look like comments; skipping them is suggested.\nPreview of the first 20 data records as written in the file\n#\t\nyear\n\t\nmonth\n\t\ndecimal date\n\t\naverage\n\t\ndeseasonalized\n\t\nndays\n\t\nsdev\n\t\nunc\n\n1\t1974\t5\t1974.3750\t333.19\t330.22\t13\t0.31\t0.16\n2\t1974\t6\t1974.4583\t332.20\t329.79\t25\t0.37\t0.14\n3\t1974\t7\t1974.5417\t331.07\t330.21\t24\t0.24\t0.09\n4\t1974\t8\t1974.6250\t329.15\t330.54\t26\t0.31\t0.12\n5\t1974\t9\t1974.7083\t327.33\t330.44\t22\t0.47\t0.19\n6\t1974\t10\t1974.7917\t327.28\t330.53\t24\t0.22\t0.09\n7\t1974\t11\t1974.8750\t328.31\t330.50\t26\t0.43\t0.16\n8\t1974\t12\t1974.9583\t329.58\t330.55\t29\t0.29\t0.10\n9\t1975\t1\t1975.0417\t330.73\t330.84\t29\t0.43\t0.15\n10\t1975\t2\t1975.1250\t331.46\t330.85\t26\t0.46\t0.17\n11\t1975\t3\t1975.2083\t331.94\t330.37\t17\t0.33\t0.15\n12\t1975\t4\t1975.2917\t333.11\t330.53\t23\t0.59\t0.24\n13\t1975\t5\t1975.3750\t333.95\t330.98\t28\t0.35\t0.13\n14\t1975\t6\t1975.4583\t333.42\t331.01\t27\t0.48\t0.18\n15\t1975\t7\t1975.5417\t331.97\t331.12\t24\t0.45\t0.18\n16\t1975\t8\t1975.6250\t329.95\t331.33\t24\t0.47\t0.18\n17\t1975\t9\t1975.7083\t328.49\t331.60\t22\t0.53\t0.22\n18\t1975\t10\t1975.7917\t328.36\t331.61\t11\t0.21\t0.12\n19\t1975\t11\t1975.8750\t329.38\t331.57\t18\t0.31\t0.14\n20\t1975\t12\t1975.9583\t330.77\t331.73\t-1\t-9.99\t0.00\nShowing the first 20 of 629 data records. Raw text is shown exactly; “·” marks an empty field.\nRecords to import (data records, 1–629; leave empty for all)\nFrom\nTo\n\n629 records × 8 "
+      }
+    },
+    {
+      "ts": "2026-10-24T23:02:58.455Z",
+      "step": "extract-screen",
+      "status": "pass",
+      "observed": {
+        "excerpt": "UNSPIN\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · 29.1 KB\nSOURCE\n\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · comma-delimited · 40 leading records skipped · record 41 is the header\n\nSelect a value in the data table to see the exact record and line it came from. The first selected records are shown below.\n\nRecord 1\nline 42\nyear\n1974\nmonth\n5\ndecimal date\n1974.3750\naverage\n333.19\ndeseasonalized\n330.22\nndays\n13\nsdev\n0.31\nunc\n0.16\nRecord 2\nline 43\nyear\n1974\nmonth\n6\ndecimal date\n1974.4583\naverage\n332.20\ndeseasonalized\n329.79\nndays\n25\nsdev\n0.37\nunc\n0.14\nRecord 3\nline 44\nyear\n1974\nmonth\n7\ndecimal date\n1974.5417\naverage\n331.07\ndeseasonalized\n330.21\nndays\n24\nsdev\n0.24\nunc\n0.09\nRecord 4\nline 45\nyear\n1974\nmonth\n8\ndecimal date\n1974.6250\naverage\n329.15\ndeseasonalized\n330.54\nndays\n26\nsdev\n0.31\nunc\n0.12\nRecord 5\nline 46\nyear\n1974\nmonth\n9\ndecimal date\n1974.7083\naverage\n327.33\ndeseasonalized\n330.44\nndays\n22\nsdev\n0.47\nunc\n0.19\nIMPORT DATA\n\nCSV, comma-separated, first record as header, all columns, all records.\n\nThe file is parsed on this server with a deterministic parser. Nothing is sent to an external service, and values keep their original text; numbers, dates, and percentages are not reinterpreted.\n\nImport data\nAdjust selection",
+        "url": "http://localhost:3106/?source=src_182cb9e947c74eba8afcd209a976870b"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:00.221Z",
+      "step": "import",
+      "status": "pass",
+      "observed": {
+        "url": "http://localhost:3106/?source=src_182cb9e947c74eba8afcd209a976870b&dataset=ds_cc213be43ca84bc19a55fa8f5acd91e9",
+        "excerpt": "UNSPIN\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · 29.1 KB\nSession only — not saved to disk\nVersion\nv1 (current) · 7:02:58 PM\nReview\nHistory\nCompare\nExport\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt\n629 rows × 8 columns · version 1 of 1\nImported with the local parser\nValues are the file's own text; types were not guessed.\nCovers the whole selection\nReview: 5032 of 5032 values unreviewed · 0 accepted · 0 corrected\n1 import note\nSOURCE\n\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · comma-delimited · 40 leading records skipped · record 41 is the header\n\nSelect a value in the data table to see the exact record and line it came from. The first selected records are shown below.\n\nRecord 1\nline 42\nyear\n1974\nmonth\n5\ndecimal date\n1974.3750\naverage\n333.19\ndeseasonalized\n330.22\nndays\n13\nsdev\n0.31\nunc\n0.16\nRecord 2\nline 43\nyear\n1974\nmonth\n6\ndecimal date\n1974.4583\naverage\n332.20\ndeseasonalized\n329.79\nndays\n25\nsdev\n0.37\nunc\n0.14\nRecord 3\nline 44\nyear\n1974\nmonth\n7\ndecimal date\n1974.5417\naverage\n331.07\ndeseasonalized\n330.21\nndays\n24\nsdev\n0.24\nunc\n0.09\nRecord 4\nline 45\nyear\n1974\nmonth\n8\ndecimal date\n1974.6250\naverage\n329.15\ndeseasonalized\n330.54\nndays\n26\nsdev\n0.31\nunc\n0.12\nRecord 5\nline 46\nyear\n1974\nmonth\n9\ndecimal date\n1974.7083\naverage\n327.33\ndeseasonalized\n330.44\nndays\n22\nsdev\n0.47\nunc\n0.19\nCHART\nChart type\nBar\nLine\nScatter\nX axis\nyear (decimal)\nmonth (decimal)\ndecimal date (decimal)\naverage (decimal)\ndeseasonalized (decimal)\nndays (decimal)\nsdev (decimal)\nunc (decimal)\nY scale\nLinear\nLog\nSeries (y)\n●\nmonth\nHide\n■\ndecimal date\nHide\n◆\naverage\nHide\n▲\ndeseasonalized\nHide\n▼\nndays\nHide\n★\nsdev\nHide\nAdd a series\nAdd a series…\nunc\nPlotted from the imported data\n\nline chart of month, decimal date, average, deseasonalized, ndays, sdev against year. Use the point navigator or the data table below for exact values.\n\n1980\n1990\n2000\n2010\n2020\n0\n500\n1000\n1500\n2000\nmonth\ndecimal date\naverage\ndeseasonalized\nndays\nsdev\nyear\nValue (no unit recorded)\nEach series has its own marker shape an"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:01.556Z",
+      "step": "inspect",
+      "status": "pass",
+      "observed": {
+        "excerpt": "UNSPIN\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · 29.1 KB\nSession only — not saved to disk\nVersion\nv1 (current) · 7:02:58 PM\nReview\nHistory\nCompare\nExport\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt\n629 rows × 8 columns · version 1 of 1\nImported with the local parser\nValues are the file's own text; types were not guessed.\nCovers the whole selection\nReview: 5032 of 5032 values unreviewed · 0 accepted · 0 corrected\n1 import note\nSOURCE\n\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · comma-delimited · 40 leading records skipped · record 41 is the header\n\nRecord 1\nline 42\nlinked\nyear\n1974\nmonth\n5\ndecimal date\n1974.3750\n▸ average\n333.19\ndeseasonalized\n330.22\nndays\n13\nsdev\n0.31\nunc\n0.16\nCHART\nChart type\nBar\nLine\nScatter\nX axis\nyear (decimal)\nmonth (decimal)\ndecimal date (decimal)\naverage (decimal)\ndeseasonalized (decimal)\nndays (decimal)\nsdev (decimal)\nunc (decimal)\nY scale\nLinear\nLog\nSeries (y)\n●\nmonth\nHide\n■\ndecimal date\nHide\n◆\naverage\nHide\n▲\ndeseasonalized\nHide\n▼\nndays\nHide\n★\nsdev\nHide\nAdd a series\nAdd a series…\nunc\nPlotted from the imported data\n\nline chart of month, decimal date, average, deseasonalized, ndays, sdev against year. Use the point navigator or the data table below for exact values.\n\n1980\n1990\n2000\n2010\n2020\n0\n500\n1000\n1500\n2000\nmonth\ndecimal date\naverage\ndeseasonalized\nndays\nsdev\nyear\nValue (no unit recorded)\nEach series has its own marker shape and line dash\n\nSelected: Series “average”, source row 1, x = 1974, y = 333.19, parsed from the file\n\nY axis range\nInclude zero\nFit data\nSet bounds\n\nA zero baseline matters for bars, whose length shows magnitude. For line and log charts a fitted range is often appropriate; changing the range never changes the values.\n\nKeyboard: focus here, then ←/→ move, ↑/↓ change series, Enter selects.\n\nSeries “month”, source row 1, x = 1974, y = 5, parsed from the file (1 of 629)\n\nShow data table\nDATA\nFilter column\nFilter: choose column\nyear\nmonth\ndecimal date\naverage\ndeseasonalized\nndays\nsdev\nunc\nFilter text\nColumns\n200 of 629 rows loaded\nSource row\nyear\nnumber\nmonth\nnumber\ndecimal date\nnumber\naverage\nnumber\ndeseasonalized\nnumber\nndays\nnumber\nsdev\nnumber\nunc\nnumber\n●\n1\n1974\n5\n1974.3750\n333.19\n330.22\n13\n0.31\n0.16\n"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:01.920Z",
+      "step": "edit-value",
+      "status": "observed",
+      "observed": {
+        "before": "333.19",
+        "after": "333.20"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:02.405Z",
+      "step": "correct-preview",
+      "status": "pass",
+      "observed": {
+        "excerpt": "UNSPIN\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · 29.1 KB\nSession only — not saved to disk\nVersion\nv1 (current) · 7:02:58 PM\nReview\nHistory\nCompare\nExport\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt\n629 rows × 8 columns · version 1 of 1\nImported with the local parser\nValues are the file's own text; types were not guessed.\nCovers the whole selection\nReview: 5032 of 5032 values unreviewed · 0 accepted · 0 corrected\n1 import note\nSOURCE\n\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · comma-delimited · 40 leading records skipped · record 41 is the header\n\nRecord 1\nline 42\nlinked\nyear\n1974\nmonth\n5\ndecimal date\n1974.3750\n▸ average\n333.19\ndeseasonalized\n330.22\nndays\n13\nsdev\n0.31\nunc\n0.16\nCHART\nChart type\nBar\nLine\nScatter\nX axis\nyear (decimal)\nmonth (decimal)\ndecimal date (decimal)\naverage (decimal)\ndeseasonalized (decimal)\nndays (decimal)\nsdev (decimal)\nunc (decimal)\nY scale\nLinear\nLog\nSeries (y)\n●\nmonth\nHide\n■\ndecimal date\nHide\n◆\naverage\nHide\n▲\ndeseasonalized\nHide\n▼\nndays\nHide\n★\nsdev\nHide\nAdd a series\nAdd a series…\nunc\nPlotted from the imported data\n\nline chart of month, decimal date, average, deseasonalized, ndays, sdev against year. Use the point navigator or the data table below for exact values.\n\n1980\n1990\n2000\n2010\n2020\n0\n500\n1000\n1500\n2000\nmonth\ndecimal date\naverage\ndeseasonalized\nndays\nsdev\nyear\nValue (no unit recorded)\nEach series has its own marker shape and line dash\n\nSelected: Series “average”, source row 1, x = 1974, y = 333.19, parsed from the file\n\nY axis range\nInclude zero\nFit data\nSet bounds\n\nA zero baseline matters for bars, whose length shows magnitude. For line and log charts a fitted range is often appropriate; changing the range never changes the values.\n\nKeyboard: focus here, then ←/→ move, ↑/↓ change series, Enter selects.\n\nSeries “month”, sou"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:03.510Z",
+      "step": "correct-save",
+      "status": "pass",
+      "observed": {
+        "excerpt": "UNSPIN\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · 29.1 KB\nSession only — not saved to disk\nVersion\nv1 · 7:02:58 PM\nv2 (current) · 7:03:02 PM\nReview\nHistory\nCompare\nExport\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt\n629 rows × 8 columns · version 2 of 2\nImported with the local parser\nValues are the file's own text; types were not guessed.\nCovers the whole selection\nReview: 5031 of 5032 values unreviewed · 0 accepted · 1 corrected\n1 import note\nSOURCE\n\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · comma-delimited · 40 leading records skipped · record 41 is the header\n\nSelect a value in the data table to see the exact record and line it came from. The first selected records are shown below.\n\nRecord 1\nline 42\nyear\n1974\nmonth\n5\ndecimal date\n1974.3750\naverage\n333.19\ndeseasonalized\n330.22\nndays\n13\nsdev\n0.31\nunc\n0.16\nRecord 2\nline 43\nyear\n1974\nmonth\n6\ndecimal date\n1974.4583\naverage\n332.20\ndeseasonalized\n329.79\nndays\n25\nsdev\n0.37\nunc\n0.14\nRecord 3\nline 44\nyear\n1974\nmonth\n7\ndecimal date\n1974.5417\naverage\n331.07\ndeseasonalized\n330.21\nndays\n24\nsdev\n0.24\nunc\n0.09\nRecord 4\nline 45\nyear\n1974\nmonth\n8\ndecimal date\n1974.6250\naverage\n329.15\ndeseasonalized\n330.54\nndays\n26\nsdev\n0.31\nunc\n0.12\nRecord 5\nline 46\nyear\n1974\nmonth\n9\ndecimal date\n1974.7083\naverage\n327.33\ndeseasonalized\n330.44\nndays\n22\nsdev\n0.47\nunc\n0.19\nCHART\nChart type\nBar\nLine\nScatter\nX axis\nyear (decimal)\nmonth (decimal)\ndecimal date (decimal)\naverage (decimal)\ndeseasonalized (decimal)\nndays (decimal)\nsdev (decimal)\nunc (decimal)\nY scale\nLinear\nLog\nSeries (y)\n●\nmonth\nHide\n■\ndecimal date\nHide\n◆\naverage\nHide\n▲\ndeseasonalized\nHide\n▼\nndays\nHide\n★\nsdev\nHide\nAdd a series\nAdd a series…\nunc\nPlotted from the imported data\n\nline chart of month, decimal date, average, deseasonalized, ndays, sdev against year. Use the point navig",
+        "url": "http://localhost:3106/?source=src_182cb9e947c74eba8afcd209a976870b&dataset=ds_cc213be43ca84bc19a55fa8f5acd91e9"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:04.632Z",
+      "step": "chart",
+      "status": "pass",
+      "observed": {
+        "selectedRows": 1,
+        "excerpt": "UNSPIN\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · 29.1 KB\nSession only — not saved to disk\nVersion\nv1 · 7:02:58 PM\nv2 (current) · 7:03:02 PM\nReview\nHistory\nCompare\nExport\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt\n629 rows × 8 columns · version 2 of 2\nImported with the local parser\nValues are the file's own text; types were not guessed.\nCovers the whole selection\nReview: 5031 of 5032 values unreviewed · 0 accepted · 1 corrected\n1 import note\nSOURCE\n\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · comma-delimited · 40 leading records skipped · record 41 is the header\n\nRecord 2\nline 43\nlinked\n▸ year\n1974\n▸ month\n6\ndecimal date\n1974.4583\naverage\n332.20\ndeseasonalized\n329.79\nndays\n25\nsdev\n0.37\nunc\n0.14\nCHART\nChart type\nBar\nLine\nScatter\nX axis\nyear (decimal)\nmonth (decimal)\ndecimal date (decimal)\naverage (decimal)\ndeseasonalized (decimal)\nndays (decimal)\nsdev (decimal)\nunc (decimal)\nY scale\nLinear\nLog\nSeries (y)\n●\nmonth\nHide\n■\ndecimal date\nHide\n◆\naverage\nHide\n▲\ndeseasonalized\nHide\n▼\nndays\nHide\n★\nsdev\nHide\nAdd a series\nAdd a series…\nunc\nPlotted from the imported data\n\nline chart of month, decimal date, average, deseasonalized, ndays, sdev against year. Use the point navigator or the data table below for exact values.\n\n1970\n1980\n1990\n2000\n2010\n2020\n0\n500\n1000\n1500\n2000\nmonth\ndecimal date\naverage\ndeseasonalized\nndays\nsdev\nyear\nValue (no unit recorded)\nOpen marker with dot (⊙): edited by you\nEach series has its own marker shape and line dash\n\nSelected: Series “month”, source row 2, x = 1974, y = 6, parsed from the file\n\nY axis range\nInclude zero\nFit data\nSet bounds\n\nA zero baseline matters for bars, whose length shows magnitude. For line and log charts a fitted range is often appropriate; changing the range never changes the values.\n\nKeyboard: focus here, then ←/→ move"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:05.195Z",
+      "step": "history-open",
+      "status": "pass",
+      "observed": {
+        "excerpt": "UNSPIN\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · 29.1 KB\nSession only — not saved to disk\nVersion\nv1 · 7:02:58 PM\nv2 (current) · 7:03:02 PM\nReview\nHistory\nCompare\nExport\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt\n629 rows × 8 columns · version 2 of 2\nImported with the local parser\nValues are the file's own text; types were not guessed.\nCovers the whole selection\nReview: 5031 of 5032 values unreviewed · 0 accepted · 1 corrected\n1 import note\nSOURCE\n\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · comma-delimited · 40 leading records skipped · record 41 is the header\n\nRecord 2\nline 43\nlinked\n▸ year\n1974\n▸ month\n6\ndecimal date\n1974.4583\naverage\n332.20\ndeseasonalized\n329.79\nndays\n25\nsdev\n0.37\nunc\n0.14\nCHART\nChart type\nBar\nLine\nScatter\nX axis\nyear (decimal)\nmonth (decimal)\ndecimal date (decimal)\naverage (decimal)\ndeseasonalized (decimal)\nndays (decimal)\nsdev (decimal)\nunc (decimal)\nY scale\nLinear\nLog\nSeries (y)\n●\nmonth\nHide\n■\ndecimal date\nHide\n◆\naverage\nHide\n▲\ndeseasonalized\nHide\n▼\nndays\nHide\n★\nsdev\nHide\nAdd a series\nAdd a series…\nunc\nPlotted from the imported data\n\nline chart of month, decimal date, average, deseasonalized, ndays, sdev against year. Use the point navigator or the data table below for exact values.\n\n1980\n1990\n2000\n2010\n2020\n0\n500\n1000\n1500\n2000\nmonth\ndecimal date\naverage\ndeseasonalized\nndays\nsdev\nyear\nValue (no unit recorded)\nOpen marker with dot (⊙): edited by you\nEach series has its own marker shape and line dash\n\nSelected: Series “month”, source row 2, x = 1974, y = 6, parsed from the file\n\nY axis range\nInclude zero\nFit data\nSet bounds\n\nA zero base"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:06.432Z",
+      "step": "undo",
+      "status": "pass",
+      "observed": {
+        "excerpt": "UNSPIN\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · 29.1 KB\nSession only — not saved to disk\nVersion\nv1 (current) · 7:02:58 PM\nv2 · 7:03:02 PM\nReview\nHistory\nCompare\nExport\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt\n629 rows × 8 columns · version 1 of 2\nImported with the local parser\nValues are the file's own text; types were not guessed.\nCovers the whole selection\nReview: 5032 of 5032 values unreviewed · 0 accepted · 0 corrected\n1 import note\nSOURCE\n\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · comma-delimited · 40 leading records skipped · record 41 is the header\n\nSelect a value in the data table to see the exact record and line it came from. The first selected records are shown below.\n\nRecord 1\nline 42\nyear\n1974\nmonth\n5\ndecimal date\n1974.3750\naverage\n333.19\ndeseasonalized\n330.22\nndays\n13\nsdev\n0.31\nunc\n0.16\nRecord 2\nline 43\nyear\n1974\nmonth\n6\ndecimal date\n1974.4583\naverage\n332.20\ndeseasonalized\n329.79\nndays\n25\nsdev\n0.37\nunc\n0.14\nRecord 3\nline 44\nyear\n1974\nmonth\n7\ndecimal date\n1974.5417\naverage\n331.07\ndeseasonalized\n330.21\nndays\n24\nsdev\n0.24\nunc\n0.09\nRecord 4\nline 45\nyear\n1974\nmonth\n8\ndecimal date\n1974.6250\naverage\n329.15\ndeseasonalized\n330.54\nndays\n26\nsdev\n0.31\nunc\n0.12\nRecord 5\nline 46\nyear\n1974\nmonth\n9\ndecimal date\n1974.7083\naverage\n327.33\ndeseasonalized\n330.44\nndays\n22\nsdev\n0.47\nunc\n0.19\nCHART\nChart type\nBar\nLine\nScatter\nX axis\nyear (decimal)\nmonth (decimal)\ndecimal date (decimal)\naverage (decimal)\ndeseasonalized (decimal)\nndays (decimal)\nsdev (decimal)\nunc (decimal)\nY scale\nLinear\nLog\nSeries (y)\n●\nmonth\nHide\n■\ndecimal date\nHide\n◆\naverage\nHide\n▲\ndeseasonalize"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:08.378Z",
+      "step": "download",
+      "status": "observed",
+      "observed": {
+        "filename": "noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv",
+        "path": "/Users/islomshamsiev/.cursor/worktrees/qa-walkthrough-c4e91b2a/unspin-886fb3371f09/evaluation/results/walkthrough/downloads/noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:08.392Z",
+      "step": "download",
+      "status": "observed",
+      "observed": {
+        "filename": "noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.manifest.json",
+        "path": "/Users/islomshamsiev/.cursor/worktrees/qa-walkthrough-c4e91b2a/unspin-886fb3371f09/evaluation/results/walkthrough/downloads/noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.manifest.json"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:08.394Z",
+      "step": "download",
+      "status": "observed",
+      "observed": {
+        "filename": "noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.data.json",
+        "path": "/Users/islomshamsiev/.cursor/worktrees/qa-walkthrough-c4e91b2a/unspin-886fb3371f09/evaluation/results/walkthrough/downloads/noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.data.json"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:08.978Z",
+      "step": "export",
+      "status": "pass",
+      "observed": {
+        "downloads": [
+          "noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv",
+          "noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.manifest.json",
+          "noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.data.json"
+        ],
+        "dialog": "UNSPIN\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · 29.1 KB\nSession only — not saved to disk\nVersion\nv1 (current) · 7:02:58 PM\nv2 · 7:03:02 PM\nReview\nHistory\nCompare\nExport\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt\n629 rows × 8 columns · version 1 of 2\nImported with the local parser\nValues are the file's own text; types were not guessed.\nCovers the whole selection\nReview: 5032 of 5032 values unreviewed · 0 accepted · 0 corrected\n1 import note\nSOURCE\n\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · comma-delimited · 40 leading records skipped · record 41 is the header\n\nSelect a value in the data table to see the exact record and line it came from. The first selected records are shown below.\n\nRecord 1\nline 42\nyear\n1974\nmonth\n5\ndecimal date\n1974.3750\naverage\n333.19\ndeseasonalized\n330.22\nndays\n13\nsdev\n0.31\nunc\n0.16\nRecord 2\nline 43\nyear\n1974\nmonth\n6\ndecimal date\n1974.4583\naverage\n332.20\ndeseasonalized\n329.79\nndays\n25\nsdev\n0.37\nunc\n0.14\nRecord 3\nline 44\nyear\n1974\nmonth\n7\ndecimal date\n1974.5417\naverage\n331.07\ndeseasonalized\n330.21\nndays\n24\nsdev\n0.24\nunc\n0.09\nRecord 4\nline 45\nyear\n1974\nmonth\n8\ndecimal date\n1974.6250\naverage\n329.15\ndeseasonalized\n330.54\nndays\n26\nsdev\n0.31\nunc\n0.12"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:11.826Z",
+      "step": "refresh",
+      "status": "pass",
+      "observed": {
+        "urlBefore": "http://localhost:3106/?source=src_182cb9e947c74eba8afcd209a976870b&dataset=ds_cc213be43ca84bc19a55fa8f5acd91e9",
+        "urlAfter": "http://localhost:3106/?source=src_182cb9e947c74eba8afcd209a976870b&dataset=ds_cc213be43ca84bc19a55fa8f5acd91e9",
+        "restored": true,
+        "lost": false,
+        "excerpt": "UNSPIN\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv · 29.1 KB\nSession only — not saved to disk\nVersion\nv1 (current) · 7:02:58 PM\nv2 · 7:03:02 PM\nReview\nHistory\nCompare\nExport\nnoaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt\n629 rows × 8 columns · version 1 of 2\nImported with the local parser\nValues are the file's own text; types were not guessed.\nCovers the whole selection\nReview: 5032 of 5032 values unreviewed · 0 accepted · 0 corrected\n1 import note\nSOURCE\n\nNo selection has been made for this file yet.\n\nCHART\nChart type\nBar\nLine\nScatter\nX axis\nyear (decimal)\nmonth (decimal)\ndecimal date (decimal)\naverage (decimal)\ndeseasonalized (decimal)\nndays (decimal)\nsdev (decimal)\nunc (decimal)\nY scale\nLinear\nLog\nSeries (y)\n●\nmonth\nHide\n■\ndecimal date\nHide\n◆\naverage\nHide\n▲\ndeseasonalized\nHide\n▼\nndays\nHide\n★\nsdev\nHide\nAdd a series\nAdd a series…\nunc\nPlotted from the imported data\n\nline chart of month, decimal date, average, deseasonalized, ndays, sdev against year. Use the point navigator or the data table below for exact values.\n\n1980\n1990\n2000\n2010\n2020\n0\n500\n1000\n1500\n2000\nmonth\ndecimal date\naverage\ndeseasonalized\nndays\nsdev\nyear\nValue (no unit recorded)\nEach series has its own marker shape and line dash\n\nClick or drag across points to select them in the table and source.\n\nY axis range\nInclude zero\nFit data\nSet bounds\n\nA zero baseline matters for bars, whose length shows magnitude. For line and log charts a fitted range is often appropriate; changing the range never changes the values.\n\nKeyboard: focus here, then ←/→ move, ↑/↓ change series, Enter selects.\n\nSeries “month”, source row "
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:14.037Z",
+      "step": "fail-upload-png",
+      "status": "pass",
+      "observed": {
+        "excerpt": "UNSPIN\nnoaa-gml-co2-trend-mlo-2026-10-09.png · 69.4 KB\nCHOOSE WHAT TO USE FROM THIS IMAGE\nUpload a different file\nnoaa-gml-co2-trend-mlo-2026-10-09.png\nImage\n69.4 KB\n800 × 600 px\n\nDrag across the image to select a region, or enter it in percent below. With the selection area focused, arrow keys move the region and Shift + arrow keys resize it.\n\nRegion in percent of the displayed image\nLeft %\nTop %\nWidth %\nHeight %\nApply\nWhole image\nWhat should be read here? (optional)\n\nIdentifies the figure or series only; it is treated as a description, not as instructions. 0/300\n\nOnly the selected region is processed. Anything outside it is ignored.\n\nWhen you start extraction (after a separate confirmation), only this cropped region is sent to Google Gemini. Values read from charts are estimates for you to review.\n\nUse this selection\nSelect a region or choose “Whole image”.",
+        "url": "http://localhost:3106/?source=src_676a96ea71ba4d248537eca0c43a32fe"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:14.444Z",
+      "step": "fail-title-crop",
+      "status": "pass",
+      "observed": {
+        "excerpt": "UNSPIN\nnoaa-gml-co2-trend-mlo-2026-10-09.png · 69.4 KB\nCHOOSE WHAT TO USE FROM THIS IMAGE\nUpload a different file\nnoaa-gml-co2-trend-mlo-2026-10-09.png\nImage\n69.4 KB\n800 × 600 px\n\nDrag across the image to select a region, or enter it in percent below. With the selection area focused, arrow keys move the region and Shift + arrow keys resize it.\n\nRegion in percent of the displayed image\nLeft %\nTop %\nWidth %\nHeight %\nApply\nWhole image\nClear\n\nSelected 672 × 72 px at (64, 6) of 800 × 600 px\n\nWhat should be read here? (optional)\n\nIdentifies the figure or series only; it is treated as a description, not as instructions. 0/300\n\nOnly the selected region is processed. Anything outside it is ignored.\n\nWhen you start extraction (after a separate confirmation), only this cropped region is sent to Google Gemini. Values read from charts are estimates for you to review.\n\nUse this selection"
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:15.341Z",
+      "step": "failed-extraction",
+      "status": "pass",
+      "observed": {
+        "sourceStill": true,
+        "inventedDataset": false,
+        "stageReal": true,
+        "startDisabled": true,
+        "url": "http://localhost:3106/?source=src_676a96ea71ba4d248537eca0c43a32fe",
+        "excerpt": "UNSPIN\nnoaa-gml-co2-trend-mlo-2026-10-09.png · 69.4 KB\nSOURCE\nSelected region\nEXTRACT DATA\n\nExtraction covers only the selected region, not the rest of the file. Values read from a chart are estimates that you review against the source.\n\nSENT FOR EXTERNAL PROCESSING\nWhat\nOnly the selected region: a 672 × 72 px crop of the 800 × 600 px image. The rest of the image is not sent.\nTo\nGoogle Gemini\n\nUnder Gemini's terms for unpaid use, Google may use submitted content to improve its products, and people may review it. Do not send sensitive, confidential, or personal information unless this server is set up for paid processing that covers it.\n\nStart extraction\nAdjust selection\n\nUnavailable: chart and PDF extraction is not configured on this server.\n\nThe server is missing its model provider key or model setting. An administrator can enable extraction in the server environment; this page cannot. Your selection is kept, and CSV and XLSX import still work."
+      }
+    },
+    {
+      "ts": "2026-10-24T23:03:16.480Z",
+      "step": "mobile-landing",
+      "status": "observed",
+      "observed": {
+        "excerpt": "UNSPIN\nDrop your data. Make it usable.\n\nTurn a chart, PDF figure, or spreadsheet into a dataset you can check against its source, correct, chart, and export with its full history.\n\nDrop a chart, PDF, or spreadsheet here\nChoose a file\n\nPNG, JPEG, WebP, PDF, CSV, XLSX · up to 10 MB\n\nSpreadsheets: up to 20,000 rows and 64 columns per import · PDFs: up to 200 pages · Images: up to 40 megapixels\n\nLegacy .xls, macro-enabled .xlsm, password-protected files, archives, and executables are refused. The file name is shown to you only; the type is decided from the file's contents.\n\nSpreadsheets (CSV, XLSX)\nParsed on this server. Nothing is sent to an AI model.\nCharts and PDFs (PNG, JPEG, WebP, PDF)\nOnly the region you select is sent to Google Gemini, after you confirm. Values read from charts are mark"
+      }
+    }
+  ],
+  "downloads": [
+    {
+      "filename": "noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv",
+      "path": "/Users/islomshamsiev/.cursor/worktrees/qa-walkthrough-c4e91b2a/unspin-886fb3371f09/evaluation/results/walkthrough/downloads/noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv"
+    },
+    {
+      "filename": "noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.manifest.json",
+      "path": "/Users/islomshamsiev/.cursor/worktrees/qa-walkthrough-c4e91b2a/unspin-886fb3371f09/evaluation/results/walkthrough/downloads/noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.manifest.json"
+    },
+    {
+      "filename": "noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.data.json",
+      "path": "/Users/islomshamsiev/.cursor/worktrees/qa-walkthrough-c4e91b2a/unspin-886fb3371f09/evaluation/results/walkthrough/downloads/noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.data.json"
+    }
+  ],
+  "finishedAt": "2026-10-24T23:03:16.480Z"
+}
