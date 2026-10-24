@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "UNSPIN — Drop your data. Make it usable.",
+  title: "UNSPIN — Inspect, correct, and reuse chart and spreadsheet data",
   description:
-    "Turn a document, chart, or spreadsheet into data you can inspect, correct, visualize, and reuse — with every value linked to its source.",
+    "Turn charts and spreadsheets into data you can inspect, correct, and reuse — with every value linked to its source.",
 };
 
 export const viewport: Viewport = {

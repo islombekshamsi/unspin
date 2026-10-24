@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { BaselinePolicy, ChartKind, ChartPoint, Column } from "@/contracts";
 import {
   Badge,
@@ -30,9 +30,11 @@ import {
   selectionEventFor,
   seriesStyle,
   sortByX,
+  xAxisNote,
   yAxisTitle,
   type YScale,
 } from "../lib/presentation";
+import { readChartSettings, writeChartSettings } from "../lib/chart-settings";
 import { useChartQuery } from "../lib/use-chart-query";
 import { ChartDataTable } from "./ChartDataTable";
 import { RechartsChart } from "./RechartsChart";
@@ -84,10 +86,47 @@ export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) 
   const [showTable, setShowTable] = useState(false);
   const [focusPointId, setFocusPointId] = useState<string | null>(null);
   const [hoverId, setHoverId] = useState<string | null>(null);
+  const [settingsReady, setSettingsReady] = useState(false);
+
+  useEffect(() => {
+    setSettingsReady(false);
+    const stored = readChartSettings(dataset.id, columns);
+    if (stored) {
+      setRawChoice({ datasetId: dataset.id, xColumnId: stored.xColumnId, yColumnIds: stored.yColumnIds, hidden: stored.hidden });
+      setKindChoice(stored.kind);
+      setScale(stored.scale);
+      setBaselineChoice(stored.baseline);
+      setBounds(stored.bounds);
+    } else {
+      setRawChoice(null);
+      setKindChoice(null);
+      setScale("linear");
+      setBaselineChoice(null);
+      setBounds({ min: "", max: "" });
+    }
+    setSettingsReady(true);
+    // Restore once per dataset. Version changes keep the same ids; overwriting from
+    // storage on every columns identity change would reset in-progress edits.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataset.id]);
+
+  useEffect(() => {
+    if (!settingsReady) return;
+    writeChartSettings(dataset.id, {
+      xColumnId: choice.xColumnId,
+      yColumnIds: choice.yColumnIds,
+      hidden: choice.hidden,
+      kind: kindChoice,
+      scale,
+      baseline: baselineChoice,
+      bounds,
+    });
+  }, [settingsReady, dataset.id, choice, kindChoice, scale, baselineChoice, bounds]);
 
   const xColumn = choice.xColumnId ? byId.get(choice.xColumnId) : undefined;
   const kind = kindChoice ?? defaultKind(xColumn);
   const baseline: BaselineMode = baselineChoice ?? (kind === "bar" ? "include_zero" : "fit_data");
+  const timeNote = xAxisNote(xColumn, columns);
 
   const query = useChartQuery(dataset.id, version.id, choice.xColumnId, choice.yColumnIds);
   const result = query.result;
@@ -259,6 +298,9 @@ export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) 
               </IconButton>
             </li>
           ))}
+          {choice.yColumnIds.length === 1 && (
+            <li className="self-center text-[12px] text-ink-faint">One series to start. Add another if you need it.</li>
+          )}
           {candidates.length > 0 && choice.yColumnIds.length < MAX_SERIES && (
             <li>
               <label className="sr-only" htmlFor="chart-add-series">
@@ -336,7 +378,9 @@ export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) 
     if (choice.yColumnIds.length === 0) {
       return (
         <EmptyState title={hasDecimal ? "Choose a column to plot" : "No numeric column to plot yet"}>
-          {hasDecimal ? "Add a series above to draw it against the x axis." : PARSE_HINT}
+          {hasDecimal
+            ? "Add a series above. Identifiers, dates, and uncertainty columns are left off until you add them."
+            : PARSE_HINT}
         </EmptyState>
       );
     }
@@ -381,6 +425,7 @@ export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) 
             {caption(dataset.extractionMethod)}
           </Badge>
           {yTitleInfo.mixedUnits && <span>These series use different units on one axis. Use Compare to check whether they belong together.</span>}
+          {timeNote && <span>{timeNote}</span>}
         </figcaption>
         {summary.map((s) => (
           <p key={s} className="text-[12px] text-ink-muted" role="note">

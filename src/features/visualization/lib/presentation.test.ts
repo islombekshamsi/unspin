@@ -13,6 +13,7 @@ import {
   markerSymbol,
   selectionEventFor,
   sortByX,
+  xAxisNote,
   yAxisTitle,
 } from "./presentation";
 
@@ -216,8 +217,30 @@ describe("initial choice", () => {
     const cols = [col("label", { dataType: "text" }), col("yr", { semanticRole: "x" }), col("v", { semanticRole: "y" }), col("w")];
     expect(initialChoice(cols)).toEqual({ xColumnId: "yr", yColumnIds: ["v"] });
   });
-  it("falls back to a date x and decimal series", () => {
+  it("falls back to a date x and one decimal series", () => {
     const cols = [col("d", { dataType: "date" }), col("a"), col("t", { dataType: "text" }), col("b")];
-    expect(initialChoice(cols)).toEqual({ xColumnId: "d", yColumnIds: ["a", "b"] });
+    expect(initialChoice(cols)).toEqual({ xColumnId: "d", yColumnIds: ["a"] });
+  });
+  it("uses NOAA decimal date and average, not every numeric column against year", () => {
+    const cols = [
+      col("year"),
+      col("month"),
+      col("decimal date"),
+      col("average"),
+      col("deseasonalized"),
+      col("ndays"),
+      col("sdev"),
+      col("unc"),
+    ];
+    expect(initialChoice(cols)).toEqual({ xColumnId: "decimal date", yColumnIds: ["average"] });
+  });
+  it("keeps identifiers, date parts, and uncertainty off the default Y axis", () => {
+    const cols = [col("id", { semanticRole: "identifier" }), col("year"), col("sdev"), col("price")];
+    expect(initialChoice(cols)).toEqual({ xColumnId: "year", yColumnIds: ["price"] });
+  });
+  it("labels an existing decimal date as original, not derived", () => {
+    const cols = [col("year"), col("month"), col("decimal date")];
+    expect(xAxisNote(cols[2], cols)).toMatch(/not a newly computed date/);
+    expect(xAxisNote(cols[0], cols)).toMatch(/does not invent a combined date/);
   });
 });

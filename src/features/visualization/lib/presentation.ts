@@ -302,17 +302,60 @@ export interface InitialChoice {
   yColumnIds: string[];
 }
 
-/** Sensible starting columns from semantic roles; falls back to decimal columns. */
+function normLabel(label: string): string {
+  return label.trim().toLowerCase().replace(/[_-]+/g, " ").replace(/\s+/g, " ");
+}
+
+/** Existing date/time fields, including NOAA “decimal date”. Not a newly computed series. */
+const TIME_X = /^(decimal date|date|datetime|timestamp|time|period|year month|yyyy ?mm)$/;
+const YEAR = /^(year|yr|yyyy)$/;
+const DATE_PART = /^(year|yr|yyyy|month|mm|day|dd|hour|minute|second|week|quarter)$/;
+const IDENTIFIER = /^(id|index|code|key|n|n days|ndays|#)$/;
+const UNCERTAINTY = /^(sdev|stdev|std|sd|unc|uncertainty|error|se|stderr|ci|flag)$/;
+const MEASURE = /average|mean|value|ppm|price|rate|total|count|deseason|observed|measured|close|open|high|low/;
+
+function excludeFromY(column: Column): boolean {
+  if (column.semanticRole === "identifier" || column.semanticRole === "uncertainty" || column.semanticRole === "x") return true;
+  const n = normLabel(column.label);
+  return DATE_PART.test(n) || IDENTIFIER.test(n) || UNCERTAINTY.test(n) || TIME_X.test(n);
+}
+
+function isPreferredY(column: Column): boolean {
+  return column.semanticRole === "y" || MEASURE.test(normLabel(column.label));
+}
+
+/**
+ * One readable default series. Identifiers, date parts, and uncertainty columns stay off
+ * the Y axis until the user adds them. X prefers an existing date/time field over “year”.
+ */
 export function initialChoice(columns: Column[]): InitialChoice {
   const x =
-    columns.find((c) => c.semanticRole === "x") ??
     columns.find((c) => c.dataType === "date" || c.dataType === "datetime") ??
+    columns.find((c) => TIME_X.test(normLabel(c.label))) ??
+    columns.find((c) => c.semanticRole === "x") ??
+    columns.find((c) => YEAR.test(normLabel(c.label))) ??
     columns.find((c) => c.semanticRole === "category") ??
     columns[0];
   const others = columns.filter((c) => c.id !== x?.id);
-  let ys = others.filter((c) => c.semanticRole === "y");
-  if (ys.length === 0) ys = others.filter((c) => c.dataType === "decimal");
-  return { xColumnId: x?.id ?? null, yColumnIds: ys.slice(0, SERIES_COLORS.length).map((c) => c.id) };
+  const roleY = others.filter((c) => c.semanticRole === "y");
+  const preferred = others.filter((c) => c.dataType === "decimal" && !excludeFromY(c) && isPreferredY(c));
+  const eligible = others.filter((c) => c.dataType === "decimal" && !excludeFromY(c));
+  const ys = roleY.length ? roleY : preferred.length ? preferred : eligible;
+  return { xColumnId: x?.id ?? null, yColumnIds: ys.slice(0, 1).map((c) => c.id) };
+}
+
+/** Explains an existing time field; never claims a derived date was stored. */
+export function xAxisNote(x: Column | undefined, columns: Column[]): string | null {
+  if (!x) return null;
+  const n = normLabel(x.label);
+  if (TIME_X.test(n) && n.includes("decimal")) {
+    return "X is the file’s decimal date column (year plus a fraction of a year), not a newly computed date.";
+  }
+  const hasMonth = columns.some((c) => DATE_PART.test(normLabel(c.label)) && normLabel(c.label) === "month");
+  if (YEAR.test(n) && hasMonth) {
+    return "X is year. Month is a separate column; this chart does not invent a combined date.";
+  }
+  return null;
 }
 
 /** Truncates long category labels for ticks; the full text stays in hover and the table. */

@@ -182,10 +182,10 @@ function Landing({
       <div className="w-full max-w-2xl">
         <Wordmark />
         <h1 className="mt-6 text-4xl leading-tight font-semibold tracking-tight text-ink sm:text-5xl">
-          Drop your data. <span className="text-accent">Make it usable.</span>
+          Turn charts and spreadsheets into data you can <span className="text-accent">inspect, correct, and reuse.</span>
         </h1>
         <p className="mt-4 max-w-xl text-[15px] leading-6 text-ink-muted">
-          Turn a chart, PDF figure, or spreadsheet into a dataset you can check against its source, correct, chart, and export with its full history.
+          Upload a file, choose the region that matters, check every value against its source, then export it with the history of what you changed.
         </p>
 
         {restoreError && (

@@ -1,6 +1,6 @@
 # UNSPIN
 
-**Drop your data. Make it usable.**
+**Turn charts and spreadsheets into data you can inspect, correct, and reuse.**
 
 UNSPIN turns a chart image, PDF figure, CSV, or XLSX file into a dataset you can work with. You can inspect it beside its source, correct it with explicit and reversible operations, explore it in linked interactive charts, and export it with full provenance and history.
 
