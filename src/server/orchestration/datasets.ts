@@ -101,6 +101,10 @@ export async function getRows(owner: Owner, datasetId: string, q: RowsQuery): Pr
     if (id && !columnIds.has(id)) throw new AppError("bad_request", "Unknown column for sort/filter.");
   }
   let rows = snapshot.rows;
+  if (q.rowIds) {
+    const wanted = new Set(q.rowIds);
+    rows = rows.filter((r) => wanted.has(r.id));
+  }
   if (q.filterColumnId && q.filterText) {
     const needle = q.filterText.toLocaleLowerCase();
     rows = rows.filter((r) => displayText(r.cells[q.filterColumnId!]).toLocaleLowerCase().includes(needle));

@@ -91,7 +91,7 @@ export type ChartQueryResult = z.infer<typeof ChartQueryResultSchema>;
 
 /** Linked selection shared by grid, chart, and source panels. */
 export const SelectionEventSchema = z.object({
-  origin: z.enum(["grid", "chart", "source"]),
+  origin: z.enum(["grid", "chart", "source", "quality"]),
   datasetVersionId: IdSchema,
   rowIds: z.array(IdSchema),
   cellIds: z.array(IdSchema),

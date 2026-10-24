@@ -108,7 +108,7 @@ export function QualityPanel({ detail, isCurrentVersion, linked, onLinkedSelect,
                     <Button
                       size="sm"
                       aria-pressed={isSelected}
-                      onClick={() => onLinkedSelect({ origin: "grid", datasetVersionId: version.id, rowIds: f.affectedRowIds, cellIds: f.affectedCellIds, provenanceIds: [] })}
+                      onClick={() => onLinkedSelect({ origin: "quality", datasetVersionId: version.id, rowIds: f.affectedRowIds, cellIds: f.affectedCellIds, provenanceIds: [] })}
                     >
                       Select affected
                     </Button>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { Row } from "@/contracts";
+import { MAX_ROW_IDS_PER_QUERY, type Row } from "@/contracts";
 import { ApiClientError, api } from "@/lib/api/client";
 
 export const PAGE_SIZE = 200;
@@ -131,15 +131,14 @@ export function useRowWindow(q: RowQuery) {
   return { rows: state.rows, total: state.total, nextCursor: loading ? null : state.nextCursor, error: loading ? null : state.error, loading, loadingMore: state.loadingMore, loadMore, ensureRows, reload, currentRows };
 }
 
-/** Finds specific rows of a version by scanning pages in source order (bounded by the dataset size). */
+/** Fetches specific rows of a version by id, in chunks the server accepts. Ids not in the version are absent. */
 export async function fetchRowsByIds(datasetId: string, versionId: string, ids: string[], signal?: AbortSignal): Promise<Map<string, Row>> {
-  const wanted = new Set(ids);
+  const unique = [...new Set(ids)];
   const found = new Map<string, Row>();
-  let cursor: string | null = null;
-  do {
-    const page = await api.getRows(datasetId, { versionId, cursor, limit: SCAN_PAGE_SIZE }, signal);
-    for (const row of page.rows) if (wanted.has(row.id)) found.set(row.id, row);
-    cursor = page.nextCursor;
-  } while (cursor && found.size < wanted.size);
+  for (let i = 0; i < unique.length; i += MAX_ROW_IDS_PER_QUERY) {
+    const chunk = unique.slice(i, i + MAX_ROW_IDS_PER_QUERY);
+    const page = await api.getRows(datasetId, { versionId, rowIds: chunk, limit: chunk.length }, signal);
+    for (const row of page.rows) found.set(row.id, row);
+  }
   return found;
 }

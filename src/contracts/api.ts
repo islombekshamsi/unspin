@@ -61,8 +61,13 @@ export const RowsQuerySchema = z.object({
   /** Case-insensitive substring filter on displayed text of one column. */
   filterColumnId: IdSchema.nullable().optional(),
   filterText: z.string().max(200).nullable().optional(),
+  /** Only these rows, in sourceOrder. Comma-separated in the query string; at most MAX_ROW_IDS_PER_QUERY. */
+  rowIds: z
+    .preprocess((v) => (typeof v === "string" ? v.split(",").filter(Boolean) : v), z.array(IdSchema).min(1).max(100))
+    .optional(),
 });
 export type RowsQuery = z.infer<typeof RowsQuerySchema>;
+export const MAX_ROW_IDS_PER_QUERY = 100;
 
 export const RowsPageSchema = z.object({
   versionId: IdSchema,

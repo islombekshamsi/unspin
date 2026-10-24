@@ -89,6 +89,20 @@ describe("malformed and mismatched requests are 400 envelopes", () => {
     await expectEnvelope(res, 400, "bad_request");
   });
 
+  it("rows query by rowIds returns exactly those rows in source order, and bounds the list", async () => {
+    const rows = s.snapshot.rows;
+    const wanted = [rows[2].id, rows[0].id, newId("row")];
+    const base = `/datasets/${s.dataset.id}/rows?versionId=${s.snapshot.version.id}`;
+    const res = await getRowsRoute(new Request(url(`${base}&rowIds=${wanted.join(",")}`)), ctx(s.dataset.id));
+    expect(res.status).toBe(200);
+    const page = (await res.json()) as { rows: { id: string }[]; totalRows: number };
+    expect(page.rows.map((r) => r.id)).toEqual([rows[0].id, rows[2].id]);
+    expect(page.totalRows).toBe(2);
+    const tooMany = Array.from({ length: 101 }, () => newId("row")).join(",");
+    await expectEnvelope(await getRowsRoute(new Request(url(`${base}&rowIds=${tooMany}`)), ctx(s.dataset.id)), 400, "bad_request");
+    await expectEnvelope(await getRowsRoute(new Request(url(`${base}&rowIds=../x`)), ctx(s.dataset.id)), 400, "bad_request");
+  });
+
   it("upload that is not multipart", async () => {
     const res = await postSources(json("/sources", { file: "x" }));
     await expectEnvelope(res, 400, "bad_request");

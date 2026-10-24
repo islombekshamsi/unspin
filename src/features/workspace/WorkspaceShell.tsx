@@ -144,10 +144,10 @@ function Wordmark() {
   );
 }
 
-function Frame({ children, bar }: { children: React.ReactNode; bar?: React.ReactNode }) {
+function Frame({ children, bar, bounded = false }: { children: React.ReactNode; bar?: React.ReactNode; bounded?: boolean }) {
   const ws = useWorkspace();
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className={bounded ? "flex min-h-screen flex-col lg:h-screen lg:overflow-hidden" : "flex min-h-screen flex-col"}>
       <header className="flex min-h-12 flex-wrap items-center gap-x-4 gap-y-2 border-b border-rule bg-surface px-4 py-2">
         <button type="button" onClick={ws.reset} className="rounded-sm" title="Start over with a new file">
           <Wordmark />
@@ -292,7 +292,7 @@ function DatasetWorkspace() {
   );
 
   return (
-    <Frame bar={bar}>
+    <Frame bar={bar} bounded>
       <div className="flex flex-col gap-3 border-b border-rule bg-surface px-4 py-3">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <h1 className="text-lg font-semibold text-ink">{dataset.title}</h1>
@@ -327,7 +327,7 @@ function DatasetWorkspace() {
       </div>
 
       <div className="flex min-h-0 flex-1">
-        <div className="grid min-h-0 flex-1 gap-3 p-3 lg:grid-cols-2 lg:grid-rows-[minmax(320px,1fr)_minmax(320px,1fr)]">
+        <div className="grid min-h-0 flex-1 gap-3 p-3 lg:overflow-auto lg:grid-cols-2 lg:grid-rows-[minmax(320px,1fr)_minmax(320px,1fr)]">
           <Panel title="Source" className={tab === "source" ? "" : "hidden lg:flex"} bodyClassName="overflow-auto p-3">
             <SourceViewer
               source={source}

@@ -118,6 +118,7 @@ export const api = {
         sortDirection: q.sortDirection,
         filterColumnId: q.filterColumnId ?? undefined,
         filterText: q.filterText ?? undefined,
+        rowIds: q.rowIds?.join(","),
       })}`,
       { signal },
     ),
