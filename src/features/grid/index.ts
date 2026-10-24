@@ -1,1 +1,1 @@
-export { DataGrid } from "./components/stubs";
+export { DataGrid } from "./components/DataGrid";
