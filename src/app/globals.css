@@ -53,6 +53,14 @@
   --series-4: #be185d;
   --series-5: #4d7c0f;
   --series-6: #0369a1;
+
+  /* shadcn Chart tokens (Recharts v3): reference as var(--chart-n), not hsl(var(--chart-n)). */
+  --chart-1: var(--series-1);
+  --chart-2: var(--series-2);
+  --chart-3: var(--series-3);
+  --chart-4: var(--series-4);
+  --chart-5: var(--series-5);
+  --chart-6: var(--series-6);
 }
 
 @theme inline {

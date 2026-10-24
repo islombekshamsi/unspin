@@ -9,4 +9,13 @@ export { Dialog } from "./Dialog";
 export { Field, Select, TextInput, NumericInput, SegmentedControl, Disclosure, Tooltip } from "./Controls";
 export type { SegmentOption } from "./Controls";
 export { FileDropzone } from "./FileDropzone";
+export {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
+  ChartStyle,
+} from "./chart";
+export type { ChartConfig } from "./chart";
 export { cx } from "./cx";
