@@ -101,6 +101,7 @@ export const api = {
 
   createSelection: (sourceId: string, selection: SelectionInput, signal?: AbortSignal) =>
     request<{ selection: SourceSelection }>("/selections", json("POST", { sourceId, selection }, signal)).then((r) => r.selection),
+  getSelection: (id: string) => request<{ selection: SourceSelection }>(`/selections/${id}`).then((r) => r.selection),
 
   createExtraction: (selectionId: string, consentToExternalProcessing: boolean, signal?: AbortSignal) =>
     request<{ job: Job }>("/extractions", json("POST", { selectionId, consentToExternalProcessing }, signal)).then((r) => r.job),

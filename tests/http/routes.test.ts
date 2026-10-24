@@ -26,6 +26,7 @@ const { POST: postSources, GET: listSources } = await import("@/app/api/v1/sourc
 const { GET: getSource, DELETE: deleteSource } = await import("@/app/api/v1/sources/[id]/route");
 const { GET: getContent } = await import("@/app/api/v1/sources/[id]/content/route");
 const { POST: postSelections } = await import("@/app/api/v1/selections/route");
+const { GET: getSelection } = await import("@/app/api/v1/selections/[id]/route");
 const { POST: postExtractions } = await import("@/app/api/v1/extractions/route");
 const { GET: getJobRoute } = await import("@/app/api/v1/jobs/[id]/route");
 const { GET: getDataset } = await import("@/app/api/v1/datasets/[id]/route");
@@ -140,6 +141,7 @@ describe("unknown and foreign ids are 404 without enumeration", () => {
     ["GET /sources/:id", (id: string) => getSource(new Request(url(`/sources/${id}`)), ctx(id))],
     ["GET /sources/:id/content", (id: string) => getContent(new Request(url(`/sources/${id}/content`)), ctx(id))],
     ["DELETE /sources/:id", (id: string) => deleteSource(new Request(url(`/sources/${id}`), { method: "DELETE" }), ctx(id))],
+    ["GET /selections/:id", (id: string) => getSelection(new Request(url(`/selections/${id}`)), ctx(id))],
   ])("%s", async (_n, call) => {
     const missing = await expectEnvelope(await call(newId("src")), 404, "not_found");
     identity.owner = B;
@@ -173,6 +175,18 @@ describe("unknown and foreign ids are 404 without enumeration", () => {
     const res = await listSources();
     const body = (await res.json()) as { sources: { id: string }[] };
     expect(body.sources.map((x) => x.id)).not.toContain(s.source.id);
+  });
+});
+
+describe("GET /selections/:id restores the saved region", () => {
+  it("returns the caller's selection and 404s for everyone else", async () => {
+    const res = await getSelection(new Request(url(`/selections/${s.selection.id}`)), ctx(s.selection.id));
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as { selection: { id: string; sourceId: string } };
+    expect(body.selection.id).toBe(s.selection.id);
+    expect(body.selection.sourceId).toBe(s.source.id);
+    identity.owner = B;
+    await expectEnvelope(await getSelection(new Request(url(`/selections/${s.selection.id}`)), ctx(s.selection.id)), 404, "not_found");
   });
 });
 

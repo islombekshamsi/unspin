@@ -47,7 +47,17 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   const loadDataset = useCallback(
     async (datasetId: string, versionId?: string) => {
       try {
-        setDetail(await api.getDataset(datasetId, versionId));
+        const next = await api.getDataset(datasetId, versionId);
+        // Fetch the source region before painting the workspace so refresh does not
+        // briefly look like “no selection has been made”.
+        let restoredSelection: SourceSelection | null = null;
+        try {
+          restoredSelection = await api.getSelection(next.dataset.sourceSelectionId);
+        } catch {
+          // Source viewer states that no selection is available; the dataset still loads.
+        }
+        setDetail(next);
+        setSelectionState(restoredSelection);
       } catch (e) {
         if (e instanceof ApiClientError) setLoadError(e);
         else throw e;
