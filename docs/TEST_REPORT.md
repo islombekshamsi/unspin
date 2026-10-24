@@ -180,3 +180,71 @@ Production fixes belong to the owning specialist.
    with a configured Gemini key. The owner provides the key; QA never reads it. Record results in
    `evaluation/results/`.
 5. Run the integrated browser workflow on port 3106 and record the inspected screenshots here.
+
+---
+
+# Phase 2 walkthrough — merged app (2026-10-24)
+
+Status: **one real-browser pass completed**. This is not an accuracy score and not a Gemini measurement.
+
+## Commit and runtime
+
+| Item | Value |
+| --- | --- |
+| Code under test | `ae8f8b8416fc8ed0881db0bd1feda5d2c9336b5b` (worktree branch `qa/phase2-walkthrough`) |
+| Node | v24.13.0 |
+| Next.js | 16.4.3 (`npx next dev -p 3106`) |
+| Browser | Google Chrome (system) driven by playwright-core 1.56.1; landing also opened in the Cursor browser on 3106 |
+| OS | macOS (darwin 25.3.0) |
+| Persistence | memory (`UNSPIN_PERSISTENCE` unset), `durable=false` |
+| Jobs mode | inline |
+| Gemini | not configured (`GET /api/v1/health`: `gemini.configured=false`; reason shown on the landing page) |
+| Dev server | `npx next dev -p 3106` in this worktree; no `.env.local`; `GEMINI_API_KEY` not read |
+| Date | 2026-10-24 |
+
+## Inputs (committed, hashed)
+
+| File | sha256 | Used for |
+| --- | --- | --- |
+| `evaluation/inputs/noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv` | `a653f1af074f08f25f7b51e97d4b93b2e5485269a10a11df167e73e5cd7e6fad` | Happy path |
+| `evaluation/inputs/noaa-gml-co2-trend-mlo-2026-10-09.png` | `1f3bf74036f52d1b77068eb1a8fb143410297fb3a5848e3961a3b0247212d5af` | Failed extraction (title-only crop) |
+
+## Steps (pass/fail)
+
+| Step | Result | What I actually saw |
+| --- | --- | --- |
+| 1. Landing empty state | **PASS** | “Drop your data. Make it usable.” Upload control. Limits 10 MB / 20k rows / 64 cols. Gemini unavailable note. Session-only note. Desktop 1280 and phone 375. |
+| 2. Upload NOAA CSV | **PASS** | 29.1 KB accepted. URL `?source=src_182cb9e947c74eba8afcd209a976870b`. |
+| 3. Select | **PASS** | Preview suggested skip 40 `#` records and a header. First data row `1974, 5, 1974.3750, 333.19, …`. 629 data records × 8 columns. “Use this selection.” |
+| 4. Import / extract | **PASS** | Deterministic parser. “Nothing is sent to an external service.” Workspace: 629 rows × 8 columns, complete selection, 5032 unreviewed. Dataset `ds_cc213be43ca84bc19a55fa8f5acd91e9`. |
+| 5. Inspect cell + source | **PASS** | `average` 333.19 on source row 1. Source: Record 1, line 42, linked. Inspector: parsed, not reviewed, “CSV record 1, line 42, field 4”, precise. |
+| 6. Correct (preview, then Save) | **PASS** | Edited 333.19 → 333.20. Preview showed before/after. Save created v2; 1 corrected. Source text stayed 333.19. Grid showed 333.20 with an edit marker. |
+| 7. Chart click / keyboard select | **PASS** (with defect) | Navigator Enter selected series “month”, source row 2, y=6. Source jumped to Record 2 / line 43 (linked). One grid row selected. Default chart is unreadable: see defect 1. |
+| 8. Undo | **PASS** | History → Undo last change → Undo. v1 current again. 0 corrected. First average back to 333.19. |
+| 9. Export CSV+JSON+manifest | **PASS** | Dialog downloaded all three. CSV: BOM, 629 data rows, first row `1974,5,1974.3750,333.19,…`. Manifest source hash matches the committed CSV; `skipLeadingRecords: 40`. data.json first average remains `"333.19"` / `parsed` (export was after undo). Hashes in `evaluation/results/walkthrough/downloads/EXPORT_HASHES.txt`. |
+| 10. Page refresh | **PASS** (with defect) | Same `?source=` / `?dataset=` restored the dataset, grid, and chart. Source panel lost the selection: “No selection has been made for this file yet.” Memory mode did **not** wipe the workspace on refresh. |
+| 11. Failed extraction | **PASS** | Title-only crop of the NOAA PNG: 672×72 px at (64, 6) of 800×600 (title band). Source kept. “Start extraction” disabled. Real stage text: not configured / unavailable. No `?dataset=`. No invented dataset. **Cancel of a live Gemini job was not run** (no key on this server). |
+| Desktop 1280 / phone 375 | **PASS** | Full path at 1280. Landing only at 375 (upload + notes still present). |
+
+Screenshots: `evaluation/results/walkthrough/01-landing-desktop.png` … `19-landing-mobile.png`. Machine log: `notes.json`. Narrative: `OBSERVATIONS.md`.
+
+Refresh and failed extraction were real. Gemini accuracy was not scored.
+
+## Defects (owners)
+
+1. **Default chart plots every numeric column against `year` with Include zero.** Observed y-axis 0–2000 while CO₂ averages are ~333–430, so the series of interest is a flat band. Month (1–12) and decimal-date (~1974–2026) share that axis. Expected: a usable default (e.g. `decimal date` × `average`, Fit data) or a refusal to mix incompatible series. Owner: `src/features/visualization/**`.
+2. **Refresh drops the source selection.** After reload, `?source=` / `?dataset=` restore the grid, but Source says “No selection has been made for this file yet.” Linking still needs that selection. Expected: restore the stored selection with the dataset. Owner: `src/features/workspace/WorkspaceShell.tsx` (`useUrlState`) / ingestion `SourceViewer`.
+3. **Live job cancel was not exercised.** Gemini is unset, so Start extraction stays disabled. Title-crop failure is honest, but Cancel-while-running is untested. Owner: extraction, when a key is present.
+
+Phase 1 defect 1 (CSV cannot skip a `#` preamble) **did not reproduce** on this build: the UI suggested and applied skip 40, and line 42 stayed the first data record.
+
+## Commands actually run
+
+| Command | Result |
+| --- | --- |
+| `npm ci` (worktree) | succeeded |
+| `npx next dev -p 3106` | Ready; `GET /api/v1/health` → ok, gemini false, persistence memory |
+| `node evaluation/results/walkthrough/drive.mjs` | completed; 22 observation notes; 3 downloads |
+| File hashes of the two committed NOAA inputs | match Phase 1 / `evaluation/sources.json` |
+
+No unit-test rerun in this role. No Gemini call. No invented timings.

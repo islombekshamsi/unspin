@@ -1,0 +1,3 @@
+44138e6ce91a4af1fbef295815f4914334e85bb9b5d050ff06faaab197b9be35  noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv  28527 bytes
+b48176053d3235ba7fae580939f1616e5bbb76cbbde38b2aa84ea7f5ebac791e  noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.data.json  2442258 bytes
+4bf6a925667ea00f8926990fe5f7a6606c2127108b1d10b50b61070b1f677085  noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.manifest.json  2866035 bytes
