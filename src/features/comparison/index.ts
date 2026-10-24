@@ -1,1 +1,1 @@
-export { ComparisonPanel } from "./components/stubs";
+export { ComparisonPanel } from "./components/ComparisonPanel";
