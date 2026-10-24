@@ -223,7 +223,7 @@ function Landing({
           {healthError && <ErrorState title="Server status unavailable" message={healthError.message} code={healthError.code} />}
           {gemini && !gemini.configured && (
             <UnavailableNote>
-              Chart and PDF extraction is unavailable on this server: the model is not configured. CSV and XLSX import still work.
+              {gemini.reason ?? "Chart and PDF extraction is unavailable on this server: the model is not configured."} CSV and XLSX import still work.
             </UnavailableNote>
           )}
           {persistence && !persistence.durable && (

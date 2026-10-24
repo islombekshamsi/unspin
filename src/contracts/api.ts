@@ -27,7 +27,7 @@ export const HealthSchema = z.object({
   status: z.enum(["ok", "degraded"]),
   version: z.string(),
   capabilities: z.object({
-    gemini: z.object({ configured: z.boolean(), model: z.string().nullable() }),
+    gemini: z.object({ configured: z.boolean(), model: z.string().nullable(), reason: z.string().nullable() }),
     persistence: z.object({
       mode: z.enum(["memory", "postgres"]),
       durable: z.boolean(),

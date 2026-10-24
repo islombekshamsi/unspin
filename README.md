@@ -80,7 +80,10 @@ See `docs/ARCHITECTURE.md`. Shared contracts live in `src/contracts/`. HTTP rout
 
 ## Known limitations
 
-See `docs/STATUS.md` and `docs/TEST_REPORT.md`.
+- **Extraction latency:** in the default `inline` jobs mode, the extraction request stays open until Gemini answers. Live calls on 2026-10-24 took 50–120 s, with intermittent provider 503s. Each job has a total budget of 180 s across at most two attempts, after which it fails with an explicit timeout. Worker mode moves this wait out of the request.
+- **Unpaid Gemini tier:** if the server's key is on an unpaid tier, Google's terms allow submitted content to be used to improve its products and to be reviewed by people. Send only material you are allowed to share until a paid tier is configured.
+
+See also `docs/STATUS.md` and `docs/TEST_REPORT.md`.
 
 ## Deployment
 

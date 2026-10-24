@@ -18,7 +18,8 @@ export const LIMITS = {
   /** Longest text the extraction service may forward as a user hint. */
   maxUserHintChars: 300,
   /** Bounded provider behaviour. */
-  providerTimeoutMs: 120_000,
+  /** Total budget per job across attempts; measured Gemini 3.x Flash calls took 50–120 s. */
+  providerTimeoutMs: 180_000,
   providerMaxAttempts: 2,
   providerMaxOutputTokens: 32_768,
   /** Raster scale used when rendering a PDF region for extraction. */

@@ -13,7 +13,7 @@ export async function getHealth(): Promise<Health> {
     status: ready ? "ok" : "degraded",
     version: APP_VERSION,
     capabilities: {
-      gemini: { configured: gemini.configured, model: gemini.configured ? gemini.model : null },
+      gemini: { configured: gemini.configured, model: gemini.configured ? gemini.model : null, reason: gemini.reason },
       persistence: { mode: repos.mode, durable: repos.durable, ready },
       blobStorage: { mode: repos.blobMode, ready },
       jobs: { mode: jobsMode() },
