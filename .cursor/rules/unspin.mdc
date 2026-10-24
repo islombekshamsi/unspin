@@ -1,0 +1,12 @@
+---
+description: UNSPIN source-linked data workspace and multi-agent implementation rules
+alwaysApply: true
+---
+
+Read AGENTS.md, docs/CONTRACTS.md, and your assigned prompts/ file before implementation.
+
+The user wants a real working application, not a static dashboard. Respect exclusive file ownership and the coordinator's contract freeze. Preserve uncommitted work and .env.local. Do not reveal secrets.
+
+Keep source data, original values, dataset versions, corrections, chart configuration, and provenance separate. Never claim AI extraction is verified because it is valid JSON. Do not invent product/demo data or performance claims. Missing values stay missing. All material transformations are explicit and reversible.
+
+Use actual integrations and honest unavailable states. When adding dependencies or provider APIs, consult their current primary documentation. Report what you actually ran and measured.

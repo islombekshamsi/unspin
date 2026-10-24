@@ -1,26 +1,143 @@
 @import "tailwindcss";
 
+/*
+ * UNSPIN design tokens (coordinator-owned).
+ * Calm editorial workspace: warm near-white canvas, dark ink, fine rules, one teal accent.
+ * Amber marks estimates/review states; red is reserved for actionable failures.
+ * Never rely on color alone: pair with text, icons, or patterns.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --canvas: #faf8f4;
+  --surface: #ffffff;
+  --surface-sunken: #f3f0ea;
+  --ink: #1b1a17;
+  --ink-muted: #5c5850;
+  --ink-faint: #8a857b;
+  --rule: #e3ded4;
+  --rule-strong: #cfc8bb;
+
+  --accent: #0f6e66;
+  --accent-strong: #0a524c;
+  --accent-soft: #e2f1ef;
+  --accent-ink: #ffffff;
+
+  --estimate: #92400e;
+  --estimate-soft: #fdf2dc;
+  --estimate-rule: #e8c98a;
+
+  --danger: #b42318;
+  --danger-soft: #fdecea;
+  --danger-rule: #f1b8b2;
+
+  --success: #2f6b2f;
+  --success-soft: #e8f3e6;
+
+  --focus: #0f6e66;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  --shadow-panel: 0 1px 0 rgba(27, 26, 23, 0.04), 0 1px 3px rgba(27, 26, 23, 0.06);
+  --shadow-overlay: 0 12px 32px rgba(27, 26, 23, 0.16), 0 2px 6px rgba(27, 26, 23, 0.08);
+
+  --motion-fast: 120ms;
+  --motion-base: 200ms;
+  --motion-slow: 400ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Chart series palette: distinguishable, paired with marker symbols in charts. */
+  --series-1: #0f6e66;
+  --series-2: #b45309;
+  --series-3: #4338ca;
+  --series-4: #be185d;
+  --series-5: #4d7c0f;
+  --series-6: #0369a1;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-sunken: var(--surface-sunken);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
+  --color-estimate: var(--estimate);
+  --color-estimate-soft: var(--estimate-soft);
+  --color-estimate-rule: var(--estimate-rule);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-danger-rule: var(--danger-rule);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --shadow-panel: var(--shadow-panel);
+  --shadow-overlay: var(--shadow-overlay);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--canvas);
+  color: var(--ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "tnum" 1, "ss01" 1;
+}
+
+/* Visible focus everywhere; never removed without replacement. */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Estimates are marked with a dashed underline in addition to color. */
+.estimate-mark {
+  text-decoration: underline dashed var(--estimate-rule);
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes unspin-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(250%);
+  }
+}
+
+.indeterminate-bar {
+  animation: unspin-indeterminate 1.4s var(--ease) infinite;
 }
