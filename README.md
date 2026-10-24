@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UNSPIN
 
-## Getting Started
+**Drop your data. Make it usable.**
 
-First, run the development server:
+UNSPIN turns a chart image, PDF figure, CSV, or XLSX file into a dataset you can work with. You can inspect it beside its source, correct it with explicit and reversible operations, explore it in linked interactive charts, and export it with full provenance and history.
+
+> Status: under active multi-agent development. `docs/STATUS.md` lists what works today and how it was verified.
+
+## Requirements
+
+- Node.js 24 LTS. The version is pinned in `.nvmrc` and `package.json` `engines`. `pdfjs-dist` 6 needs Node ≥ 22.13, and `vitest` 5 needs Node ≥ 22.12.
+
+  ```bash
+  nvm install 24 && nvm use
+  ```
+
+- npm (the lockfile is `package-lock.json`).
+- Optional: PostgreSQL 14+ for durable workspaces.
+
+## Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+nvm use
+npm ci
+cp .env.example .env.local   # only if you don't already have .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Edit `.env.local`. Never commit it.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `GEMINI_API_KEY` | For chart/PDF extraction | Server-only Gemini key |
+| `GEMINI_MODEL` | For chart/PDF extraction | Explicit model id. Extraction stays disabled until both Gemini variables are set |
+| `DATABASE_URL` | Optional | PostgreSQL. Without it, work is kept in process memory and lost on restart |
+| `UNSPIN_STORAGE_MODE`, `UNSPIN_STORAGE_ROOT` | Optional | Private blob storage (`memory`, `filesystem`, or `s3`) |
+| `UNSPIN_JOBS_MODE` | Optional | `inline` (default) or `worker` (needs `DATABASE_URL` and a worker process) |
+| `APP_BASE_URL`, `AUTH0_*`, `UNSPIN_S3_*`, `ELEVENLABS_*` | Optional | Deployment origin and optional integrations. Each one is reported as unavailable until configured |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+No secret uses a `NEXT_PUBLIC_` prefix. Only server code reads the Gemini key.
 
-## Learn More
+## Run
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run dev          # http://localhost:3000
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Checks
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run typecheck    # next typegen + tsc
+npm test             # vitest
+npm run lint
+npm run build
+```
 
-## Deploy on Vercel
+## Upload limits
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+These are the initial guardrails, set in `src/server/config/limits.ts`. They are design targets, not measured performance:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 10 MiB per file.
+- 20,000 structured rows.
+- 64 columns.
+- 40 megapixels per image.
+- 200 PDF pages.
+- One selected region per extraction.
+- 250 AI-extracted rows per region.
+
+Anything over a limit gets an explicit error. Nothing is silently truncated.
+
+Supported inputs are PNG, JPEG, WebP, PDF, CSV (UTF-8), and XLSX. Legacy XLS, macro-enabled XLSM, encrypted files, archives, and executables are rejected with a reason.
+
+## What happens to your file
+
+- **CSV and XLSX** are parsed deterministically on this server. Nothing is sent to an AI model.
+- **Images and PDFs:** only the region you select is sent to Google Gemini, and only after you confirm. Values read from charts are marked as estimates, and every value keeps a source reference.
+
+## Project layout
+
+See `docs/ARCHITECTURE.md`. Shared contracts live in `src/contracts/`. HTTP routes are under `src/app/api/v1/`, and use cases are in `src/server/orchestration/`.
+
+## Known limitations
+
+See `docs/STATUS.md` and `docs/TEST_REPORT.md`.
+
+## Deployment
+
+See `deployment/`.
