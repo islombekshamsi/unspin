@@ -1,3 +1,3 @@
 export { ChartPanel } from "./components/ChartPanel";
-export { PlotlyChart } from "./components/PlotlyChart";
-export type { PlotlyChartProps } from "./components/PlotlyChart";
+export { RechartsChart } from "./components/RechartsChart";
+export type { RechartsChartProps } from "./components/RechartsChart";

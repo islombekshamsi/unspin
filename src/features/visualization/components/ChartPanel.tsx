@@ -15,7 +15,7 @@ import {
   UnavailableNote,
 } from "@/components/ui";
 import type { ChartPanelProps } from "@/features/workspace/seams";
-import { PLOT_CONFIG, buildLayout, buildTraces, type FigureSeries } from "../lib/figure";
+import { buildPlotModel, type FigureSeries } from "../lib/figure";
 import {
   MAX_SERIES,
   axisTitle,
@@ -35,7 +35,7 @@ import {
 } from "../lib/presentation";
 import { useChartQuery } from "../lib/use-chart-query";
 import { ChartDataTable } from "./ChartDataTable";
-import { PlotlyChart } from "./PlotlyChart";
+import { RechartsChart } from "./RechartsChart";
 import { PointNavigator } from "./PointNavigator";
 
 type BaselineMode = BaselinePolicy["mode"];
@@ -129,34 +129,29 @@ export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) 
     [baseline, plottedYs, effectiveScale, bounds],
   );
 
-  const data = useMemo(
-    () =>
-      result
-        ? buildTraces({ kind, xKind: result.xKind, series: figureSeries, allPoints: result.points, highlighted, focusPointId, describe })
-        : [],
-    [result, kind, figureSeries, highlighted, focusPointId, describe],
-  );
-
   const yCols = visibleSeries.map((s) => byId.get(s.yColumnId)).filter((c): c is Column => !!c);
   const yTitleInfo = yCols.length ? yAxisTitle(yCols) : { title: "Value", mixedUnits: false };
   const yTitle = yRange.label ? `${yTitleInfo.title} — ${yRange.label}` : yTitleInfo.title;
   const xTitle = xColumn ? axisTitle(xColumn) : "x";
-  const rangeKey = yRange.range ? yRange.range.join(",") : "auto";
-  const layout = useMemo(
+  const model = useMemo(
     () =>
       result
-        ? buildLayout({
+        ? buildPlotModel({
             kind,
             xKind: result.xKind,
+            series: figureSeries,
+            allPoints: result.points,
+            highlighted,
+            focusPointId,
+            describe,
             xTitle,
             yTitle,
             yScale: effectiveScale,
-            yRange: rangeKey === "auto" ? null : (rangeKey.split(",").map(Number) as [number, number]),
-            allPoints: result.points,
-            uirevision: `${result.versionId}|${result.xColumnId}|${choice.yColumnIds.join(",")}|${kind}`,
+            yRange: yRange.range,
+            clipToBounds: baseline === "explicit_bounds" && !yRange.error,
           })
-        : {},
-    [result, kind, xTitle, yTitle, effectiveScale, rangeKey, choice.yColumnIds],
+        : null,
+    [result, kind, figureSeries, highlighted, focusPointId, describe, xTitle, yTitle, effectiveScale, yRange.range, yRange.error, baseline],
   );
 
   const navSeries = useMemo(
@@ -394,17 +389,17 @@ export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) 
           </p>
         ))}
 
-        <PlotlyChart
-          className="h-[min(420px,60vh)] min-h-[260px] w-full shrink-0"
-          data={data}
-          layout={layout}
-          config={PLOT_CONFIG}
-          label={`${kind} chart of ${visibleSeries.map((s) => s.label).join(", ")} against ${xTitle}. Use the point navigator or the data table below for exact values.`}
-          onPointClick={(id) => pick([id])}
-          onPointsSelected={pick}
-          onDeselect={() => emit([])}
-          onHover={setHoverId}
-        />
+        {model && (
+          <RechartsChart
+            className="h-[min(420px,60vh)] min-h-[260px] w-full shrink-0"
+            model={model}
+            label={`${kind} chart of ${visibleSeries.map((s) => s.label).join(", ")} against ${xTitle}. Use the point navigator or the data table below for exact values.`}
+            onPointClick={(id) => pick([id])}
+            onPointsSelected={pick}
+            onDeselect={() => emit([])}
+            onHover={setHoverId}
+          />
+        )}
 
         <ul className="flex flex-wrap gap-x-4 gap-y-1 text-[12px] text-ink-muted" aria-label="Marker key">
           {kind === "bar" ? (
