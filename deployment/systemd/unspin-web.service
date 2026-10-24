@@ -1,0 +1,27 @@
+[Unit]
+Description=UNSPIN web (Next.js)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=unspin
+Group=unspin
+WorkingDirectory=/opt/unspin/app
+EnvironmentFile=/etc/unspin/unspin.env
+# Bind to loopback only; nginx terminates TLS in front.
+ExecStart=/usr/bin/env npx next start -H 127.0.0.1 -p 3000
+Restart=on-failure
+RestartSec=5
+KillSignal=SIGTERM
+TimeoutStopSec=30
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/unspin /opt/unspin/app/.next
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

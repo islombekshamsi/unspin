@@ -1,0 +1,27 @@
+[Unit]
+Description=UNSPIN durable job worker
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=unspin
+Group=unspin
+WorkingDirectory=/opt/unspin/app
+EnvironmentFile=/etc/unspin/unspin.env
+# --concurrency is the global cap on simultaneous provider calls from this instance.
+ExecStart=/usr/bin/env npx tsx src/server/jobs/worker.ts --concurrency=2 --max-attempts=3
+Restart=on-failure
+RestartSec=5
+# The worker finishes in-flight jobs for up to 25 s after SIGTERM; unfinished jobs are reclaimed by lease expiry.
+KillSignal=SIGTERM
+TimeoutStopSec=35
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/unspin
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
