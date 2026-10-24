@@ -139,9 +139,16 @@ export async function runJob(jobId: string, workerId: string | null): Promise<vo
 
     await repos.jobs.transition(jobId, ["running"], { stage: "committing" });
     throwIfAborted(controller.signal);
-    const datasetId = newId("ds");
+    let datasetId = newId("ds");
     const { dataset, snapshot, history } = buildInitialDataset(owner, datasetId, source.id, selection.id, draft);
-    await repos.datasets.create(owner, { dataset, initialSnapshot: snapshot, provenance: draft.provenance, historyEntry: history });
+    try {
+      await repos.datasets.create(owner, { dataset, initialSnapshot: snapshot, provenance: draft.provenance, historyEntry: history });
+    } catch (e) {
+      // Another worker committed this selection first; its dataset is the job's result.
+      const winner = isAppError(e) && e.code === "idempotency_conflict" ? e.details?.datasetId : undefined;
+      if (typeof winner !== "string") throw e;
+      datasetId = winner;
+    }
 
     await repos.jobs.transition(jobId, ["running"], {
       status: "completed",

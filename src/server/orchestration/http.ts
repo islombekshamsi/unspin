@@ -1,3 +1,4 @@
+import { unstable_rethrow } from "next/navigation";
 import { z } from "zod";
 import { AppError, isAppError, newId, type ApiErrorBody } from "@/contracts";
 
@@ -40,6 +41,7 @@ export async function handle(
     const res = await fn(requestId);
     return res;
   } catch (e) {
+    unstable_rethrow(e);
     if (isAppError(e)) {
       if (e.status >= 500) {
         console.warn(`[api] ${route} ${requestId} ${e.code} ${Date.now() - started}ms`);

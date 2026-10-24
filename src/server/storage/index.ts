@@ -8,7 +8,6 @@ import {
   MemoryDatasetRepository,
   MemoryJobRepository,
   MemorySelectionRepository,
-  MemoryShareRepository,
   MemorySourceRepository,
   memoryState,
 } from "./memory";
@@ -90,7 +89,8 @@ function build(): Backend {
       datasets: new MemoryDatasetRepository(state),
       jobs: new MemoryJobRepository(state),
       blobs: blobs.store,
-      shares: new MemoryShareRepository(state),
+      // A share link that silently dies on restart would mislead its recipient.
+      shares: null,
       ready: blobs.ready,
     },
     claim: async (guest, account) => claimGuestWorkspaceMemory(state, guest, account),

@@ -52,6 +52,16 @@ export async function currentOwner(): Promise<Owner | null> {
   return isValidGuestToken(existing) ? guestOwner(existing) : null;
 }
 
+/**
+ * Identity for routes acting on existing resources. Never issues a cookie: a caller without
+ * one owns nothing, so the answer is the same 404 an unauthorized owner would get.
+ */
+export async function requireOwner(): Promise<Owner> {
+  const owner = await currentOwner();
+  if (!owner) throw new AppError("not_found", "Not found.");
+  return owner;
+}
+
 /** The guest identity carried by this request's cookie, if any (ignores any account session). */
 export async function currentGuest(): Promise<Owner | null> {
   const jar = await cookies();

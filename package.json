@@ -12,7 +12,9 @@
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "worker": "tsx --env-file-if-exists=.env.local src/server/jobs/worker.ts",
+    "db:migrate": "tsx --env-file-if-exists=.env.local src/server/storage/migrate.ts"
   },
   "overrides": {
     "uuid": "^11.1.1"

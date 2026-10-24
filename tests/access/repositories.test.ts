@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { AppError, newId, type Job } from "@/contracts";
 import { getRepositories, newBlobKey } from "@/server/storage";
-import { buildCsvSelection, commitManualEdit, seedDataset, type SeededDataset } from "../helpers/fixtures";
+import { commitManualEdit, seedDataset, type SeededDataset } from "../helpers/fixtures";
 import { NOAA_SAMPLE, noaaTable } from "../helpers/noaa";
 import { makeOwner } from "../helpers/owners";
 
@@ -200,15 +200,22 @@ describe("version compare-and-set", () => {
 
 describe("jobs", () => {
   it("idempotency keys are scoped per owner", async () => {
-    const sel = buildCsvSelection(seeded.source.id);
-    const a1 = await repos().jobs.createOrGet(A, queuedJob(sel.id), `${sel.id}:k`);
-    const a2 = await repos().jobs.createOrGet(A, queuedJob(sel.id), `${sel.id}:k`);
-    const b1 = await repos().jobs.createOrGet(B, queuedJob(sel.id), `${sel.id}:k`);
+    const sel = seeded.selection;
+    const bSeeded = await seedDataset(B, noaaTable(NOAA_SAMPLE));
+    const key = "same-key:k";
+    const a1 = await repos().jobs.createOrGet(A, queuedJob(sel.id), key);
+    const a2 = await repos().jobs.createOrGet(A, queuedJob(sel.id), key);
+    const b1 = await repos().jobs.createOrGet(B, queuedJob(bSeeded.selection.id), key);
     expect(a1.created).toBe(true);
     expect(a2.created).toBe(false);
     expect(a2.job.id).toBe(a1.job.id);
     expect(b1.created).toBe(true);
     expect(b1.job.id).not.toBe(a1.job.id);
+  });
+
+  it("a job cannot be attached to another owner's selection", async () => {
+    const err = await repos().jobs.createOrGet(B, queuedJob(seeded.selection.id), newId("req")).catch((e) => e);
+    expect((err as AppError).code).toBe("not_found");
   });
 
   it("other owner cannot read or cancel a job", async () => {

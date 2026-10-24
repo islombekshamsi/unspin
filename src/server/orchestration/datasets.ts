@@ -118,8 +118,7 @@ export async function getRows(owner: Owner, datasetId: string, q: RowsQuery): Pr
     });
   }
   const limit = Math.min(q.limit ?? 200, LIMITS.maxRowsPageSize);
-  const offset = q.cursor ? Number.parseInt(q.cursor, 10) : 0;
-  if (!Number.isInteger(offset) || offset < 0) throw new AppError("bad_request", "Invalid cursor.");
+  const offset = parseCursor(q.cursor);
   const page = rows.slice(offset, offset + limit);
   const next = offset + limit < rows.length ? String(offset + limit) : null;
   return { versionId: snapshot.version.id, rows: page, totalRows: rows.length, nextCursor: next };
@@ -148,8 +147,7 @@ export async function previewTransform(owner: Owner, datasetId: string, req: Pre
     sourceSelectionId: dataset.sourceSelectionId,
   });
   const limit = req.limit ?? 100;
-  const offset = req.cursor ? Number.parseInt(req.cursor, 10) : 0;
-  if (!Number.isInteger(offset) || offset < 0) throw new AppError("bad_request", "Invalid cursor.");
+  const offset = parseCursor(req.cursor);
   return {
     operationHash: operationHash(base.version.id, req.operation),
     operation: req.operation,
@@ -332,6 +330,12 @@ export async function createExport(owner: Owner, datasetId: string, req: CreateE
     }
   }
   return { id: newId("exp"), createdAt: exportedAt, files };
+}
+
+function parseCursor(cursor: string | null | undefined): number {
+  if (!cursor) return 0;
+  if (!/^\d{1,9}$/.test(cursor)) throw new AppError("bad_request", "Invalid cursor.");
+  return Number(cursor);
 }
 
 function safeFileStem(title: string): string {

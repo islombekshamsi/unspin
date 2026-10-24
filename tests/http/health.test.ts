@@ -32,7 +32,8 @@ describe("GET /health payload", () => {
   it("with nothing configured: schema-valid booleans, no model id", async () => {
     ALL.forEach((k) => delete process.env[k]);
     const h = HealthSchema.parse(await getHealth());
-    expect(h.capabilities.gemini).toEqual({ configured: false, model: null });
+    expect(h.capabilities.gemini).toMatchObject({ configured: false, model: null });
+    expect(h.capabilities.gemini.reason).toMatch(/GEMINI_API_KEY and GEMINI_MODEL/);
     expect(h.capabilities.accounts.configured).toBe(false);
     expect(h.capabilities.narration.configured).toBe(false);
     expect(h.capabilities.persistence.durable).toBe(h.capabilities.persistence.mode === "postgres");
@@ -58,7 +59,8 @@ describe("GET /health payload", () => {
     ALL.forEach((k) => delete process.env[k]);
     process.env.GEMINI_API_KEY = CANARIES.GEMINI_API_KEY;
     const h = await getHealth();
-    expect(h.capabilities.gemini).toEqual({ configured: false, model: null });
+    expect(h.capabilities.gemini).toMatchObject({ configured: false, model: null });
+    expect(h.capabilities.gemini.reason).toMatch(/GEMINI_MODEL is not set/);
     assertNoSecrets(h);
   });
 

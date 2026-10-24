@@ -1,4 +1,4 @@
-import { resolveOwner } from "@/server/identity";
+import { requireOwner } from "@/server/identity";
 import { cancelJob } from "@/server/orchestration/extraction";
 import { handle, jsonOk } from "@/server/orchestration/http";
 
@@ -6,7 +6,7 @@ import { handle, jsonOk } from "@/server/orchestration/http";
 export async function POST(_req: Request, ctx: RouteContext<"/api/v1/jobs/[id]/cancel">) {
   return handle("POST /jobs/:id/cancel", async (requestId) => {
     const { id } = await ctx.params;
-    const owner = await resolveOwner();
+    const owner = await requireOwner();
     const job = await cancelJob(owner, id);
     return jsonOk(requestId, { job });
   });

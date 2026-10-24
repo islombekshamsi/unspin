@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { ApiErrorBodySchema, newId, type Owner } from "@/contracts";
+import { ApiErrorBodySchema, AppError, newId, type Owner } from "@/contracts";
 import { commitManualEdit, seedDataset, type SeededDataset } from "../helpers/fixtures";
 import { NOAA_SAMPLE, noaaTable } from "../helpers/noaa";
 import { makeOwner } from "../helpers/owners";
@@ -16,6 +16,10 @@ vi.mock("@/server/identity", () => ({
   GUEST_COOKIE: "unspin_guest",
   resolveOwner: async () => identity.owner,
   currentOwner: async () => identity.owner,
+  requireOwner: async () => {
+    if (!identity.owner) throw new AppError("not_found", "Not found.");
+    return identity.owner;
+  },
 }));
 
 const { POST: postSources, GET: listSources } = await import("@/app/api/v1/sources/route");
@@ -203,7 +207,8 @@ describe("source content download", () => {
 });
 
 describe("unavailable capabilities are honest", () => {
-  it("sharing is 503 not_configured, not a fabricated share", async () => {
-    await expectEnvelope(await sharesRoute(), 503, "not_configured");
+  it("sharing is 503 not_configured without durable storage, not a fabricated share", async () => {
+    const res = await sharesRoute(json(`/datasets/${s.dataset.id}/shares`, { versionId: s.snapshot.version.id }), ctx(s.dataset.id));
+    await expectEnvelope(res, 503, "not_configured");
   });
 });

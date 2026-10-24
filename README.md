@@ -44,12 +44,25 @@ No secret uses a `NEXT_PUBLIC_` prefix. Only server code reads the Gemini key.
 npm run dev          # http://localhost:3000
 ```
 
+Durable mode (PostgreSQL, filesystem blobs, background worker):
+
+```bash
+createdb unspin                      # any local PostgreSQL database
+# in .env.local: DATABASE_URL=postgres:///unspin, UNSPIN_STORAGE_MODE=filesystem, UNSPIN_JOBS_MODE=worker
+npm run db:migrate                   # applies db/migrations once; refuses edited migrations
+npm run dev                          # terminal 1
+npm run worker                       # terminal 2
+```
+
+Read-only share links need durable storage. On a memory-only server they return 503, rather than handing out a link that stops working when the server restarts. Deployment is described in `deployment/README.md`.
+
 ## Checks
 
 ```bash
 npm run typecheck    # next typegen + tsc
-npm test             # vitest
+npm test             # vitest; PostgreSQL suites run when UNSPIN_TEST_DATABASE_URL is set
 npm run lint
+BASE_URL=http://localhost:3106 npx tsx tests/smoke/http-smoke.ts   # against a running server
 npm run build
 ```
 

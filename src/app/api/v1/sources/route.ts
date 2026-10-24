@@ -1,6 +1,6 @@
 import { AppError } from "@/contracts";
 import { LIMITS } from "@/server/config/limits";
-import { resolveOwner } from "@/server/identity";
+import { currentOwner, resolveOwner } from "@/server/identity";
 import { handle, jsonOk } from "@/server/orchestration/http";
 import { createSource } from "@/server/orchestration/sources";
 import { getRepositories } from "@/server/storage";
@@ -31,8 +31,8 @@ export async function POST(request: Request) {
 
 export async function GET() {
   return handle("GET /sources", async (requestId) => {
-    const owner = await resolveOwner();
-    const sources = await getRepositories().sources.list(owner);
+    const owner = await currentOwner();
+    const sources = owner ? await getRepositories().sources.list(owner) : [];
     return jsonOk(requestId, { sources });
   });
 }

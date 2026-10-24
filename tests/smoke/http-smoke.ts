@@ -149,7 +149,16 @@ async function main() {
   } else expectError("POST /sources real NOAA CSV", up, 201, true);
 
   // Cookie identity and isolation --------------------------------------------
-  await call(B, "/sources");
+  const reader = new Jar();
+  await call(reader, "/sources");
+  await call(reader, `/datasets/ds_00000000000000000000000000000000`);
+  record(
+    "read-only requests issue no guest cookie",
+    reader.cookies.has("unspin_guest") ? "FAIL" : "PASS",
+    reader.cookies.has("unspin_guest") ? "cookie issued on GET" : "no cookie",
+  );
+  // Only an upload attempt creates a guest capability.
+  await call(B, "/sources", { method: "POST" });
   const ca = A.cookies.get("unspin_guest");
   const cb = B.cookies.get("unspin_guest");
   const sc = A.setCookieHeaders.find((s) => s.startsWith("unspin_guest=")) ?? "";
@@ -190,7 +199,7 @@ async function main() {
   // Forged cookie -----------------------------------------------------------
   const forged = new Jar();
   forged.cookies.set("unspin_guest", "..%2F..%2Fforged");
-  await call(forged, "/sources");
+  await call(forged, "/sources", { method: "POST" });
   const reissued = forged.cookies.get("unspin_guest") ?? "";
   record("malformed guest cookie is replaced, not trusted", /^[A-Za-z0-9_-]{43}$/.test(reissued) ? "PASS" : "FAIL", reissued ? "new capability issued" : "no new cookie");
 
