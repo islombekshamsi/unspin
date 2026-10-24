@@ -39,6 +39,11 @@ const PROTOCOL_NUMBERS = local({
   rows: [["1,234.5"], ["12.5%"], ["(123)"], ["123456789012345678901234567890"], [null], ["NA"], ["$83.22"], [" 7 "]],
 });
 
+const PROTOCOL_PERCENTS = local({
+  columns: [{ label: "share", dataType: "text" }],
+  rows: [["12.5%"], ["3%"], [null]],
+});
+
 describe.skipIf(transformsPlaceholder)(`transforms [skips while ${PLACEHOLDER_REASON("transforms.computeTransform")}]`, () => {
   it("is deterministic: preview and apply compute identical results for the same base and operation", () => {
     const { snapshot, provenance, columns, ctx } = local(noaaTable(NOAA_SAMPLE));
@@ -88,25 +93,47 @@ describe.skipIf(transformsPlaceholder)(`transforms [skips while ${PLACEHOLDER_RE
     for (const c of byRaw.values()) expect(c.currentValue).not.toBe("0");
   });
 
-  it("parse_numeric with explicit policies: grouping, percent, parentheses, currency", () => {
+  const explicitPolicies = (col: string, percentPolicy: "reject" | "keep_percent_number" | "to_fraction"): TransformOperation => ({
+    type: "parse_numeric",
+    columnId: col,
+    locale: { decimalSeparator: ".", groupingSeparator: "," },
+    groupingPolicy: "allow",
+    percentPolicy,
+    currencyPolicy: { mode: "strip_symbol", currency: "USD" },
+    parenthesesNegative: true,
+    onFailure: "keep_and_flag",
+  });
+
+  it("parse_numeric with explicit policies: grouping, parentheses, currency", () => {
     const { snapshot, provenance, columns, ctx } = PROTOCOL_NUMBERS;
     const col = columns[0].id;
-    const run = (percentPolicy: "keep_percent_number" | "to_fraction") =>
-      new Map(
-        compute(
-          snapshot,
-          provenance,
-          { type: "parse_numeric", columnId: col, locale: { decimalSeparator: ".", groupingSeparator: "," }, groupingPolicy: "allow", percentPolicy, currencyPolicy: { mode: "strip_symbol", currency: "USD" }, parenthesesNegative: true, onFailure: "keep_and_flag" },
-          ctx,
-        ).rows.map((r) => [r.cells[col].rawText, r.cells[col].currentValue]),
-      );
-    const keep = run("keep_percent_number");
-    expect(keep.get("1,234.5")).toBe("1234.5");
-    expect(keep.get("12.5%")).toBe("12.5");
-    expect(keep.get("(123)")).toBe("-123");
-    expect(keep.get("$83.22")).toBe("83.22");
-    expect(keep.get("NA")).toBe("NA");
+    const out = compute(snapshot, provenance, explicitPolicies(col, "reject"), ctx);
+    const byRaw = new Map(out.rows.map((r) => [r.cells[col].rawText, r.cells[col]]));
+    expect(byRaw.get("1,234.5")!.currentValue).toBe("1234.5");
+    expect(byRaw.get("(123)")!.currentValue).toBe("-123");
+    expect(byRaw.get("$83.22")!.currentValue).toBe("83.22");
+    expect(byRaw.get("NA")!.currentValue).toBe("NA");
+    // percentPolicy "reject" leaves the percent value as flagged text.
+    expect(byRaw.get("12.5%")!.currentValue).toBe("12.5%");
+    expect(out.failedCellIds).toContain(byRaw.get("12.5%")!.id);
+  });
+
+  it("parse_numeric percent policies; a column mixing % and bare numbers is not given one meaning", () => {
+    const mixed = PROTOCOL_NUMBERS;
+    const mcol = mixed.columns[0].id;
+    const m = compute(mixed.snapshot, mixed.provenance, explicitPolicies(mcol, "keep_percent_number"), mixed.ctx);
+    const mByRaw = new Map(m.rows.map((r) => [r.cells[mcol].rawText, r.cells[mcol]]));
+    expect(mByRaw.get("12.5%")!.currentValue).toBe("12.5");
+    expect(mByRaw.get("1,234.5")!.currentValue).toBe("1,234.5");
+    expect(m.failedCellIds).toContain(mByRaw.get("1,234.5")!.id);
+
+    const { snapshot, provenance, columns, ctx } = PROTOCOL_PERCENTS;
+    const col = columns[0].id;
+    const run = (p: "keep_percent_number" | "to_fraction") =>
+      new Map(compute(snapshot, provenance, explicitPolicies(col, p), ctx).rows.map((r) => [r.cells[col].rawText, r.cells[col].currentValue]));
+    expect(run("keep_percent_number").get("12.5%")).toBe("12.5");
     expect(run("to_fraction").get("12.5%")).toBe("0.125");
+    expect(run("to_fraction").get("3%")).toBe("0.03");
   });
 
   it("edit_cell creates a user_edit value and preserves the original rawText", () => {

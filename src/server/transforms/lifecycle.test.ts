@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { AppError, type Dataset, type Owner, type TransformOperation } from "@/contracts";
 import { applyTransform, getHistory, getRows, previewTransform, restoreVersion } from "@/server/orchestration/datasets";
-import { getRepositories } from "@/server/storage";
+import { getRepositories, newBlobKey } from "@/server/storage";
+import { buildCsvSelection, buildCsvSource } from "../../../tests/helpers/fixtures";
 import { column, snapshot } from "./test-helpers";
 
 /** Runs the cleaning functions through the real orchestration and in-memory repository. */
@@ -9,10 +10,19 @@ const owner: Owner = { ownerId: "owner_lifecycle", kind: "guest", actor: { kind:
 
 async function seed(id: string) {
   const snap = snapshot([column("v"), column("n")], [["1,200.50", "NA"], ["oops", "x"], ["3", "x"]], `ver_${id}`);
+  snap.version.datasetId = id;
+  const repos = getRepositories();
+  const bytes = new TextEncoder().encode("v,n\n");
+  const source = buildCsvSource(bytes);
+  const blobKey = newBlobKey(owner.ownerId, source.id);
+  await repos.blobs.put(blobKey, bytes);
+  await repos.sources.create(owner, { source, blobKey });
+  const selection = buildCsvSelection(source.id);
+  await repos.selections.create(owner, selection);
   const dataset: Dataset = {
     id,
-    sourceId: "src_test",
-    sourceSelectionId: "sel_test",
+    sourceId: source.id,
+    sourceSelectionId: selection.id,
     title: "Lifecycle",
     description: "",
     createdAt: "2026-01-01T00:00:00.000Z",
