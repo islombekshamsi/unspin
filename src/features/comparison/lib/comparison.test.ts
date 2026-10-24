@@ -110,7 +110,7 @@ describe("checkCompatibility", () => {
 });
 
 function pt(rowId: string, x: string, y: string | null): ChartPoint {
-  return { pointId: `${rowId}:y`, rowId, yColumnId: "y", xCellId: `${rowId}x`, yCellId: `${rowId}y`, x, y, provenanceIds: [], yOrigin: "parsed" };
+  return { pointId: `${rowId}:y`, rowId, sourceOrder: 0, yColumnId: "y", xCellId: `${rowId}x`, yCellId: `${rowId}y`, x, y, provenanceIds: [], yOrigin: "parsed" };
 }
 
 describe("indexing", () => {

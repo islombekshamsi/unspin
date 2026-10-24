@@ -102,6 +102,7 @@ function makePoint(row: Row, yColumnId: string, xCell: Cell, yCell: Cell, y: str
   return {
     pointId: `${row.id}:${yColumnId}`,
     rowId: row.id,
+    sourceOrder: row.sourceOrder,
     yColumnId,
     xCellId: xCell.id,
     yCellId: yCell.id,

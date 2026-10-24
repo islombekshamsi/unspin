@@ -61,6 +61,8 @@ export const ChartPointSchema = z.object({
   /** Stable: `${rowId}:${yColumnId}`. Never an array position. */
   pointId: z.string(),
   rowId: IdSchema,
+  /** The row's position in the original selection (Row.sourceOrder), for "source row N" descriptions. */
+  sourceOrder: z.number().int().min(0),
   yColumnId: IdSchema,
   xCellId: IdSchema,
   yCellId: IdSchema,

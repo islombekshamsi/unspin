@@ -36,6 +36,7 @@ function pt(rowId: string, x: string | null, y: string | null, over: Partial<Cha
   return {
     pointId: `${rowId}:y`,
     rowId,
+    sourceOrder: 0,
     yColumnId: "y",
     xCellId: `${rowId}_x`,
     yCellId: `${rowId}_y`,
@@ -108,9 +109,9 @@ describe("units and descriptions", () => {
     expect(formatValue(null, revenue)).toBe("missing");
   });
   it("describes a point in words", () => {
-    const p = pt("r4", "2021", "12.5", { yOrigin: "estimated" });
+    const p = pt("r4", "2021", "12.5", { yOrigin: "estimated", sourceOrder: 3 });
     expect(describePoint(p, "Revenue", col("year", { dataType: "text" }), revenue)).toBe(
-      "Series “Revenue”, x = 2021, y = 12.5 USD million, estimated from chart",
+      "Series “Revenue”, source row 4, x = 2021, y = 12.5 USD million, estimated from chart",
     );
     expect(describePoint(pt("r5", "2022", null), "Revenue", undefined, revenue)).toMatch(/y missing \(shown as a gap\)/);
   });

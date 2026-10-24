@@ -84,7 +84,7 @@ export function formatValue(value: string | null, column: Column | undefined): s
 
 export function describePoint(point: ChartPoint, seriesLabel: string, xColumn: Column | undefined, yColumn: Column | undefined): string {
   const y = point.y === null ? "y missing (shown as a gap)" : `y = ${formatValue(point.y, yColumn)}`;
-  return `Series “${seriesLabel}”, x = ${formatValue(point.x, xColumn)}, ${y}, ${ORIGIN_LABEL[point.yOrigin]}`;
+  return `Series “${seriesLabel}”, source row ${point.sourceOrder + 1}, x = ${formatValue(point.x, xColumn)}, ${y}, ${ORIGIN_LABEL[point.yOrigin]}`;
 }
 
 function plural(n: number, one: string, many: string) {
