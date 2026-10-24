@@ -1,6 +1,6 @@
 # What UNSPIN has so far
 
-_24 October 2026. This is what is in the app today, not a roadmap._
+_24 October 2026, after the core-finish production pass. This is what is in the app today, not a roadmap._
 
 UNSPIN is a local web app. You upload a chart image, PDF page, CSV, or Excel file and get a dataset you can inspect next to the source, clean with reversible steps, chart, and export. Missing values stay missing. Estimated values stay marked as estimates. Nothing is presented as verified just because it is valid JSON.
 
@@ -25,7 +25,7 @@ Run it with Node 24 (`nvm use`) and `npm run dev`. Open http://localhost:3000. R
 - **Grid:** keyboard navigation, pages of rows, missing values shown as a dashed token with a reason, estimates marked, edits marked. Save goes through a preview. Older versions are read-only.
 - **Review:** quality findings cite what they observed. Preview a suggested fix, then apply it. There is no “fix all.”
 - **Cleaning:** explicit operations only (edit a cell, parse numbers with chosen separators, mark missing, convert units with exact factors, remove selected rows or exact duplicates, and similar). Preview always matches apply. Missing values are never turned into zero.
-- **Chart:** bar, line, or scatter. Estimates and your edits use distinct markers, not colour alone. Missing values are gaps. Log scale is refused when any plotted value is zero or negative.
+- **Chart:** bar, line, or scatter (Recharts). The default is **one** Y series. Identifiers, date parts, and uncertainty columns stay off until you add them. NOAA monthly CO₂ opens as `average` vs the file’s `decimal date`, with a fitted Y range (not include-zero). Estimates and your edits use distinct markers, not colour alone. Missing values are gaps. Log scale is refused when any plotted value is zero or negative. Axis choices are remembered in this browser for that dataset id.
 - **Compare:** you say what each series measures. Mixed currencies, mixed percent forms, and price versus total return are refused with an explanation.
 - **History:** every committed change. Undo, view an older version, or make an older version current again.
 
@@ -49,18 +49,19 @@ If the Gemini key is on an unpaid tier, Google’s terms allow submitted content
 These used the production server and published US-government files, not invented data.
 
 - **HTTP smoke:** 30 checks passed, including a real NOAA CSV upload, rejected `.xls` files, and per-browser isolation.
-- **NOAA CO₂ monthly CSV:** 40 comment lines skipped, 629 rows × 8 columns, first row `1974, 5, 1974.3750, 333.19, …`, source line 42. Export wrote CSV, JSON, and a manifest.
-- **EIA STEO workbook:** sheet `2tab`, range `A6:E6` → `WTIPUUS` / `83.22` / `91.64` / `108.5`. Same three export files.
-- **NOAA Mauna Loa CO₂ chart (Gemini):** 69 rows × 3 columns, marked `vision_estimate`, 98 seconds. First row `2021-01`, `415.5`, `415.2`. Accuracy against NOAA’s published series was **not** measured (their 2021-01 averages are 415.49 and 415.23). That dataset was not exported.
+- **NOAA CO₂ monthly CSV (browser, production `:3108`, 2026-10-24):** 40 comment lines skipped, 629 rows × 8 columns, first row `1974, 5, 1974.3750, 333.19, …`, source line 42. Default chart: line of `average` vs `decimal date`. Correct `333.19` → `333.20`, undo, export. Refresh restored the skipped-comment selection. Export CSV sha256 `44138e6ce91a4af1fbef295815f4914334e85bb9b5d050ff06faaab197b9be35`. Notes in `evaluation/results/core-finish/`.
+- **EIA STEO workbook:** sheet `2tab`, range `A6:E6` → `WTIPUUS` / `83.22` / `91.64` / `108.5`. Same three export files. Not re-run in the core-finish browser pass.
+- **NOAA Mauna Loa CO₂ chart (Gemini):** 69 rows × 3 columns, marked `vision_estimate`, 98 seconds. First row `2021-01`, `415.5`, `415.2`. Accuracy against NOAA’s published series was **not** measured (their 2021-01 averages are 415.49 and 415.23). That dataset was not exported. T1 scoring is still outstanding (`docs/EVALUATION.md`).
 
-Automated tests: 556 passed. Typecheck, lint, and production build pass.
+Automated tests on this revision: **567 passed**, 13 skipped. Typecheck and production build pass.
 
 ## What is not ready
 
 - **Work is session-only** unless you set `DATABASE_URL` and run migrations. Without that, a restart wipes uploads and datasets. Share links stay off in that mode so they cannot silently die.
 - **No accounts.** A guest cookie is created when you upload. There is no sign-in.
 - **Not for a public URL.** There is no per-user extraction quota and no bot protection. Anyone who can reach the server can trigger Gemini.
-- **Browser walkthrough of the full UI** after all pieces were merged has not been done yet. Individual panels were checked while they were built.
+- **Durable restart** has not been tested: local Postgres was not listening on this pass.
+- **Chart extraction accuracy** against NOAA’s published series has not been scored.
 - **S3 storage** has not been tried against a real bucket. Nothing has been deployed.
 - Chart extraction can take about a minute and sometimes hits a provider 503.
 

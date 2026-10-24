@@ -33,7 +33,8 @@ _Updated by the coordinator at milestones. No secrets or source contents._
 
 ## In progress
 
-- QA phase 2: browser workflow, measurements, `docs/TEST_REPORT.md`.
+- NOAA chart extraction T1 scoring (`docs/EVALUATION.md`): no aligned-observation counts yet.
+- Durable PostgreSQL restart: unverified (no listener on `:5432` this pass).
 
 ## Blocked / not configured
 
@@ -41,17 +42,17 @@ _Updated by the coordinator at milestones. No secrets or source contents._
 - No per-user extraction quota or bot protection yet. Do not deploy publicly until both exist.
 - The S3 adapter has not been exercised against a real bucket. Nothing has been deployed.
 
-## Checks actually run (2026-10-24)
+## Checks actually run (2026-10-24, core-finish revision)
 
 - `npm run typecheck`: pass.
-- `npx eslint src tests`: 0 errors; 1 warning (`react-hooks/incompatible-library` on `useVirtualizer`).
-- `npm test`: 556 passed, 13 skipped.
+- `npm test`: **567 passed**, 13 skipped.
 - `npx next build`: pass.
-- HTTP smoke against `next start` on port 3106: **30 pass, 0 blocked, 0 fail**.
-- **HTTP end-to-end, real files, production server on 3106:**
-  - NOAA CO₂ monthly CSV excerpt: skip 40 comment records, 629 × 8, first row `1974,5,1974.3750,333.19,…`, provenance line 42. Export wrote CSV, JSON and a manifest.
-  - EIA STEO XLSX sheet `2tab` range `A6:E6`: `WTIPUUS` / `83.22` / `91.64` / `108.5`. Export wrote CSV, JSON and a manifest.
-  - NOAA Mauna Loa CO₂ trend PNG through Gemini (`consentToExternalProcessing`): 69 × 3, method `vision_estimate`, 98 s, first row `2021-01`, `415.5`, `415.2`. Accuracy against the NOAA key was not measured (the key’s 2021-01 averages are 415.49 and 415.23). Export of this dataset was not run.
+- Production `next start -p 3108` NOAA CSV browser path: **0 fail** (`evaluation/results/core-finish/notes.json`). Default chart is `average` vs `decimal date`. Refresh restores the CSV selection.
+- HTTP smoke against `next start` on port 3106 (earlier the same day): **30 pass, 0 blocked, 0 fail**.
+- **HTTP end-to-end, real files, production server on 3106 (earlier the same day):**
+  - NOAA CO₂ monthly CSV excerpt: skip 40 comment records, 629 × 8, first row `1974,5,1974.3750,333.19,…`, provenance line 42.
+  - EIA STEO XLSX sheet `2tab` range `A6:E6`: `WTIPUUS` / `83.22` / `91.64` / `108.5`.
+  - NOAA Mauna Loa CO₂ trend PNG through Gemini (`consentToExternalProcessing`): 69 × 3, method `vision_estimate`, 98 s, first row `2021-01`, `415.5`, `415.2`. Accuracy against the NOAA key was not measured.
 
 ## Known limits
 
@@ -60,4 +61,4 @@ _Updated by the coordinator at milestones. No secrets or source contents._
 
 ## Next owner
 
-Coordinator: QA phase 2 (browser workflow, measurements, test report). Deployment stays private until quotas exist.
+Coordinator: NOAA T1 scoring when the eval export exists; durable restart when Postgres is actually running. Do not start Auth0/Vultr until those are real. Public deploy stays off.
