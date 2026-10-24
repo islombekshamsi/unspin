@@ -92,6 +92,11 @@ export type CsvDelimiter = z.infer<typeof CsvDelimiterSchema>;
 const CsvRecordsInput = z.object({
   kind: z.literal("csv_records"),
   delimiter: CsvDelimiterSchema,
+  /**
+   * Records before the header that are not part of the table (for example "#" comment lines).
+   * Absent means 0. Skipped records are disclosed as an import issue; line numbers stay physical.
+   */
+  skipLeadingRecords: z.number().int().min(0).max(10_000).optional(),
   /** 0 means no header record; column labels are then generated as "Column 1".. */
   headerRecordCount: z.number().int().min(0).max(1),
   /** Zero-based source column indexes; null selects all columns. */
@@ -195,10 +200,13 @@ export const StructuredInspectionSchema = z.discriminatedUnion("kind", [
     kind: z.literal("csv"),
     suggestedDelimiter: CsvDelimiterSchema,
     delimiterUsed: CsvDelimiterSchema,
+    /** Leading records that look like comments; header suggestion and record stats are computed after them. */
+    suggestedSkipLeadingRecords: z.number().int().nonnegative(),
+    skipReason: z.string().nullable(),
     suggestedHeaderRecordCount: z.number().int().min(0).max(1),
     hasBom: z.boolean(),
     totalRecords: z.number().int().nonnegative(),
-    /** Raw field strings for the first records exactly as parsed. */
+    /** Raw field strings for the first records exactly as parsed, starting at record 0 (skipped records included). */
     previewRecords: z.array(z.array(z.string())),
     maxFieldCount: z.number().int().nonnegative(),
     inconsistentRecords: z.array(

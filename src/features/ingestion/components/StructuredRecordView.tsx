@@ -58,8 +58,10 @@ function CsvRecords({ source, selection, provenance, activeProvenanceIds, onSour
   const csvSel = selection?.kind === "csv_records" ? selection : null;
   const { tokens, error } = useCsvTokens(api.sourceContentUrl(source.id), csvSel?.delimiter ?? null);
   const active = useActive(provenance, activeProvenanceIds);
+  const skip = csvSel?.skipLeadingRecords ?? 0;
   const headerCount = csvSel?.headerRecordCount ?? 0;
-  const header = tokens && headerCount === 1 ? tokens.records[0]?.fields : null;
+  const header = tokens && headerCount === 1 ? tokens.records[skip]?.fields : null;
+  const dataOffset = skip + headerCount;
 
   const groups = useMemo(() => {
     const m = new Map<number, { recordIndex: number; lineStart: number; lineEnd: number; fields: Set<number>; absent: boolean; ids: string[] }>();
@@ -83,20 +85,20 @@ function CsvRecords({ source, selection, provenance, activeProvenanceIds, onSour
   if (!csvSel) return <p className="text-[13px] text-ink-muted">No selection has been made for this file yet.</p>;
 
   const start = csvSel.recordInterval?.start ?? 0;
-  const fallback = groups.length === 0 && tokens ? tokens.records.slice(headerCount + start, headerCount + start + 5).map((r, i) => ({ recordIndex: start + i, lineStart: r.lineStart, lineEnd: r.lineEnd, fields: new Set<number>(), absent: false, ids: [] })) : [];
+  const fallback = groups.length === 0 && tokens ? tokens.records.slice(dataOffset + start, dataOffset + start + 5).map((r, i) => ({ recordIndex: start + i, lineStart: r.lineStart, lineEnd: r.lineEnd, fields: new Set<number>(), absent: false, ids: [] })) : [];
   const shown = groups.length ? groups.slice(0, MAX_RECORDS_SHOWN) : fallback;
 
   return (
     <div className="flex flex-col gap-3 text-[13px]">
       <p className="text-[12px] text-ink-muted">
-        {source.filename} · {DELIMITER_NAMES[csvSel.delimiter].toLowerCase()}-delimited · {headerCount ? "first record is the header" : "no header"}
+        {source.filename} · {DELIMITER_NAMES[csvSel.delimiter].toLowerCase()}-delimited{skip ? ` · ${skip} leading records skipped` : ""} · {headerCount ? `record ${skip + 1} is the header` : "no header"}
         {csvSel.recordInterval ? ` · records ${csvSel.recordInterval.start + 1}–${csvSel.recordInterval.endExclusive}` : ""}
       </p>
       {error && <ErrorState title="Source records unavailable" message={error} />}
       {groups.length === 0 && <p className="text-ink-muted">Select a value in the data table to see the exact record and line it came from. The first selected records are shown below.</p>}
       {groups.length > MAX_RECORDS_SHOWN && <p className="text-[12px] text-ink-muted">Showing {MAX_RECORDS_SHOWN} of {groups.length} linked records.</p>}
       {shown.map((g) => {
-        const rec = tokens?.records[g.recordIndex + headerCount];
+        const rec = tokens?.records[g.recordIndex + dataOffset];
         const lines = g.lineStart === g.lineEnd ? `line ${g.lineStart}` : `lines ${g.lineStart}–${g.lineEnd}`;
         return (
           <article key={g.recordIndex} className={`rounded-md border ${g.ids.length ? "border-accent" : "border-rule"} bg-surface`}>

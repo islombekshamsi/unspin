@@ -99,8 +99,8 @@ export const api = {
     request<{ inspection: StructuredInspection }>(`/sources/${id}/structure${qs(opts)}`).then((r) => r.inspection),
   listDatasetsForSource: (id: string) => request<{ datasets: Dataset[] }>(`/sources/${id}/datasets`).then((r) => r.datasets),
 
-  createSelection: (sourceId: string, selection: SelectionInput) =>
-    request<{ selection: SourceSelection }>("/selections", json("POST", { sourceId, selection })).then((r) => r.selection),
+  createSelection: (sourceId: string, selection: SelectionInput, signal?: AbortSignal) =>
+    request<{ selection: SourceSelection }>("/selections", json("POST", { sourceId, selection }, signal)).then((r) => r.selection),
 
   createExtraction: (selectionId: string, consentToExternalProcessing: boolean, signal?: AbortSignal) =>
     request<{ job: Job }>("/extractions", json("POST", { selectionId, consentToExternalProcessing }, signal)).then((r) => r.job),

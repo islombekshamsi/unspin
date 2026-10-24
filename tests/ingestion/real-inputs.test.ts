@@ -140,13 +140,38 @@ describe.skipIf(inspectPlaceholder)(`inspectStructured with real inputs [skips w
     expect(ins.hasBom).toBe(false);
     expect(ins.delimiterUsed).toBe(",");
     expect(ins.maxFieldCount).toBe(8);
-    if (ins.totalRecords === 670) {
-      expect(ins.inconsistentRecords.length).toBeGreaterThan(0);
-      expect(ins.previewRecords[0][0].startsWith("#")).toBe(true);
-    } else {
-      expect(ins.totalRecords).toBe(630);
-      expect(ins.issues.join(" ")).toMatch(/comment|#/i);
-    }
+    expect(ins.totalRecords).toBe(670);
+    // The 40 "#" lines are disclosed and suggested for skipping, not silently dropped.
+    expect(ins.suggestedSkipLeadingRecords).toBe(40);
+    expect(ins.skipReason).toMatch(/lines 1–40/);
+    expect(ins.issues.join(" ")).toMatch(/comment/i);
+    expect(ins.previewRecords[0][0].startsWith("#")).toBe(true);
+    expect(ins.previewRecords[40]).toEqual(["year", "month", "decimal date", "average", "deseasonalized", "ndays", "sdev", "unc"]);
+    expect(ins.suggestedHeaderRecordCount).toBe(1);
+    expect(ins.inconsistentRecords).toEqual([]);
+  });
+
+  it.skipIf(parsePlaceholder)("NOAA CSV: skipping the comment preamble makes line 41 the header and keeps physical line numbers", async () => {
+    const src = await toSource(COMMITTED.noaaCo2Excerpt);
+    const sel: SourceSelection = {
+      id: newId("sel"),
+      sourceId: src.id,
+      createdAt: new Date().toISOString(),
+      kind: "csv_records",
+      delimiter: ",",
+      skipLeadingRecords: 40,
+      headerRecordCount: 1,
+      selectedColumnIndexes: null,
+      recordInterval: null,
+    };
+    const d = await parseStructuredSelection(src, readInput(COMMITTED.noaaCo2Excerpt), sel);
+    expect(d.columns.map((c) => c.label)).toEqual(["year", "month", "decimal date", "average", "deseasonalized", "ndays", "sdev", "unc"]);
+    expect(d.rows).toHaveLength(629);
+    const first = d.columns.map((c) => d.rows[0].cells[c.id].rawText);
+    expect(first).toEqual(["1974", "5", "1974.3750", "333.19", "330.22", "13", "0.31", "0.16"]);
+    const p = d.provenance.find((x) => x.id === d.rows[0].cells[d.columns[3].id].provenanceIds[0])!;
+    expect(p.locator).toMatchObject({ type: "csv_record", recordIndex: 0, lineStart: 42, lineEnd: 42, fieldIndex: 3 });
+    expect(d.issues.some((i) => /lines 1–40/.test(i.message) && /skipped/.test(i.message))).toBe(true);
   });
 
   it("EIA workbook: lists all sheets with cached formula counts; never executes formulas", async () => {

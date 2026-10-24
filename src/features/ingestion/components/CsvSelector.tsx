@@ -17,6 +17,7 @@ export function CsvSelector({ source, state }: { source: Source; state: SubmitSt
   const [delimiter, setDelimiter] = useState<CsvDelimiter | null>(null);
   const [result, setResult] = useState<{ key: string; inspection: CsvInspection | null; error: ApiClientError | null } | null>(null);
   const [header, setHeader] = useState<0 | 1 | null>(null);
+  const [skipText, setSkipText] = useState<string | null>(null);
   const [columns, setColumns] = useState<Set<number> | null>(null);
   const [startText, setStartText] = useState("");
   const [endText, setEndText] = useState("");
@@ -42,9 +43,13 @@ export function CsvSelector({ source, state }: { source: Source; state: SubmitSt
 
   const current = result?.key === key ? result : null;
   const ins = current?.inspection ?? null;
+  const skipValue = skipText === null ? (ins?.suggestedSkipLeadingRecords ?? 0) : skipText.trim() === "" ? 0 : Number(skipText);
+  const skipValid = Number.isInteger(skipValue) && skipValue >= 0 && (!ins || skipValue < ins.totalRecords);
+  const skip = skipValid ? skipValue : 0;
+  const records = useMemo(() => (ins ? ins.previewRecords.slice(skip) : []), [ins, skip]);
   const headerCount = header ?? ins?.suggestedHeaderRecordCount ?? 1;
-  const headerReason = useMemo(() => (ins ? suggestHeader(ins.previewRecords.map((fields, i) => ({ fields, lineStart: i + 1, lineEnd: i + 1 }))).reason : ""), [ins]);
-  const dataRecords = ins ? Math.max(0, ins.totalRecords - headerCount) : 0;
+  const headerReason = useMemo(() => (records.length ? suggestHeader(records.map((fields, i) => ({ fields, lineStart: i + 1, lineEnd: i + 1 }))).reason : ""), [records]);
+  const dataRecords = ins ? Math.max(0, ins.totalRecords - skip - headerCount) : 0;
   const maxRows = limits?.maxStructuredRows ?? Infinity;
   const maxCols = limits?.maxColumns ?? Infinity;
 
@@ -55,12 +60,13 @@ export function CsvSelector({ source, state }: { source: Source; state: SubmitSt
   const allColumns = ins ? Array.from({ length: ins.maxFieldCount }, (_, i) => i) : [];
   const chosen = columns ?? new Set(allColumns);
   const labelFor = (c: number) => {
-    const h = headerCount === 1 ? ins?.previewRecords[0]?.[c] : undefined;
+    const h = headerCount === 1 ? records[0]?.[c] : undefined;
     return h && h.trim() !== "" ? h : `Column ${c + 1}`;
   };
 
   let blocker: string | undefined;
   if (!ins) blocker = "Waiting for the preview.";
+  else if (!skipValid) blocker = `Enter how many leading records to skip (0–${(ins.totalRecords - 1).toLocaleString()}).`;
   else if (dataRecords === 0) blocker = "There are no data records to import.";
   else if (!intervalValid) blocker = `Enter a record range between 1 and ${dataRecords.toLocaleString()}.`;
   else if (selectedRows > maxRows) blocker = `Choose at most ${maxRows.toLocaleString()} records (currently ${selectedRows.toLocaleString()}).`;
@@ -73,13 +79,14 @@ export function CsvSelector({ source, state }: { source: Source; state: SubmitSt
     void state.submit({
       kind: "csv_records",
       delimiter: ins.delimiterUsed,
+      ...(skip > 0 ? { skipLeadingRecords: skip } : {}),
       headerRecordCount: headerCount,
       selectedColumnIndexes: columns && chosen.size !== allColumns.length ? [...chosen].sort((a, b) => a - b) : null,
       recordInterval: fullRange ? null : { start: start - 1, endExclusive: end },
     });
   };
 
-  const previewData = ins ? ins.previewRecords.slice(headerCount, headerCount + PREVIEW_DATA_ROWS) : [];
+  const previewData = records.slice(headerCount, headerCount + PREVIEW_DATA_ROWS);
 
   return (
     <div className="flex flex-col gap-4">
@@ -102,12 +109,25 @@ export function CsvSelector({ source, state }: { source: Source; state: SubmitSt
             ))}
           </Select>
         </label>
+        <label className="flex flex-col gap-1 text-[12px] font-medium text-ink-muted">
+          Skip leading records
+          <NumericInput
+            className="w-28"
+            value={skipText ?? String(ins?.suggestedSkipLeadingRecords ?? 0)}
+            aria-invalid={!skipValid}
+            onChange={(e) => {
+              setSkipText(e.target.value);
+              setHeader(null);
+              setColumns(null);
+            }}
+          />
+        </label>
         <div className="flex flex-col gap-1">
           <span className="text-[12px] font-medium text-ink-muted" id="csv-header-label">
-            First record
+            {skip > 0 ? `Record ${skip + 1}` : "First record"}
           </span>
           <SegmentedControl<"1" | "0">
-            label="First record"
+            label={skip > 0 ? `Record ${skip + 1}` : "First record"}
             value={String(headerCount) as "1" | "0"}
             onChange={(v) => setHeader(v === "1" ? 1 : 0)}
             options={[
@@ -125,7 +145,8 @@ export function CsvSelector({ source, state }: { source: Source; state: SubmitSt
       </div>
       {ins && (
         <p className="text-[12px] text-ink-muted">
-          Suggested: {DELIMITER_NAMES[ins.suggestedDelimiter].toLowerCase()}, {ins.suggestedHeaderRecordCount ? "first record as header" : "no header"}. {headerReason}
+          Suggested: {DELIMITER_NAMES[ins.suggestedDelimiter].toLowerCase()}
+          {ins.suggestedSkipLeadingRecords ? `, skip ${plural(ins.suggestedSkipLeadingRecords, "leading record")}` : ""}, {ins.suggestedHeaderRecordCount ? "header record" : "no header"}. {headerReason}
         </p>
       )}
 

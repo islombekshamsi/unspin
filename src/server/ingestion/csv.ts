@@ -62,12 +62,15 @@ export function inspectCsv(bytes: Uint8Array, requested: CsvDelimiter | undefine
   const { text, hasBom } = decodeCsv(bytes);
   const suggestion = suggestDelimiter(text);
   const delimiterUsed = requested ?? suggestion.delimiter;
-  const tokens = tokenizeOrThrow(text, delimiterUsed);
+  const allTokens = tokenizeOrThrow(text, delimiterUsed);
+  const skip = suggestSkip(allTokens);
+  const tokens = skipRecords(allTokens, skip.count);
   const header = suggestHeader(tokens.records);
   const maxFieldCount = tokens.records.reduce((m, r) => Math.max(m, r.fields.length), 0);
   const expected = expectedFieldCount(tokens, header.headerRecordCount);
-  const inconsistentRecords = tokens.records.flatMap((r, i) => (r.fields.length !== expected ? [{ recordIndex: i, fieldCount: r.fields.length }] : []));
+  const inconsistentRecords = tokens.records.flatMap((r, i) => (r.fields.length !== expected ? [{ recordIndex: i + skip.count, fieldCount: r.fields.length }] : []));
   const issues: string[] = [];
+  if (skip.reason) issues.push(skip.reason);
   if (inconsistentRecords.length > 0) {
     issues.push(
       `${inconsistentRecords.length === 1 ? "1 record does" : `${inconsistentRecords.length} records do`} not have ${expected} fields. They are kept; absent fields become empty cells marked as not reported.`,
@@ -95,13 +98,37 @@ export function inspectCsv(bytes: Uint8Array, requested: CsvDelimiter | undefine
     kind: "csv",
     suggestedDelimiter: suggestion.delimiter,
     delimiterUsed,
+    suggestedSkipLeadingRecords: skip.count,
+    skipReason: skip.reason,
     suggestedHeaderRecordCount: header.headerRecordCount,
     hasBom,
-    totalRecords: tokens.records.length,
-    previewRecords: tokens.records.slice(0, PREVIEW_RECORDS).map((r) => r.fields),
+    totalRecords: allTokens.records.length,
+    previewRecords: allTokens.records.slice(0, skip.count + PREVIEW_RECORDS).map((r) => r.fields),
     maxFieldCount,
     inconsistentRecords,
     issues,
+  };
+}
+
+const MAX_SUGGESTED_SKIP = 1000;
+
+/** Leading records whose first field starts with "#" are suggested as comments. Only a suggestion; the user decides. */
+function suggestSkip(tokens: CsvTokens): { count: number; reason: string | null } {
+  let count = 0;
+  while (count < tokens.records.length && count < MAX_SUGGESTED_SKIP && (tokens.records[count].fields[0] ?? "").trimStart().startsWith("#")) count++;
+  if (count === 0 || count === tokens.records.length) return { count: 0, reason: null };
+  const last = tokens.records[count - 1];
+  return { count, reason: `The first ${count === 1 ? "record starts" : `${count} records start`} with “#” (lines 1–${last.lineEnd}) and look like comments; skipping them is suggested.` };
+}
+
+/** Drops leading records; remaining record indexes start at 0 while line numbers stay physical. */
+function skipRecords(tokens: CsvTokens, count: number): CsvTokens {
+  if (count === 0) return tokens;
+  return {
+    ...tokens,
+    records: tokens.records.slice(count),
+    malformedQuoteRecords: tokens.malformedQuoteRecords.filter((i) => i >= count).map((i) => i - count),
+    emptyLines: tokens.emptyLines.filter((l) => l > tokens.records[count - 1].lineEnd),
   };
 }
 
@@ -124,6 +151,7 @@ type CsvInput = Extract<SelectionInput, { kind: "csv_records" }>;
 
 interface CsvPlan {
   tokens: CsvTokens;
+  skipped: { count: number; lineEnd: number | null };
   columnCount: number;
   columnIndexes: number[];
   start: number;
@@ -132,7 +160,13 @@ interface CsvPlan {
 
 function planCsv(bytes: Uint8Array, input: CsvInput): CsvPlan {
   const { text } = decodeCsv(bytes);
-  const tokens = tokenizeOrThrow(text, input.delimiter);
+  const allTokens = tokenizeOrThrow(text, input.delimiter);
+  const skip = input.skipLeadingRecords ?? 0;
+  if (skip >= allTokens.records.length) {
+    throw new AppError("invalid_selection", `Cannot skip ${skip} records; the file has ${allTokens.records.length}.`, { details: { records: allTokens.records.length } });
+  }
+  const skipped = { count: skip, lineEnd: skip > 0 ? allTokens.records[skip - 1].lineEnd : null };
+  const tokens = skipRecords(allTokens, skip);
   const dataCount = tokens.records.length - input.headerRecordCount;
   if (dataCount <= 0) {
     throw new AppError("invalid_selection", input.headerRecordCount > 0 ? "There are no data records after the header record." : "The file has no records.");
@@ -166,7 +200,7 @@ function planCsv(bytes: Uint8Array, input: CsvInput): CsvPlan {
       details: { rows: selected, limit: LIMITS.maxStructuredRows },
     });
   }
-  return { tokens, columnCount, columnIndexes, start, endExclusive };
+  return { tokens, skipped, columnCount, columnIndexes, start, endExclusive };
 }
 
 export function resolveCsvSelection(source: Source, bytes: Uint8Array, input: CsvInput): ResolvedSelection {
@@ -175,6 +209,7 @@ export function resolveCsvSelection(source: Source, bytes: Uint8Array, input: Cs
     kind: "csv_records",
     sourceId: source.id,
     delimiter: input.delimiter,
+    ...(input.skipLeadingRecords ? { skipLeadingRecords: input.skipLeadingRecords } : {}),
     headerRecordCount: input.headerRecordCount,
     selectedColumnIndexes: input.selectedColumnIndexes ? [...input.selectedColumnIndexes].sort((a, b) => a - b) : null,
     recordInterval: input.recordInterval,
@@ -187,7 +222,7 @@ export function parseCsvSelection(
   selection: Extract<SourceSelection, { kind: "csv_records" }>,
 ): ParsedDatasetDraft {
   const plan = planCsv(bytes, selection);
-  const { tokens, columnIndexes, start, endExclusive } = plan;
+  const { tokens, skipped, columnIndexes, start, endExclusive } = plan;
   const header = selection.headerRecordCount === 1 ? tokens.records[0] : null;
   const labels = columnIndexes.map((c) => {
     const h = header?.fields[c];
@@ -269,6 +304,16 @@ export function parseCsvSelection(
       }),
     );
   }
+  if (skipped.count > 0) {
+    issues.push(
+      issue(
+        "extraction_issue",
+        "info",
+        `The first ${skipped.count === 1 ? "record" : `${skipped.count} records`} (lines 1–${skipped.lineEnd}) ${skipped.count === 1 ? "was" : "were"} skipped as not part of the table, as chosen. Line numbers in source references still count them.`,
+        { evidence: [`Lines 1–${skipped.lineEnd}`] },
+      ),
+    );
+  }
   if (tokens.emptyLines.length > 0) {
     issues.push(
       issue("extraction_issue", "info", `${tokens.emptyLines.length} empty line${tokens.emptyLines.length === 1 ? " was" : "s were"} skipped. Line numbers in source references still count them.`, {
@@ -282,7 +327,7 @@ export function parseCsvSelection(
   const range = start === 0 && endExclusive === total ? `all ${total} records` : `records ${start + 1}–${endExclusive} of ${total}`;
   return {
     title: name,
-    description: `Imported from ${source.filename} (${range}; ${DELIMITER_NAMES[selection.delimiter].toLowerCase()}-delimited; ${selection.headerRecordCount ? "first record used as header" : "no header record"}). Values are kept exactly as written; nothing was converted.`,
+    description: `Imported from ${source.filename} (${range}; ${DELIMITER_NAMES[selection.delimiter].toLowerCase()}-delimited; ${skipped.count ? `${skipped.count} leading records skipped; ` : ""}${selection.headerRecordCount ? "header record used for labels" : "no header record"}). Values are kept exactly as written; nothing was converted.`,
     extractionMethod: "deterministic_parser",
     coverage: "complete_selection",
     coverageNote: null,

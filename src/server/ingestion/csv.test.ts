@@ -108,6 +108,19 @@ describe("CSV import", () => {
     expect(new Set(d.rows.map((r) => r.id)).size).toBe(2);
   });
 
+  it("skips leading comment records, uses the next as header, and keeps physical line numbers", async () => {
+    const d = await importCsv("# title\n# units\nyear,value\n2020,1.50\n2021,2\n", { skipLeadingRecords: 2 });
+    expect(d.columns.map((c) => c.label)).toEqual(["year", "value"]);
+    expect(values(d)).toEqual([
+      ["2020", "1.50"],
+      ["2021", "2"],
+    ]);
+    const p = d.provenance.find((x) => x.id === d.rows[0].cells[d.columns[1].id].provenanceIds[0])!;
+    expect(p.locator).toMatchObject({ type: "csv_record", recordIndex: 0, lineStart: 4, lineEnd: 4, fieldIndex: 1 });
+    expect(d.issues.some((i) => /lines 1–2/.test(i.message) && /skipped/.test(i.message))).toBe(true);
+    expect(d.description).toMatch(/2 leading records skipped/);
+  });
+
   it("labels columns when there is no header record", async () => {
     const d = await importCsv("1,2\n3,4\n", { headerRecordCount: 0 });
     expect(d.columns.map((c) => c.label)).toEqual(["Column 1", "Column 2"]);
@@ -160,6 +173,8 @@ describe("CSV inspection", () => {
     expect(ins.hasBom).toBe(true);
     expect(ins.suggestedDelimiter).toBe(";");
     expect(ins.delimiterUsed).toBe(";");
+    expect(ins.suggestedSkipLeadingRecords).toBe(0);
+    expect(ins.skipReason).toBeNull();
     expect(ins.suggestedHeaderRecordCount).toBe(1);
     expect(ins.totalRecords).toBe(4);
     expect(ins.previewRecords[0]).toEqual(["year", "value"]);
@@ -172,5 +187,17 @@ describe("CSV inspection", () => {
     if (ins.kind !== "csv") throw new Error("expected csv");
     expect(ins.delimiterUsed).toBe(",");
     expect(ins.previewRecords[0]).toEqual(["a;b"]);
+  });
+
+  it("suggests skipping leading records that start with #", async () => {
+    const { source, bytes } = await csvSource("# note\n# more\nyear,value\n2020,1\n");
+    const ins = await inspectStructured(source, bytes, {});
+    if (ins.kind !== "csv") throw new Error("expected csv");
+    expect(ins.suggestedSkipLeadingRecords).toBe(2);
+    expect(ins.skipReason).toMatch(/lines 1–2/);
+    expect(ins.suggestedHeaderRecordCount).toBe(1);
+    expect(ins.totalRecords).toBe(4);
+    expect(ins.previewRecords[0][0]).toBe("# note");
+    expect(ins.previewRecords[2]).toEqual(["year", "value"]);
   });
 });

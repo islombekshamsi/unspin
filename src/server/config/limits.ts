@@ -6,6 +6,8 @@ import type { Limits } from "@/contracts";
  */
 export const LIMITS = {
   maxUploadBytes: 10 * 1024 * 1024,
+  /** Inflated XLSX parts; zip-bomb guard. Not a public upload limit. */
+  maxXlsxUncompressedBytes: 200 * 1024 * 1024,
   maxStructuredRows: 20_000,
   maxColumns: 64,
   /** Decoded pixel cap for images (guards decompression bombs). */

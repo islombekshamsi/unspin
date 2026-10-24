@@ -8,7 +8,7 @@ import { readZipDirectory, readZipEntry, ZipFormatError, type ZipEntry } from "@
  */
 
 /** Ceiling on the expanded size of an uploaded workbook; guards decompression bombs. */
-export const MAX_XLSX_EXPANDED_BYTES = LIMITS.maxUploadBytes * 20;
+export const MAX_XLSX_EXPANDED_BYTES = LIMITS.maxXlsxUncompressedBytes;
 const MAX_XML_PART_BYTES = MAX_XLSX_EXPANDED_BYTES;
 
 const XLSX_MAIN_TYPES = [

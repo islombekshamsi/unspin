@@ -80,7 +80,7 @@ These are the initial guardrails, set in `src/server/config/limits.ts`. They are
 
 Anything over a limit gets an explicit error. Nothing is silently truncated.
 
-Supported inputs are PNG, JPEG, WebP, PDF, CSV (UTF-8), and XLSX. Legacy XLS, macro-enabled XLSM, encrypted files, archives, and executables are rejected with a reason.
+Supported inputs are PNG, JPEG, WebP, PDF, CSV (UTF-8), and XLSX. Legacy XLS, macro-enabled XLSM, encrypted files, archives, and executables are rejected with a reason. CSV files with leading `#` comment records can skip those records; the skip is chosen, never applied silently, and line numbers in source references stay physical.
 
 ## What happens to your file
 
