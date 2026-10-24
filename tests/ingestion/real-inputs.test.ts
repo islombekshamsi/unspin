@@ -122,7 +122,9 @@ describe.skipIf(uploadPlaceholder)(`validateUpload with real inputs [skips while
     const file = new File([readInput(COMMITTED.noaaCo2Excerpt) as Uint8Array<ArrayBuffer>], hostile, { type: "text/csv" });
     const source = await createSource(owner, file);
     expect(source.id).toMatch(/^src_[a-f0-9]{32}$/);
-    expect(source.filename).toBe(hostile);
+    // The display name is reduced to a base name; it is metadata only.
+    expect(source.filename).not.toMatch(/[\\/]|\.\./);
+    expect(source.filename).toMatch(/report\.csv$/);
     const rec = await getRepositories().sources.get(owner, source.id);
     expect(rec!.blobKey).not.toContain("passwd");
     expect(rec!.blobKey).not.toContain("report");
@@ -289,8 +291,13 @@ describe.skipIf(parsePlaceholder)(`parseStructuredSelection semantics on real fi
     const sel: SourceSelection = { id: newId("sel"), sourceId: src.id, createdAt: new Date().toISOString(), kind: "xlsx_range", sheetName: "2tab", range: "C3:E4", headerRowCount: 0 };
     const d = await parseStructuredSelection(src, readInput(COMMITTED.eiaSteoXlsx), sel);
     const yearCells = d.columns.map((c) => d.rows[0].cells[c.id]);
-    expect(yearCells.map((c) => c.currentValue)).toEqual(["2022", "2022", "2022"]);
-    const disclosed = yearCells.every((c) => c.notes.some((n) => /cach|formula/i.test(n))) || d.issues.some((i) => /cach|formula/i.test(i.message));
-    expect(disclosed).toBe(true);
+    // C3 holds the formula; D3:E3 are parts of the same merged cell. The year is not copied into them.
+    expect(yearCells[0].currentValue).toBe("2022");
+    expect(yearCells[0].notes.some((n) => /cach/i.test(n) && /formula/i.test(n))).toBe(true);
+    for (const part of yearCells.slice(1)) {
+      expect(part.currentValue).toBeNull();
+      expect(part.missingReason).not.toBeNull();
+      expect(part.notes.some((n) => /merged/i.test(n))).toBe(true);
+    }
   });
 });
