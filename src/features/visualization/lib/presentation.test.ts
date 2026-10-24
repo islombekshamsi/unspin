@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { ChartPoint, Column, SelectionEvent } from "@/contracts";
-import { buildTraces } from "./figure";
+import { buildTraces, numericXDomain, rechartsYDomain } from "./figure";
 import {
   axisTitle,
   checkLogDomain,
@@ -89,6 +89,25 @@ describe("y range", () => {
   });
   it("a constant series still gets a visible range", () => {
     expect(computeYRange("fit_data", ["0", "0"], "linear", null).range).toEqual([-1, 1]);
+  });
+});
+
+describe("recharts y domain", () => {
+  it("passes linear ranges through and converts log10 units back to data units", () => {
+    expect(rechartsYDomain([0, 10], "linear")).toEqual([0, 10]);
+    const log = rechartsYDomain([-0.15, 3.15], "log");
+    expect(log![0]).toBeCloseTo(10 ** -0.15);
+    expect(log![1]).toBeCloseTo(10 ** 3.15);
+    expect(rechartsYDomain(null, "log")).toBeNull();
+  });
+});
+
+describe("recharts x domain", () => {
+  it("fits decimal-date values instead of forcing a zero baseline", () => {
+    expect(numericXDomain([{ x: 1974.375 }, { x: 2026.7083 }, { x: "May" }])).toEqual([1974.375, 2026.7083]);
+  });
+  it("leaves category-only series without a numeric domain", () => {
+    expect(numericXDomain([{ x: "A" }, { x: "B" }])).toBeNull();
   });
 });
 

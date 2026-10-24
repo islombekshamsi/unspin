@@ -5,10 +5,10 @@ import type { ChartPoint, ChartQueryResult, Column, DatasetDetail } from "@/cont
 import { Badge, Button, EmptyState, ErrorState, Field, IconButton, Select, UnavailableNote, cx } from "@/components/ui";
 import type { BadgeTone } from "@/components/ui";
 import type { ComparisonPanelProps } from "@/features/workspace/seams";
-import { PlotlyChart } from "@/features/visualization";
+import { RechartsChart } from "@/features/visualization";
 import { ChartDataTable } from "@/features/visualization/components/ChartDataTable";
 import { PointNavigator } from "@/features/visualization/components/PointNavigator";
-import { PLOT_CONFIG, buildLayout, buildTraces, type FigureSeries } from "@/features/visualization/lib/figure";
+import { buildPlotModel, type FigureSeries } from "@/features/visualization/lib/figure";
 import {
   axisTitle,
   describePoint,
@@ -411,11 +411,9 @@ export function ComparisonPanel({ detail }: ComparisonPanelProps) {
             <figcaption>
               <Badge className="whitespace-normal!" tone="neutral">{indexed ? `Indexed: ${INDEX_FORMULA}, base at x = ${baseX}` : "Values as stored in each dataset"}</Badge>
             </figcaption>
-            <PlotlyChart
+            <RechartsChart
               className="h-[min(380px,55vh)] min-h-[240px] w-full shrink-0"
-              data={figure.data}
-              layout={figure.layout}
-              config={PLOT_CONFIG}
+              model={figure.model}
               label={`Overlay of ${resolved.map((r) => r.label).join(", ")}. Use the point navigator or data table for exact values.`}
               onPointClick={setSelected}
               onPointsSelected={(ids) => setSelected(ids[0] ?? null)}
@@ -514,19 +512,22 @@ function useOverlay(
       points: s.points,
     }));
     const kind = xKind === "category" ? "bar" : "line";
-    const data = buildTraces({ kind, xKind, series: fs, allPoints: all, highlighted: new Set(selected ? [selected] : []), focusPointId: focusId, describe });
     const xLabels = [...new Set(resolved.map((r) => r.xColumn!.label))];
-    const layout = buildLayout({
+    const model = buildPlotModel({
       kind,
       xKind,
+      series: fs,
+      allPoints: all,
+      highlighted: new Set(selected ? [selected] : []),
+      focusPointId: focusId,
+      describe,
       xTitle: xLabels.length === 1 ? axisTitle(resolved[0].xColumn!) : xLabels.join(" / "),
       yTitle: indexResults ? `Index (${baseX} = 100)` : yAxisTitle(resolved.map((r) => r.yColumn!)).title,
       yScale: "linear",
       yRange: null,
-      allPoints: all,
-      uirevision: series.map((s) => s.r.key).join("+") + (indexResults ? `|idx:${baseX}` : ""),
+      clipToBounds: false,
     });
     const nav = fs.map((s) => ({ seriesId: s.seriesId, label: s.label, points: sortByX(s.points, xKind, all) }));
-    return { data, layout, nav, lookup, describe };
+    return { model, nav, lookup, describe };
   }, [series, resolved, indexResults, baseX, focusId, selected]);
 }

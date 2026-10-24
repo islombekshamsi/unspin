@@ -1,7 +1,7 @@
 import Decimal from "decimal.js";
 import type { BaselinePolicy, ChartPoint, ChartQueryResult, Column, ExtractionMethod, SelectionEvent } from "@/contracts";
 
-/** Mirrors --series-1..6 in globals.css; Plotly needs literal colors. */
+/** Mirrors --chart-1..6 / --series-1..6 in globals.css. */
 export const SERIES_COLORS = ["#0f6e66", "#b45309", "#4338ca", "#be185d", "#4d7c0f", "#0369a1"] as const;
 /** Each series also differs by marker symbol and dash so color is never the only signal. */
 export const SERIES_SYMBOLS = ["circle", "square", "diamond", "triangle-up", "triangle-down", "star"] as const;
@@ -21,8 +21,9 @@ export const ORIGIN_LABEL: Record<PointOrigin, string> = {
 };
 
 export function seriesStyle(index: number) {
+  const n = (index % SERIES_COLORS.length) + 1;
   return {
-    color: SERIES_COLORS[index % SERIES_COLORS.length],
+    color: `var(--chart-${n})`,
     symbol: SERIES_SYMBOLS[index % SERIES_SYMBOLS.length],
     dash: SERIES_DASHES[index % SERIES_DASHES.length],
   };
@@ -149,7 +150,7 @@ export function parseBound(text: string): BoundParse {
 }
 
 export interface YRange {
-  /** Plotly range: data units for linear, log10 units for log. Null means let the library fit. */
+  /** Axis range: data units for linear, log10 units for log. Null means let the library fit. */
   range: [number, number] | null;
   /** Human bounds in data units, shown next to the axis title. */
   label: string | null;
