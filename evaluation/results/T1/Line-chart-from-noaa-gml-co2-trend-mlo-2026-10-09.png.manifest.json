@@ -1,0 +1,160 @@
+{
+  "schemaVersion": "unspin.contracts/1",
+  "software": {
+    "name": "UNSPIN",
+    "version": "0.1.0"
+  },
+  "exportedAt": "2026-10-24T23:37:03.968Z",
+  "scope": {
+    "kind": "full"
+  },
+  "csvPolicy": {
+    "nullRepresentation": "Missing values (currentValue null) are written as an empty field; the reason is in data.json (missingReason). An empty text value is also an empty field; use data.json to distinguish them.",
+    "decimalSeparator": ".",
+    "numericValues": "Decimal cells are written exactly as their stored decimal strings (no rounding, grouping, locale formatting, or exponent changes; negatives keep their leading minus). Booleans are written as true/false. Dates are YYYY-MM-DD and datetimes ISO 8601 UTC. File encoding is UTF-8 with a byte-order mark, RFC 4180 quoting, and CRLF line endings.",
+    "formulaInjection": "Any header or non-decimal cell whose text starts with =, +, -, @, TAB, or CR is prefixed with a single apostrophe (') so spreadsheet software treats it as text. Valid decimal cells are never prefixed, so -12.5 stays -12.5. data.json carries every value unescaped."
+  },
+  "source": {
+    "sourceId": "src_39404dec5474422d9233cf5a07e4e308",
+    "kind": "image",
+    "filename": "noaa-gml-co2-trend-mlo-2026-10-09.png",
+    "sha256": "1f3bf74036f52d1b77068eb1a8fb143410297fb3a5848e3961a3b0247212d5af",
+    "byteSize": 71023,
+    "processingDisclosure": "gemini_selected_region"
+  },
+  "selection": {
+    "id": "sel_5efe55b4448842bc887b7eaa585911b7",
+    "sourceId": "src_39404dec5474422d9233cf5a07e4e308",
+    "createdAt": "2026-10-24T23:34:18.219Z",
+    "kind": "image_region",
+    "region": {
+      "x": 0.06,
+      "y": 0.13,
+      "width": 0.86,
+      "height": 0.78
+    },
+    "userHint": "Two series, 2021-2026 monthly CO2 ppm: red circles monthly mean; black squares deseasonalized.",
+    "transform": {
+      "originalWidth": 800,
+      "originalHeight": 600,
+      "exifOrientation": 1,
+      "orientedWidth": 800,
+      "orientedHeight": 600,
+      "orientedPixelBox": {
+        "left": 48,
+        "top": 78,
+        "width": 688,
+        "height": 468
+      }
+    }
+  },
+  "dataset": {
+    "id": "ds_c29c027a98624484978bcf27bba1df6b",
+    "title": "Line chart from noaa-gml-co2-trend-mlo-2026-10-09.png",
+    "extractionMethod": "vision_estimate",
+    "extraction": {
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "promptVersion": "chart-table-v1",
+      "inputDisclosure": "selected_image_region",
+      "requestedAt": "2026-10-24T23:34:18.232Z"
+    },
+    "coverage": "uncertain",
+    "coverageNote": "The model reported that part of the figure may be cut off or too dense to read completely.",
+    "coverageAcknowledgedAt": "2026-10-24T23:37:03.959Z",
+    "initialVersionId": "ver_e62f3ffa5b634086a7df5b85c4e02bf0",
+    "exportedVersionId": "ver_e62f3ffa5b634086a7df5b85c4e02bf0",
+    "currentVersionId": "ver_e62f3ffa5b634086a7df5b85c4e02bf0"
+  },
+  "columns": [
+    {
+      "id": "col_4c44f9ce9f1e4d6cb0e231645101981c",
+      "label": "Date",
+      "semanticRole": "x",
+      "dataType": "text",
+      "unit": null,
+      "currency": null,
+      "percentRepresentation": null,
+      "datePolicy": null,
+      "sourceScale": "linear",
+      "seriesLabel": null
+    },
+    {
+      "id": "col_effb1fd5923847f19a6f83107f347cda",
+      "label": "Monthly mean",
+      "semanticRole": "y",
+      "dataType": "decimal",
+      "unit": null,
+      "currency": null,
+      "percentRepresentation": null,
+      "datePolicy": null,
+      "sourceScale": "linear",
+      "seriesLabel": "Monthly mean"
+    },
+    {
+      "id": "col_6b9e58b098a94b7182c05f062209324b",
+      "label": "Deseasonalized",
+      "semanticRole": "y",
+      "dataType": "decimal",
+      "unit": null,
+      "currency": null,
+      "percentRepresentation": null,
+      "datePolicy": null,
+      "sourceScale": "linear",
+      "seriesLabel": "Deseasonalized"
+    }
+  ],
+  "reviewSummary": {
+    "cellsTotal": 204,
+    "unreviewed": 204,
+    "accepted": 0,
+    "corrected": 0,
+    "unavailable": 0
+  },
+  "reviewStatement": "Review markers (accepted, corrected, unavailable) record actions a user took in UNSPIN. They are user review, not scientific validation, peer review, or a guarantee that a value matches its source. In this export, 204 of 204 cells are unreviewed, 0 accepted, 0 corrected, and 0 marked unavailable. Coverage is uncertain: The model reported that part of the figure may be cut off or too dense to read completely. (acknowledged by the user at 2026-10-24T23:37:03.959Z). Values were estimated by a vision model from the selected region and may differ from the source data.",
+  "rowCount": 68,
+  "history": [
+    {
+      "id": "op_2610689976ba4ab882305a97f787e16d",
+      "datasetId": "ds_c29c027a98624484978bcf27bba1df6b",
+      "kind": "initial",
+      "baseVersionId": null,
+      "resultVersionId": "ver_e62f3ffa5b634086a7df5b85c4e02bf0",
+      "operation": null,
+      "restoredVersionId": null,
+      "actor": {
+        "kind": "guest",
+        "label": "Guest session"
+      },
+      "createdAt": "2026-10-24T23:37:03.942Z",
+      "affectedCount": 68,
+      "rowCountBefore": null,
+      "rowCountAfter": 68,
+      "changedCellIds": [],
+      "removedRowIds": [],
+      "summary": "Extracted 68 candidate rows × 3 columns (vision estimate)"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "prov_6012486bcad7475eb0d9b67b152ce4db",
+      "sourceId": "src_39404dec5474422d9233cf5a07e4e308",
+      "sourceSelectionId": "sel_5efe55b4448842bc887b7eaa585911b7",
+      "locator": {
+        "type": "image_box",
+        "coordinateSystem": "oriented_source_pixels",
+        "box": {
+          "left": 48,
+          "top": 78,
+          "width": 688,
+          "height": 468
+        }
+      },
+      "locatorOrigin": "user_confirmed",
+      "locatorAvailability": "region_only",
+      "label": "Selected image region",
+      "extractionMethod": "vision_estimate",
+      "createdAt": "2026-10-24T23:37:03.937Z"
+    }
+  ]
+}

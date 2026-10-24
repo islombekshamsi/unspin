@@ -28,18 +28,35 @@ npx next start -p 3108
 BASE_URL=http://localhost:3108 node evaluation/results/core-finish/drive.mjs
 ```
 
-## B. NOAA Mauna Loa chart (Gemini) — scoring not finished
+## B. NOAA Mauna Loa chart (Gemini) — UNSPIN T1 arm
 
-A prior HTTP pass on this repository reported a consented crop producing 69 × 3 estimated rows in 98 seconds, first month `2021-01`, values `415.5` / `415.2`. NOAA’s published 2021-01 averages are 415.49 and 415.23. **One matching row is not an accuracy benchmark.**
+Run 2026-10-24. Coordinator completed the UNSPIN arm after the dedicated eval pass died on a provider connection error. The key was opened only after export.
 
-On this core-finish revision:
+| Item | Observed |
+| --- | --- |
+| Input | `evaluation/inputs/noaa-gml-co2-trend-mlo-2026-10-09.png` sha256 `1f3bf74036f52d1b77068eb1a8fb143410297fb3a5848e3961a3b0247212d5af` |
+| Crop | 48,78,688,468 px on 800×600 (normalized 0.06, 0.13, 0.86, 0.78) |
+| Model | `gemini-3.8-flash`, one attempt, consent given |
+| Time | 165.9 s to first candidate; no cell corrections |
+| Table | 68 × 3, method `vision_estimate`, coverage `uncertain` (acknowledged) |
+| First row | `2021-01`, `415.5`, `415.3` (estimates) |
+| Missing vs key | `2026-09` both series (2 of 138) |
+| matched | 136 |
+| extra | 0 |
+| abs_error | median 0.135 ppm, p90 1.18 ppm, max 2.37 ppm |
+| within 0.2 ppm (1% of 20 ppm axis) | **73 / 136** matched rows |
+| Evidence | `evaluation/results/T1_NOAA.md`, `evaluation/results/2026-10-24-builder-t1-unspin.csv`, `evaluation/results/T1/score.json` |
 
-- The T1 protocol in `evaluation/PROTOCOL.md` was not completed.
-- No reviewed extraction export exists to score against `evaluation/reference/noaa-co2-trend-mlo-2021-01_2026-09.reference.csv`.
-- No mean/median/max absolute error, and no counts within the predeclared 0.01 × 20 ppm tolerance, are reported.
-- A title-only crop of the committed PNG reached the consent screen. **Start extraction** stayed disabled until consent. No dataset was created. The crop was not submitted to Gemini on this pass.
+This is not a general accuracy claim. General-AI and WebPlotDigitizer arms were not run.
 
-Do not invent aligned/matched/mismatched counts.
+Reproducible:
+
+```bash
+nvm use
+npx next start -p 3107
+BASE_URL=http://localhost:3107 node evaluation/scripts/run-t1-unspin.mjs
+node evaluation/scripts/score-noaa-t1.mjs   # only after export
+```
 
 ## C. EIA STEO XLSX
 

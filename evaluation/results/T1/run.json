@@ -1,0 +1,97 @@
+{
+  "t_start_utc": "2026-10-24T23:34:18.062Z",
+  "input_sha256": "1f3bf74036f52d1b77068eb1a8fb143410297fb3a5848e3961a3b0247212d5af",
+  "crop_normalized": {
+    "x": 0.06,
+    "y": 0.13,
+    "width": 0.86,
+    "height": 0.78
+  },
+  "crop_pixel_box": {
+    "left": 48,
+    "top": 78,
+    "width": 688,
+    "height": 468
+  },
+  "hint": "Two series, 2021-2026 monthly CO2 ppm: red circles monthly mean; black squares deseasonalized.",
+  "base": "http://localhost:3107",
+  "gemini_configured": true,
+  "gemini_model": "gemini-3.8-flash",
+  "sourceId": "src_39404dec5474422d9233cf5a07e4e308",
+  "source_sha256": "1f3bf74036f52d1b77068eb1a8fb143410297fb3a5848e3961a3b0247212d5af",
+  "image": {
+    "format": "png",
+    "originalWidth": 800,
+    "originalHeight": 600,
+    "exifOrientation": 1,
+    "orientedWidth": 800,
+    "orientedHeight": 600
+  },
+  "selectionId": "sel_5efe55b4448842bc887b7eaa585911b7",
+  "resolved_region": {
+    "x": 0.06,
+    "y": 0.13,
+    "width": 0.86,
+    "height": 0.78
+  },
+  "jobId": "job_9700d50012564f508fd6e58ae6a59412",
+  "extraction_started_utc": "2026-10-24T23:34:18.220Z",
+  "job_status": "completed",
+  "job_stage": "finished",
+  "attemptCount": 1,
+  "job_error": null,
+  "finishedAt": "2026-10-24T23:37:03.946Z",
+  "t_first_candidate_utc": "2026-10-24T23:37:03.946Z",
+  "extraction_seconds": 165.884,
+  "datasetId": "ds_c29c027a98624484978bcf27bba1df6b",
+  "coverage": "uncertain",
+  "extractionMethod": "vision_estimate",
+  "rowCount": 68,
+  "columns": [
+    {
+      "id": "col_4c44f9ce9f1e4d6cb0e231645101981c",
+      "label": "Date",
+      "dataType": "text",
+      "seriesLabel": null
+    },
+    {
+      "id": "col_effb1fd5923847f19a6f83107f347cda",
+      "label": "Monthly mean",
+      "dataType": "decimal",
+      "seriesLabel": "Monthly mean"
+    },
+    {
+      "id": "col_6b9e58b098a94b7182c05f062209324b",
+      "label": "Deseasonalized",
+      "dataType": "decimal",
+      "seriesLabel": "Deseasonalized"
+    }
+  ],
+  "coverageAcknowledged": true,
+  "fetchedRows": 68,
+  "t_verified_export_utc": "2026-10-24T23:37:03.974Z",
+  "end_to_end_seconds": 165.912,
+  "exportId": "exp_7a6f0fbd92394bcc9f069e89fac7aa29",
+  "exportFiles": [
+    {
+      "filename": "Line-chart-from-noaa-gml-co2-trend-mlo-2026-10-09.png.csv",
+      "path": "/Users/islomshamsiev/Desktop/unspin/evaluation/results/T1/Line-chart-from-noaa-gml-co2-trend-mlo-2026-10-09.png.csv",
+      "sha256": "87594e7103f4e91d2f93f8ab3e6972b566793ce9e524d74ebf2b3d62bcdc4d89",
+      "bytes": 1465
+    },
+    {
+      "filename": "Line-chart-from-noaa-gml-co2-trend-mlo-2026-10-09.png.data.json",
+      "path": "/Users/islomshamsiev/Desktop/unspin/evaluation/results/T1/Line-chart-from-noaa-gml-co2-trend-mlo-2026-10-09.png.data.json",
+      "sha256": "883965e258508bf394ea19dd44fa383ea5656e001f9c97f2102d37ae74c2cb5c",
+      "bytes": 105939
+    },
+    {
+      "filename": "Line-chart-from-noaa-gml-co2-trend-mlo-2026-10-09.png.manifest.json",
+      "path": "/Users/islomshamsiev/Desktop/unspin/evaluation/results/T1/Line-chart-from-noaa-gml-co2-trend-mlo-2026-10-09.png.manifest.json",
+      "sha256": "ab1deef0260b0c081667ef5c339296b37f629363e98b3a340f0660532eeffc83",
+      "bytes": 5976
+    }
+  ],
+  "outcome": "extracted_exported",
+  "looked_at_key_before_export": false
+}

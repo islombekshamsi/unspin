@@ -1,0 +1,1115 @@
+{
+  "summary": {
+    "extracted_rows_long": 136,
+    "exported_table_rows": 68,
+    "matched": 136,
+    "missing": 2,
+    "extra": 0,
+    "unreferenced": 0,
+    "wrong_series": 16,
+    "disclosed_gaps": 0,
+    "abs_error_median": 0.1349999999999909,
+    "abs_error_p90": 1.1800000000000068,
+    "abs_error_max": 2.3700000000000045,
+    "error_units": "ppm",
+    "normalized_error_denominator": 20,
+    "within_tolerance_n": 73,
+    "within_tolerance_share": 0.5367647058823529,
+    "tolerance_declared": "normalized_error <= 0.01 of 20 ppm (0.2 ppm)",
+    "relative_error_undefined": 0,
+    "date_errors": 0,
+    "extraction_seconds": 165.884,
+    "end_to_end_seconds": 165.912,
+    "looked_at_key_before_export": false
+  },
+  "pairErrors": [
+    {
+      "x": "2021-01",
+      "series": "average",
+      "extracted": 415.5,
+      "reference": 415.49,
+      "abs_error": 0.009999999999990905,
+      "normalized_error": 0.0004999999999995453
+    },
+    {
+      "x": "2021-01",
+      "series": "deseasonalized",
+      "extracted": 415.3,
+      "reference": 415.23,
+      "abs_error": 0.06999999999999318,
+      "normalized_error": 0.0034999999999996588
+    },
+    {
+      "x": "2021-02",
+      "series": "average",
+      "extracted": 416.7,
+      "reference": 416.72,
+      "abs_error": 0.020000000000038654,
+      "normalized_error": 0.0010000000000019327
+    },
+    {
+      "x": "2021-02",
+      "series": "deseasonalized",
+      "extracted": 415.8,
+      "reference": 415.8,
+      "abs_error": 0,
+      "normalized_error": 0
+    },
+    {
+      "x": "2021-03",
+      "series": "average",
+      "extracted": 417.6,
+      "reference": 417.61,
+      "abs_error": 0.009999999999990905,
+      "normalized_error": 0.0004999999999995453
+    },
+    {
+      "x": "2021-03",
+      "series": "deseasonalized",
+      "extracted": 416.2,
+      "reference": 416.17,
+      "abs_error": 0.029999999999972715,
+      "normalized_error": 0.0014999999999986357
+    },
+    {
+      "x": "2021-04",
+      "series": "average",
+      "extracted": 419,
+      "reference": 419.01,
+      "abs_error": 0.009999999999990905,
+      "normalized_error": 0.0004999999999995453
+    },
+    {
+      "x": "2021-04",
+      "series": "deseasonalized",
+      "extracted": 416.6,
+      "reference": 416.58,
+      "abs_error": 0.020000000000038654,
+      "normalized_error": 0.0010000000000019327
+    },
+    {
+      "x": "2021-05",
+      "series": "average",
+      "extracted": 419.1,
+      "reference": 419.09,
+      "abs_error": 0.010000000000047748,
+      "normalized_error": 0.0005000000000023874
+    },
+    {
+      "x": "2021-05",
+      "series": "deseasonalized",
+      "extracted": 416,
+      "reference": 415.88,
+      "abs_error": 0.12000000000000455,
+      "normalized_error": 0.006000000000000227
+    },
+    {
+      "x": "2021-06",
+      "series": "average",
+      "extracted": 418.9,
+      "reference": 418.93,
+      "abs_error": 0.03000000000002956,
+      "normalized_error": 0.001500000000001478
+    },
+    {
+      "x": "2021-06",
+      "series": "deseasonalized",
+      "extracted": 416.5,
+      "reference": 416.48,
+      "abs_error": 0.01999999999998181,
+      "normalized_error": 0.0009999999999990906
+    },
+    {
+      "x": "2021-07",
+      "series": "average",
+      "extracted": 417.2,
+      "reference": 416.9,
+      "abs_error": 0.30000000000001137,
+      "normalized_error": 0.015000000000000568
+    },
+    {
+      "x": "2021-07",
+      "series": "deseasonalized",
+      "extracted": 416.5,
+      "reference": 416.48,
+      "abs_error": 0.01999999999998181,
+      "normalized_error": 0.0009999999999990906
+    },
+    {
+      "x": "2021-08",
+      "series": "average",
+      "extracted": 414.4,
+      "reference": 414.42,
+      "abs_error": 0.020000000000038654,
+      "normalized_error": 0.0010000000000019327
+    },
+    {
+      "x": "2021-08",
+      "series": "deseasonalized",
+      "extracted": 416.3,
+      "reference": 416.27,
+      "abs_error": 0.03000000000002956,
+      "normalized_error": 0.001500000000001478
+    },
+    {
+      "x": "2021-09",
+      "series": "average",
+      "extracted": 413.3,
+      "reference": 413.26,
+      "abs_error": 0.040000000000020464,
+      "normalized_error": 0.002000000000001023
+    },
+    {
+      "x": "2021-09",
+      "series": "deseasonalized",
+      "extracted": 416.7,
+      "reference": 416.63,
+      "abs_error": 0.06999999999999318,
+      "normalized_error": 0.0034999999999996588
+    },
+    {
+      "x": "2021-10",
+      "series": "average",
+      "extracted": 413.9,
+      "reference": 413.9,
+      "abs_error": 0,
+      "normalized_error": 0
+    },
+    {
+      "x": "2021-10",
+      "series": "deseasonalized",
+      "extracted": 417.1,
+      "reference": 417.14,
+      "abs_error": 0.03999999999996362,
+      "normalized_error": 0.001999999999998181
+    },
+    {
+      "x": "2021-11",
+      "series": "average",
+      "extracted": 415,
+      "reference": 414.97,
+      "abs_error": 0.029999999999972715,
+      "normalized_error": 0.0014999999999986357
+    },
+    {
+      "x": "2021-11",
+      "series": "deseasonalized",
+      "extracted": 416.9,
+      "reference": 416.93,
+      "abs_error": 0.03000000000002956,
+      "normalized_error": 0.001500000000001478
+    },
+    {
+      "x": "2021-12",
+      "series": "average",
+      "extracted": 416.8,
+      "reference": 416.67,
+      "abs_error": 0.12999999999999545,
+      "normalized_error": 0.0064999999999997725
+    },
+    {
+      "x": "2021-12",
+      "series": "deseasonalized",
+      "extracted": 417.3,
+      "reference": 417.37,
+      "abs_error": 0.06999999999999318,
+      "normalized_error": 0.0034999999999996588
+    },
+    {
+      "x": "2022-01",
+      "series": "average",
+      "extracted": 417.7,
+      "reference": 418.13,
+      "abs_error": 0.4300000000000068,
+      "normalized_error": 0.021500000000000342
+    },
+    {
+      "x": "2022-01",
+      "series": "deseasonalized",
+      "extracted": 417.8,
+      "reference": 417.86,
+      "abs_error": 0.060000000000002274,
+      "normalized_error": 0.0030000000000001137
+    },
+    {
+      "x": "2022-02",
+      "series": "average",
+      "extracted": 418.9,
+      "reference": 419.24,
+      "abs_error": 0.34000000000003183,
+      "normalized_error": 0.01700000000000159
+    },
+    {
+      "x": "2022-02",
+      "series": "deseasonalized",
+      "extracted": 418.3,
+      "reference": 418.32,
+      "abs_error": 0.01999999999998181,
+      "normalized_error": 0.0009999999999990906
+    },
+    {
+      "x": "2022-03",
+      "series": "average",
+      "extracted": 418.7,
+      "reference": 418.76,
+      "abs_error": 0.060000000000002274,
+      "normalized_error": 0.0030000000000001137
+    },
+    {
+      "x": "2022-03",
+      "series": "deseasonalized",
+      "extracted": 417.3,
+      "reference": 417.31,
+      "abs_error": 0.009999999999990905,
+      "normalized_error": 0.0004999999999995453
+    },
+    {
+      "x": "2022-04",
+      "series": "average",
+      "extracted": 420.2,
+      "reference": 420.19,
+      "abs_error": 0.009999999999990905,
+      "normalized_error": 0.0004999999999995453
+    },
+    {
+      "x": "2022-04",
+      "series": "deseasonalized",
+      "extracted": 417.6,
+      "reference": 417.67,
+      "abs_error": 0.06999999999999318,
+      "normalized_error": 0.0034999999999996588
+    },
+    {
+      "x": "2022-05",
+      "series": "average",
+      "extracted": 421,
+      "reference": 420.97,
+      "abs_error": 0.029999999999972715,
+      "normalized_error": 0.0014999999999986357
+    },
+    {
+      "x": "2022-05",
+      "series": "deseasonalized",
+      "extracted": 417.7,
+      "reference": 417.7,
+      "abs_error": 0,
+      "normalized_error": 0
+    },
+    {
+      "x": "2022-06",
+      "series": "average",
+      "extracted": 421,
+      "reference": 420.94,
+      "abs_error": 0.060000000000002274,
+      "normalized_error": 0.0030000000000001137
+    },
+    {
+      "x": "2022-06",
+      "series": "deseasonalized",
+      "extracted": 418.5,
+      "reference": 418.47,
+      "abs_error": 0.029999999999972715,
+      "normalized_error": 0.0014999999999986357
+    },
+    {
+      "x": "2022-07",
+      "series": "average",
+      "extracted": 418.8,
+      "reference": 418.85,
+      "abs_error": 0.05000000000001137,
+      "normalized_error": 0.0025000000000005686
+    },
+    {
+      "x": "2022-07",
+      "series": "deseasonalized",
+      "extracted": 418.4,
+      "reference": 418.41,
+      "abs_error": 0.010000000000047748,
+      "normalized_error": 0.0005000000000023874
+    },
+    {
+      "x": "2022-08",
+      "series": "average",
+      "extracted": 417.1,
+      "reference": 417.15,
+      "abs_error": 0.049999999999954525,
+      "normalized_error": 0.0024999999999977263
+    },
+    {
+      "x": "2022-08",
+      "series": "deseasonalized",
+      "extracted": 418.8,
+      "reference": 419.03,
+      "abs_error": 0.22999999999996135,
+      "normalized_error": 0.011499999999998067
+    },
+    {
+      "x": "2022-09",
+      "series": "average",
+      "extracted": 415.8,
+      "reference": 415.91,
+      "abs_error": 0.11000000000001364,
+      "normalized_error": 0.005500000000000682
+    },
+    {
+      "x": "2022-09",
+      "series": "deseasonalized",
+      "extracted": 419,
+      "reference": 419.3,
+      "abs_error": 0.30000000000001137,
+      "normalized_error": 0.015000000000000568
+    },
+    {
+      "x": "2022-10",
+      "series": "average",
+      "extracted": 415.6,
+      "reference": 415.74,
+      "abs_error": 0.13999999999998636,
+      "normalized_error": 0.0069999999999993175
+    },
+    {
+      "x": "2022-10",
+      "series": "deseasonalized",
+      "extracted": 418.9,
+      "reference": 418.97,
+      "abs_error": 0.07000000000005002,
+      "normalized_error": 0.003500000000002501
+    },
+    {
+      "x": "2022-11",
+      "series": "average",
+      "extracted": 417.4,
+      "reference": 417.47,
+      "abs_error": 0.07000000000005002,
+      "normalized_error": 0.003500000000002501
+    },
+    {
+      "x": "2022-11",
+      "series": "deseasonalized",
+      "extracted": 419.5,
+      "reference": 419.51,
+      "abs_error": 0.009999999999990905,
+      "normalized_error": 0.0004999999999995453
+    },
+    {
+      "x": "2022-12",
+      "series": "average",
+      "extracted": 419,
+      "reference": 418.99,
+      "abs_error": 0.009999999999990905,
+      "normalized_error": 0.0004999999999995453
+    },
+    {
+      "x": "2022-12",
+      "series": "deseasonalized",
+      "extracted": 419.8,
+      "reference": 419.79,
+      "abs_error": 0.009999999999990905,
+      "normalized_error": 0.0004999999999995453
+    },
+    {
+      "x": "2023-01",
+      "series": "average",
+      "extracted": 419.5,
+      "reference": 419.48,
+      "abs_error": 0.01999999999998181,
+      "normalized_error": 0.0009999999999990906
+    },
+    {
+      "x": "2023-01",
+      "series": "deseasonalized",
+      "extracted": 419.1,
+      "reference": 419.19,
+      "abs_error": 0.08999999999997499,
+      "normalized_error": 0.00449999999999875
+    },
+    {
+      "x": "2023-02",
+      "series": "average",
+      "extracted": 420.1,
+      "reference": 420.31,
+      "abs_error": 0.20999999999997954,
+      "normalized_error": 0.010499999999998977
+    },
+    {
+      "x": "2023-02",
+      "series": "deseasonalized",
+      "extracted": 419.2,
+      "reference": 419.34,
+      "abs_error": 0.13999999999998636,
+      "normalized_error": 0.0069999999999993175
+    },
+    {
+      "x": "2023-03",
+      "series": "average",
+      "extracted": 420.5,
+      "reference": 420.99,
+      "abs_error": 0.4900000000000091,
+      "normalized_error": 0.024500000000000455
+    },
+    {
+      "x": "2023-03",
+      "series": "deseasonalized",
+      "extracted": 420.8,
+      "reference": 419.54,
+      "abs_error": 1.259999999999991,
+      "normalized_error": 0.06299999999999954
+    },
+    {
+      "x": "2023-04",
+      "series": "average",
+      "extracted": 423.4,
+      "reference": 423.35,
+      "abs_error": 0.049999999999954525,
+      "normalized_error": 0.0024999999999977263
+    },
+    {
+      "x": "2023-04",
+      "series": "deseasonalized",
+      "extracted": 420.7,
+      "reference": 420.83,
+      "abs_error": 0.12999999999999545,
+      "normalized_error": 0.0064999999999997725
+    },
+    {
+      "x": "2023-05",
+      "series": "average",
+      "extracted": 424,
+      "reference": 424,
+      "abs_error": 0,
+      "normalized_error": 0
+    },
+    {
+      "x": "2023-05",
+      "series": "deseasonalized",
+      "extracted": 421.3,
+      "reference": 420.71,
+      "abs_error": 0.5900000000000318,
+      "normalized_error": 0.02950000000000159
+    },
+    {
+      "x": "2023-06",
+      "series": "average",
+      "extracted": 423.7,
+      "reference": 423.68,
+      "abs_error": 0.01999999999998181,
+      "normalized_error": 0.0009999999999990906
+    },
+    {
+      "x": "2023-06",
+      "series": "deseasonalized",
+      "extracted": 421.4,
+      "reference": 421.25,
+      "abs_error": 0.14999999999997726,
+      "normalized_error": 0.0074999999999988635
+    },
+    {
+      "x": "2023-07",
+      "series": "average",
+      "extracted": 421.8,
+      "reference": 421.83,
+      "abs_error": 0.029999999999972715,
+      "normalized_error": 0.0014999999999986357
+    },
+    {
+      "x": "2023-07",
+      "series": "deseasonalized",
+      "extracted": 421.9,
+      "reference": 421.45,
+      "abs_error": 0.44999999999998863,
+      "normalized_error": 0.02249999999999943
+    },
+    {
+      "x": "2023-08",
+      "series": "average",
+      "extracted": 419.7,
+      "reference": 419.68,
+      "abs_error": 0.01999999999998181,
+      "normalized_error": 0.0009999999999990906
+    },
+    {
+      "x": "2023-08",
+      "series": "deseasonalized",
+      "extracted": 422.1,
+      "reference": 421.61,
+      "abs_error": 0.4900000000000091,
+      "normalized_error": 0.024500000000000455
+    },
+    {
+      "x": "2023-09",
+      "series": "average",
+      "extracted": 418.5,
+      "reference": 418.5,
+      "abs_error": 0,
+      "normalized_error": 0
+    },
+    {
+      "x": "2023-09",
+      "series": "deseasonalized",
+      "extracted": 422.4,
+      "reference": 421.98,
+      "abs_error": 0.4199999999999591,
+      "normalized_error": 0.020999999999997954
+    },
+    {
+      "x": "2023-10",
+      "series": "average",
+      "extracted": 418.8,
+      "reference": 418.82,
+      "abs_error": 0.01999999999998181,
+      "normalized_error": 0.0009999999999990906
+    },
+    {
+      "x": "2023-10",
+      "series": "deseasonalized",
+      "extracted": 422.6,
+      "reference": 422.07,
+      "abs_error": 0.5300000000000296,
+      "normalized_error": 0.026500000000001477
+    },
+    {
+      "x": "2023-11",
+      "series": "average",
+      "extracted": 420.5,
+      "reference": 420.46,
+      "abs_error": 0.040000000000020464,
+      "normalized_error": 0.002000000000001023
+    },
+    {
+      "x": "2023-11",
+      "series": "deseasonalized",
+      "extracted": 423.6,
+      "reference": 422.41,
+      "abs_error": 1.1899999999999977,
+      "normalized_error": 0.059499999999999886
+    },
+    {
+      "x": "2023-12",
+      "series": "average",
+      "extracted": 421.5,
+      "reference": 421.86,
+      "abs_error": 0.36000000000001364,
+      "normalized_error": 0.018000000000000682
+    },
+    {
+      "x": "2023-12",
+      "series": "deseasonalized",
+      "extracted": 423.9,
+      "reference": 422.59,
+      "abs_error": 1.3100000000000023,
+      "normalized_error": 0.06550000000000011
+    },
+    {
+      "x": "2024-01",
+      "series": "average",
+      "extracted": 422.5,
+      "reference": 422.8,
+      "abs_error": 0.30000000000001137,
+      "normalized_error": 0.015000000000000568
+    },
+    {
+      "x": "2024-01",
+      "series": "deseasonalized",
+      "extracted": 423.9,
+      "reference": 422.51,
+      "abs_error": 1.3899999999999864,
+      "normalized_error": 0.06949999999999931
+    },
+    {
+      "x": "2024-02",
+      "series": "average",
+      "extracted": 424.1,
+      "reference": 424.55,
+      "abs_error": 0.44999999999998863,
+      "normalized_error": 0.02249999999999943
+    },
+    {
+      "x": "2024-02",
+      "series": "deseasonalized",
+      "extracted": 423.6,
+      "reference": 423.59,
+      "abs_error": 0.010000000000047748,
+      "normalized_error": 0.0005000000000023874
+    },
+    {
+      "x": "2024-03",
+      "series": "average",
+      "extracted": 425.4,
+      "reference": 425.38,
+      "abs_error": 0.01999999999998181,
+      "normalized_error": 0.0009999999999990906
+    },
+    {
+      "x": "2024-03",
+      "series": "deseasonalized",
+      "extracted": 424.5,
+      "reference": 423.93,
+      "abs_error": 0.5699999999999932,
+      "normalized_error": 0.028499999999999658
+    },
+    {
+      "x": "2024-04",
+      "series": "average",
+      "extracted": 426.5,
+      "reference": 426.51,
+      "abs_error": 0.009999999999990905,
+      "normalized_error": 0.0004999999999995453
+    },
+    {
+      "x": "2024-04",
+      "series": "deseasonalized",
+      "extracted": 425.2,
+      "reference": 423.99,
+      "abs_error": 1.2099999999999795,
+      "normalized_error": 0.06049999999999898
+    },
+    {
+      "x": "2024-05",
+      "series": "average",
+      "extracted": 426.9,
+      "reference": 426.9,
+      "abs_error": 0,
+      "normalized_error": 0
+    },
+    {
+      "x": "2024-05",
+      "series": "deseasonalized",
+      "extracted": 424.9,
+      "reference": 423.61,
+      "abs_error": 1.2899999999999636,
+      "normalized_error": 0.06449999999999818
+    },
+    {
+      "x": "2024-06",
+      "series": "average",
+      "extracted": 426.9,
+      "reference": 426.91,
+      "abs_error": 0.010000000000047748,
+      "normalized_error": 0.0005000000000023874
+    },
+    {
+      "x": "2024-06",
+      "series": "deseasonalized",
+      "extracted": 425.6,
+      "reference": 424.48,
+      "abs_error": 1.1200000000000045,
+      "normalized_error": 0.05600000000000023
+    },
+    {
+      "x": "2024-07",
+      "series": "average",
+      "extracted": 425.6,
+      "reference": 425.55,
+      "abs_error": 0.05000000000001137,
+      "normalized_error": 0.0025000000000005686
+    },
+    {
+      "x": "2024-07",
+      "series": "deseasonalized",
+      "extracted": 425.6,
+      "reference": 425.17,
+      "abs_error": 0.4300000000000068,
+      "normalized_error": 0.021500000000000342
+    },
+    {
+      "x": "2024-08",
+      "series": "average",
+      "extracted": 422.1,
+      "reference": 422.99,
+      "abs_error": 0.8899999999999864,
+      "normalized_error": 0.04449999999999932
+    },
+    {
+      "x": "2024-08",
+      "series": "deseasonalized",
+      "extracted": 425.8,
+      "reference": 424.92,
+      "abs_error": 0.8799999999999955,
+      "normalized_error": 0.043999999999999775
+    },
+    {
+      "x": "2024-09",
+      "series": "average",
+      "extracted": 421.4,
+      "reference": 422.03,
+      "abs_error": 0.6299999999999955,
+      "normalized_error": 0.03149999999999977
+    },
+    {
+      "x": "2024-09",
+      "series": "deseasonalized",
+      "extracted": 426.2,
+      "reference": 425.51,
+      "abs_error": 0.6899999999999977,
+      "normalized_error": 0.034499999999999885
+    },
+    {
+      "x": "2024-10",
+      "series": "average",
+      "extracted": 422.4,
+      "reference": 422.38,
+      "abs_error": 0.01999999999998181,
+      "normalized_error": 0.0009999999999990906
+    },
+    {
+      "x": "2024-10",
+      "series": "deseasonalized",
+      "extracted": 426.3,
+      "reference": 425.63,
+      "abs_error": 0.6700000000000159,
+      "normalized_error": 0.03350000000000079
+    },
+    {
+      "x": "2024-11",
+      "series": "average",
+      "extracted": 423.8,
+      "reference": 423.85,
+      "abs_error": 0.05000000000001137,
+      "normalized_error": 0.0025000000000005686
+    },
+    {
+      "x": "2024-11",
+      "series": "deseasonalized",
+      "extracted": 426.1,
+      "reference": 425.8,
+      "abs_error": 0.30000000000001137,
+      "normalized_error": 0.015000000000000568
+    },
+    {
+      "x": "2024-12",
+      "series": "average",
+      "extracted": 425.4,
+      "reference": 425.4,
+      "abs_error": 0,
+      "normalized_error": 0
+    },
+    {
+      "x": "2024-12",
+      "series": "deseasonalized",
+      "extracted": 426.7,
+      "reference": 426.14,
+      "abs_error": 0.5600000000000023,
+      "normalized_error": 0.028000000000000115
+    },
+    {
+      "x": "2025-01",
+      "series": "average",
+      "extracted": 426.6,
+      "reference": 426.65,
+      "abs_error": 0.049999999999954525,
+      "normalized_error": 0.0024999999999977263
+    },
+    {
+      "x": "2025-01",
+      "series": "deseasonalized",
+      "extracted": 427.1,
+      "reference": 426.36,
+      "abs_error": 0.7400000000000091,
+      "normalized_error": 0.037000000000000456
+    },
+    {
+      "x": "2025-02",
+      "series": "average",
+      "extracted": 428.1,
+      "reference": 427.09,
+      "abs_error": 1.0100000000000477,
+      "normalized_error": 0.05050000000000239
+    },
+    {
+      "x": "2025-02",
+      "series": "deseasonalized",
+      "extracted": 427.2,
+      "reference": 426.12,
+      "abs_error": 1.079999999999984,
+      "normalized_error": 0.0539999999999992
+    },
+    {
+      "x": "2025-03",
+      "series": "average",
+      "extracted": 429.6,
+      "reference": 428.15,
+      "abs_error": 1.4500000000000455,
+      "normalized_error": 0.07250000000000227
+    },
+    {
+      "x": "2025-03",
+      "series": "deseasonalized",
+      "extracted": 427.2,
+      "reference": 426.69,
+      "abs_error": 0.5099999999999909,
+      "normalized_error": 0.025499999999999544
+    },
+    {
+      "x": "2025-04",
+      "series": "average",
+      "extracted": 430.5,
+      "reference": 429.64,
+      "abs_error": 0.8600000000000136,
+      "normalized_error": 0.043000000000000684
+    },
+    {
+      "x": "2025-04",
+      "series": "deseasonalized",
+      "extracted": 427.5,
+      "reference": 427.12,
+      "abs_error": 0.37999999999999545,
+      "normalized_error": 0.018999999999999774
+    },
+    {
+      "x": "2025-05",
+      "series": "average",
+      "extracted": 429.6,
+      "reference": 430.51,
+      "abs_error": 0.9099999999999682,
+      "normalized_error": 0.04549999999999841
+    },
+    {
+      "x": "2025-05",
+      "series": "deseasonalized",
+      "extracted": 427.4,
+      "reference": 427.22,
+      "abs_error": 0.17999999999994998,
+      "normalized_error": 0.0089999999999975
+    },
+    {
+      "x": "2025-06",
+      "series": "average",
+      "extracted": 427.9,
+      "reference": 429.61,
+      "abs_error": 1.7100000000000364,
+      "normalized_error": 0.08550000000000182
+    },
+    {
+      "x": "2025-06",
+      "series": "deseasonalized",
+      "extracted": 427.8,
+      "reference": 427.18,
+      "abs_error": 0.6200000000000045,
+      "normalized_error": 0.03100000000000023
+    },
+    {
+      "x": "2025-07",
+      "series": "average",
+      "extracted": 425.5,
+      "reference": 427.87,
+      "abs_error": 2.3700000000000045,
+      "normalized_error": 0.11850000000000023
+    },
+    {
+      "x": "2025-07",
+      "series": "deseasonalized",
+      "extracted": 428.1,
+      "reference": 427.49,
+      "abs_error": 0.6100000000000136,
+      "normalized_error": 0.030500000000000683
+    },
+    {
+      "x": "2025-08",
+      "series": "average",
+      "extracted": 424.4,
+      "reference": 425.48,
+      "abs_error": 1.080000000000041,
+      "normalized_error": 0.054000000000002046
+    },
+    {
+      "x": "2025-08",
+      "series": "deseasonalized",
+      "extracted": 428.4,
+      "reference": 427.41,
+      "abs_error": 0.9899999999999523,
+      "normalized_error": 0.049499999999997615
+    },
+    {
+      "x": "2025-09",
+      "series": "average",
+      "extracted": 424.9,
+      "reference": 424.37,
+      "abs_error": 0.5299999999999727,
+      "normalized_error": 0.026499999999998636
+    },
+    {
+      "x": "2025-09",
+      "series": "deseasonalized",
+      "extracted": 428.2,
+      "reference": 427.85,
+      "abs_error": 0.3499999999999659,
+      "normalized_error": 0.017499999999998295
+    },
+    {
+      "x": "2025-10",
+      "series": "average",
+      "extracted": 426.5,
+      "reference": 424.87,
+      "abs_error": 1.6299999999999955,
+      "normalized_error": 0.08149999999999977
+    },
+    {
+      "x": "2025-10",
+      "series": "deseasonalized",
+      "extracted": 428.3,
+      "reference": 428.12,
+      "abs_error": 0.18000000000000682,
+      "normalized_error": 0.009000000000000341
+    },
+    {
+      "x": "2025-11",
+      "series": "average",
+      "extracted": 427.5,
+      "reference": 426.46,
+      "abs_error": 1.0400000000000205,
+      "normalized_error": 0.052000000000001025
+    },
+    {
+      "x": "2025-11",
+      "series": "deseasonalized",
+      "extracted": 428.4,
+      "reference": 428.4,
+      "abs_error": 0,
+      "normalized_error": 0
+    },
+    {
+      "x": "2025-12",
+      "series": "average",
+      "extracted": 428.6,
+      "reference": 427.49,
+      "abs_error": 1.1100000000000136,
+      "normalized_error": 0.05550000000000068
+    },
+    {
+      "x": "2025-12",
+      "series": "deseasonalized",
+      "extracted": 428.7,
+      "reference": 428.22,
+      "abs_error": 0.47999999999996135,
+      "normalized_error": 0.023999999999998068
+    },
+    {
+      "x": "2026-01",
+      "series": "average",
+      "extracted": 429.3,
+      "reference": 428.62,
+      "abs_error": 0.6800000000000068,
+      "normalized_error": 0.03400000000000034
+    },
+    {
+      "x": "2026-01",
+      "series": "deseasonalized",
+      "extracted": 428.6,
+      "reference": 428.32,
+      "abs_error": 0.28000000000002956,
+      "normalized_error": 0.014000000000001478
+    },
+    {
+      "x": "2026-02",
+      "series": "average",
+      "extracted": 430.1,
+      "reference": 429.35,
+      "abs_error": 0.75,
+      "normalized_error": 0.0375
+    },
+    {
+      "x": "2026-02",
+      "series": "deseasonalized",
+      "extracted": 428.9,
+      "reference": 428.39,
+      "abs_error": 0.5099999999999909,
+      "normalized_error": 0.025499999999999544
+    },
+    {
+      "x": "2026-03",
+      "series": "average",
+      "extracted": 431.1,
+      "reference": 430.15,
+      "abs_error": 0.9500000000000455,
+      "normalized_error": 0.047500000000002277
+    },
+    {
+      "x": "2026-03",
+      "series": "deseasonalized",
+      "extracted": 428.7,
+      "reference": 428.69,
+      "abs_error": 0.009999999999990905,
+      "normalized_error": 0.0004999999999995453
+    },
+    {
+      "x": "2026-04",
+      "series": "average",
+      "extracted": 432.3,
+      "reference": 431.12,
+      "abs_error": 1.1800000000000068,
+      "normalized_error": 0.059000000000000344
+    },
+    {
+      "x": "2026-04",
+      "series": "deseasonalized",
+      "extracted": 429.1,
+      "reference": 428.6,
+      "abs_error": 0.5,
+      "normalized_error": 0.025
+    },
+    {
+      "x": "2026-05",
+      "series": "average",
+      "extracted": 431.4,
+      "reference": 432.34,
+      "abs_error": 0.9399999999999977,
+      "normalized_error": 0.04699999999999989
+    },
+    {
+      "x": "2026-05",
+      "series": "deseasonalized",
+      "extracted": 429,
+      "reference": 429.05,
+      "abs_error": 0.05000000000001137,
+      "normalized_error": 0.0025000000000005686
+    },
+    {
+      "x": "2026-06",
+      "series": "average",
+      "extracted": 429.1,
+      "reference": 431.43,
+      "abs_error": 2.329999999999984,
+      "normalized_error": 0.1164999999999992
+    },
+    {
+      "x": "2026-06",
+      "series": "deseasonalized",
+      "extracted": 429.1,
+      "reference": 429,
+      "abs_error": 0.10000000000002274,
+      "normalized_error": 0.005000000000001137
+    },
+    {
+      "x": "2026-07",
+      "series": "average",
+      "extracted": 427.6,
+      "reference": 429.13,
+      "abs_error": 1.5299999999999727,
+      "normalized_error": 0.07649999999999864
+    },
+    {
+      "x": "2026-07",
+      "series": "deseasonalized",
+      "extracted": 429.5,
+      "reference": 428.74,
+      "abs_error": 0.7599999999999909,
+      "normalized_error": 0.03799999999999955
+    },
+    {
+      "x": "2026-08",
+      "series": "average",
+      "extracted": 426,
+      "reference": 427.55,
+      "abs_error": 1.5500000000000114,
+      "normalized_error": 0.07750000000000057
+    },
+    {
+      "x": "2026-08",
+      "series": "deseasonalized",
+      "extracted": 429.6,
+      "reference": 429.48,
+      "abs_error": 0.12000000000000455,
+      "normalized_error": 0.006000000000000227
+    }
+  ]
+}

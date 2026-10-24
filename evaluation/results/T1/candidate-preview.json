@@ -1,0 +1,99 @@
+{
+  "columns": [
+    {
+      "id": "col_4c44f9ce9f1e4d6cb0e231645101981c",
+      "label": "Date",
+      "dataType": "text",
+      "seriesLabel": null
+    },
+    {
+      "id": "col_effb1fd5923847f19a6f83107f347cda",
+      "label": "Monthly mean",
+      "dataType": "decimal",
+      "seriesLabel": "Monthly mean"
+    },
+    {
+      "id": "col_6b9e58b098a94b7182c05f062209324b",
+      "label": "Deseasonalized",
+      "dataType": "decimal",
+      "seriesLabel": "Deseasonalized"
+    }
+  ],
+  "first3": [
+    {
+      "x": "2021-01",
+      "series": "Monthly mean",
+      "y": "415.5",
+      "origin": "estimated"
+    },
+    {
+      "x": "2021-01",
+      "series": "Deseasonalized",
+      "y": "415.3",
+      "origin": "estimated"
+    },
+    {
+      "x": "2021-02",
+      "series": "Monthly mean",
+      "y": "416.7",
+      "origin": "estimated"
+    },
+    {
+      "x": "2021-02",
+      "series": "Deseasonalized",
+      "y": "415.8",
+      "origin": "estimated"
+    },
+    {
+      "x": "2021-03",
+      "series": "Monthly mean",
+      "y": "417.6",
+      "origin": "estimated"
+    },
+    {
+      "x": "2021-03",
+      "series": "Deseasonalized",
+      "y": "416.2",
+      "origin": "estimated"
+    }
+  ],
+  "last3": [
+    {
+      "x": "2026-06",
+      "series": "Monthly mean",
+      "y": "429.1",
+      "origin": "estimated"
+    },
+    {
+      "x": "2026-06",
+      "series": "Deseasonalized",
+      "y": "429.1",
+      "origin": "estimated"
+    },
+    {
+      "x": "2026-07",
+      "series": "Monthly mean",
+      "y": "427.6",
+      "origin": "estimated"
+    },
+    {
+      "x": "2026-07",
+      "series": "Deseasonalized",
+      "y": "429.5",
+      "origin": "estimated"
+    },
+    {
+      "x": "2026-08",
+      "series": "Monthly mean",
+      "y": "426.0",
+      "origin": "estimated"
+    },
+    {
+      "x": "2026-08",
+      "series": "Deseasonalized",
+      "y": "429.6",
+      "origin": "estimated"
+    }
+  ],
+  "n": 136
+}

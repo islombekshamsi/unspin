@@ -51,7 +51,7 @@ These used the production server and published US-government files, not invented
 - **HTTP smoke:** 30 checks passed, including a real NOAA CSV upload, rejected `.xls` files, and per-browser isolation.
 - **NOAA CO₂ monthly CSV (browser, production `:3108`, 2026-10-24):** 40 comment lines skipped, 629 rows × 8 columns, first row `1974, 5, 1974.3750, 333.19, …`, source line 42. Default chart: line of `average` vs `decimal date`. Correct `333.19` → `333.20`, undo, export. Refresh restored the skipped-comment selection. Export CSV sha256 `44138e6ce91a4af1fbef295815f4914334e85bb9b5d050ff06faaab197b9be35`. Notes in `evaluation/results/core-finish/`.
 - **EIA STEO workbook:** sheet `2tab`, range `A6:E6` → `WTIPUUS` / `83.22` / `91.64` / `108.5`. Same three export files. Not re-run in the core-finish browser pass.
-- **NOAA Mauna Loa CO₂ chart (Gemini):** 69 rows × 3 columns, marked `vision_estimate`, 98 seconds. First row `2021-01`, `415.5`, `415.2`. Accuracy against NOAA’s published series was **not** measured (their 2021-01 averages are 415.49 and 415.23). That dataset was not exported. T1 scoring is still outstanding (`docs/EVALUATION.md`).
+- **NOAA Mauna Loa CO₂ chart (Gemini, T1 UNSPIN arm, 2026-10-24):** crop 48×78+688×468 px, `gemini-3.8-flash`, 165.9 s, 68 × 3 estimated rows, first row `2021-01` / `415.5` / `415.3`. Scored after export: 136 matched, 2 missing (`2026-09`), median abs error 0.135 ppm, **73 / 136** within 0.2 ppm. One chart only (`docs/EVALUATION.md`).
 
 Automated tests on this revision: **567 passed**, 13 skipped. Typecheck and production build pass.
 
@@ -61,7 +61,7 @@ Automated tests on this revision: **567 passed**, 13 skipped. Typecheck and prod
 - **No accounts.** A guest cookie is created when you upload. There is no sign-in.
 - **Not for a public URL.** There is no per-user extraction quota and no bot protection. Anyone who can reach the server can trigger Gemini.
 - **Durable restart** has not been tested: local Postgres was not listening on this pass.
-- **Chart extraction accuracy** against NOAA’s published series has not been scored.
+- **Chart extraction** on this NOAA figure is an estimate with 73/136 points inside 0.2 ppm of the publisher file. That is not a general accuracy rating.
 - **S3 storage** has not been tried against a real bucket. Nothing has been deployed.
 - Chart extraction can take about a minute and sometimes hits a provider 503.
 

@@ -33,8 +33,8 @@ _Updated by the coordinator at milestones. No secrets or source contents._
 
 ## In progress
 
-- NOAA chart extraction T1 scoring (`docs/EVALUATION.md`): no aligned-observation counts yet.
 - Durable PostgreSQL restart: unverified (no listener on `:5432` this pass).
+- T1 general-AI and WebPlotDigitizer arms not run.
 
 ## Blocked / not configured
 
@@ -52,7 +52,7 @@ _Updated by the coordinator at milestones. No secrets or source contents._
 - **HTTP end-to-end, real files, production server on 3106 (earlier the same day):**
   - NOAA CO₂ monthly CSV excerpt: skip 40 comment records, 629 × 8, first row `1974,5,1974.3750,333.19,…`, provenance line 42.
   - EIA STEO XLSX sheet `2tab` range `A6:E6`: `WTIPUUS` / `83.22` / `91.64` / `108.5`.
-  - NOAA Mauna Loa CO₂ trend PNG through Gemini (`consentToExternalProcessing`): 69 × 3, method `vision_estimate`, 98 s, first row `2021-01`, `415.5`, `415.2`. Accuracy against the NOAA key was not measured.
+  - NOAA Mauna Loa CO₂ trend PNG through Gemini (T1 UNSPIN arm): 68 × 3, 165.9 s, first row `2021-01` / `415.5` / `415.3`. After export: 136 matched, 2 missing, median abs error 0.135 ppm, 73/136 within 0.2 ppm.
 
 ## Known limits
 
@@ -61,4 +61,4 @@ _Updated by the coordinator at milestones. No secrets or source contents._
 
 ## Next owner
 
-Coordinator: NOAA T1 scoring when the eval export exists; durable restart when Postgres is actually running. Do not start Auth0/Vultr until those are real. Public deploy stays off.
+Coordinator: durable restart when Postgres is actually running. Do not start Auth0/Vultr until that is real. Public deploy stays off.

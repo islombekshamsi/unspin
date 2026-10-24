@@ -1,0 +1,3313 @@
+{
+  "schemaVersion": "unspin.contracts/1",
+  "datasetId": "ds_c29c027a98624484978bcf27bba1df6b",
+  "versionId": "ver_e62f3ffa5b634086a7df5b85c4e02bf0",
+  "exportedAt": "2026-10-24T23:37:03.968Z",
+  "scope": {
+    "kind": "full"
+  },
+  "columns": [
+    {
+      "id": "col_4c44f9ce9f1e4d6cb0e231645101981c",
+      "label": "Date",
+      "semanticRole": "x",
+      "dataType": "text",
+      "unit": null,
+      "currency": null,
+      "percentRepresentation": null,
+      "datePolicy": null,
+      "sourceScale": "linear",
+      "seriesLabel": null
+    },
+    {
+      "id": "col_effb1fd5923847f19a6f83107f347cda",
+      "label": "Monthly mean",
+      "semanticRole": "y",
+      "dataType": "decimal",
+      "unit": null,
+      "currency": null,
+      "percentRepresentation": null,
+      "datePolicy": null,
+      "sourceScale": "linear",
+      "seriesLabel": "Monthly mean"
+    },
+    {
+      "id": "col_6b9e58b098a94b7182c05f062209324b",
+      "label": "Deseasonalized",
+      "semanticRole": "y",
+      "dataType": "decimal",
+      "unit": null,
+      "currency": null,
+      "percentRepresentation": null,
+      "datePolicy": null,
+      "sourceScale": "linear",
+      "seriesLabel": "Deseasonalized"
+    }
+  ],
+  "rows": [
+    {
+      "rowId": "row_d985731374da4562b58aac6eec7d24ed",
+      "sourceOrder": 0,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_2c02a74c8a1242cfb317b918a75d8604",
+          "currentValue": "2021-01",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2021-01",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_5fd2c80ba4354a7296cdc0628bd2288b",
+          "currentValue": "415.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "415.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_ecaf5f4b987648bf92855542fd490ff8",
+          "currentValue": "415.3",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "415.3",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_618d03e95d144544b61c39459657dc8f",
+      "sourceOrder": 1,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_f5fe2bf886954ebcba7a9ce723a149f9",
+          "currentValue": "2021-02",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2021-02",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_5e8fd1251e4a4dd58710373db1283332",
+          "currentValue": "416.7",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "416.7",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_e774c4c6dd2b4268bbdc9a8ccb584826",
+          "currentValue": "415.8",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "415.8",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_33eb4d8dd4934bb9863a64adbbd8a185",
+      "sourceOrder": 2,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_940aab9c69d14bd5992ef8b70221a395",
+          "currentValue": "2021-03",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2021-03",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_bdab48f973f44cdd855c583ba9fdacf0",
+          "currentValue": "417.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "417.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_90712c89bebb4d37a9c986fca41f2a6c",
+          "currentValue": "416.2",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "416.2",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_612dcba5306748c59e3df0ece34ef5b7",
+      "sourceOrder": 3,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_5b3d90ed83c54886a8762aaba86b8fb1",
+          "currentValue": "2021-04",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2021-04",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_b5e30c78f7ab455a9714d212b114dc7d",
+          "currentValue": "419.0",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "419.0",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_be31a9fa4c3a4b2d87eca3d3865b91ad",
+          "currentValue": "416.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "416.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_e04b85736c5b4886860ca793dedad100",
+      "sourceOrder": 4,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_94195566636b419890d232d78838bf7f",
+          "currentValue": "2021-05",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2021-05",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_116b2851fa6244ea9201d36019c1a18b",
+          "currentValue": "419.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "419.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_5fd0612f599c44398fb04f4a359b1307",
+          "currentValue": "416.0",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "416.0",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_302218058d2d406d9190854c665d6465",
+      "sourceOrder": 5,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_87da92005c0c46a08b04a0bbc585e19a",
+          "currentValue": "2021-06",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2021-06",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_3a977ce19b8a432cbdbabf274265138e",
+          "currentValue": "418.9",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "418.9",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_81b3b8382c2a4d3e83d0342ff3bc79dd",
+          "currentValue": "416.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "416.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_5e7b577101d24206a6b4afb5925b5a7f",
+      "sourceOrder": 6,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_50aec489beb54343a8a61c20aa4eefe4",
+          "currentValue": "2021-07",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2021-07",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_b74ea57a83344f92bcbfe1d48ef24a8c",
+          "currentValue": "417.2",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "417.2",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_e3cff666728b447590fd0b6a7a8c76b7",
+          "currentValue": "416.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "416.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_283484d1a04846a7954d8f1e73706b6d",
+      "sourceOrder": 7,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_f60ddb4c000f4c429ca44f652f4a70b2",
+          "currentValue": "2021-08",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2021-08",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_995f5d12183d49959434c0e5d3ba0f4d",
+          "currentValue": "414.4",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "414.4",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_bc0171ef311244e5ad943fdc6131cd91",
+          "currentValue": "416.3",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "416.3",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_4ee6439a09f549bfae50ccfaefaeabea",
+      "sourceOrder": 8,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_8521788dd94048fda0ef6ee6ba2b2951",
+          "currentValue": "2021-09",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2021-09",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_b28e3aa4a40242a4b0760615f7826c64",
+          "currentValue": "413.3",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "413.3",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_6ff76231163a495db3a4b6bc8f1ab22b",
+          "currentValue": "416.7",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "416.7",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_313ede56e64b41cb8df62092f1870c32",
+      "sourceOrder": 9,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_a0f4dc68a8124a948e82c761b07a2216",
+          "currentValue": "2021-10",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2021-10",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_60ede05909c84d12820d2255930c4ed6",
+          "currentValue": "413.9",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "413.9",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_2d593cb3bf5f4bac829fe693d0476911",
+          "currentValue": "417.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "417.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_bb3a431b547540368a06611ac155ac90",
+      "sourceOrder": 10,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_59582b09925041b5924380d379fafe7d",
+          "currentValue": "2021-11",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2021-11",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_892ece1d1be948d28a960d1c66351a49",
+          "currentValue": "415.0",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "415.0",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_1e99590f7462447c9095598339d67159",
+          "currentValue": "416.9",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "416.9",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_9d8ee462449c4af691354356f4fafa59",
+      "sourceOrder": 11,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_e83b38a1dd824381aba11b96e041a79c",
+          "currentValue": "2021-12",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2021-12",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_5c633aff037745478a36591e20672ad2",
+          "currentValue": "416.8",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "416.8",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_212537149fbf4a4f8b4e3f58afb3e8c8",
+          "currentValue": "417.3",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "417.3",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_7dc34d7f4d394b12a3ac28baed654ec9",
+      "sourceOrder": 12,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_e12b3652edd94a808632ff3263cfa668",
+          "currentValue": "2022-01",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2022-01",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_57a86162511a4bbf8ca4d42ffb7538b9",
+          "currentValue": "417.7",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "417.7",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_f48c21b099db44cd813817c34609b9cd",
+          "currentValue": "417.8",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "417.8",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_8c29742fbf8d4d0483f8257633ec7b3c",
+      "sourceOrder": 13,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_3f8db0623b7a41ad828727524453f5b4",
+          "currentValue": "2022-02",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2022-02",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_22e8b947860c478a8ea41db5712dd4bd",
+          "currentValue": "418.9",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "418.9",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_6e6c5bb1e36d4ca7a9342a4bbd0c5635",
+          "currentValue": "418.3",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "418.3",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_f47bb874baf544f5ba0e4712d6bb81f0",
+      "sourceOrder": 14,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_3415910bdb434b4b9ff9a478a6fa7b47",
+          "currentValue": "2022-03",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2022-03",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_fb5d52aadda34e358181d3627f83a9fd",
+          "currentValue": "418.7",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "418.7",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_1a9e2d92b4f04026a77eb4d6093862ee",
+          "currentValue": "417.3",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "417.3",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_7ae960c598b94ab9962db45d40df8843",
+      "sourceOrder": 15,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_f21fe9569a8641f1b563a319e3fa15b1",
+          "currentValue": "2022-04",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2022-04",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_da00db44d420452e9da6eaf79a33cb52",
+          "currentValue": "420.2",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "420.2",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_7c578576689941b287673abf22cb5a48",
+          "currentValue": "417.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "417.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_466c8850fd7d4ca1809c4122fe1617f6",
+      "sourceOrder": 16,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_f4f41637fdde49c987790618c9505351",
+          "currentValue": "2022-05",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2022-05",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_5dbf54d5edec4e8681354b41ed2324f1",
+          "currentValue": "421.0",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "421.0",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_b14f0e8c5e0f427d8e462461f3602b7a",
+          "currentValue": "417.7",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "417.7",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_d02ce633aa344b8787318afc3b7ebec7",
+      "sourceOrder": 17,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_bef9f8173d654acd8805e9425adb4767",
+          "currentValue": "2022-06",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2022-06",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_f3c2badd8bba4521b4bbce693efdec33",
+          "currentValue": "421.0",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "421.0",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_b9d1f8797ab74433baad9ad6d22b0aea",
+          "currentValue": "418.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "418.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_c33542cbd43c4bb3b7fd1e904d5a5f97",
+      "sourceOrder": 18,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_65d9f4266a0045958fd9644ffa377bff",
+          "currentValue": "2022-07",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2022-07",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_f605008e40dd4b25b7296dfb3e63248d",
+          "currentValue": "418.8",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "418.8",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_27542e47cc86403f894dbe969ff3069f",
+          "currentValue": "418.4",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "418.4",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_7badfc79632149598c18dcbd48552d41",
+      "sourceOrder": 19,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_effc63adbcef4580b0d572d63b0e1b9a",
+          "currentValue": "2022-08",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2022-08",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_79258422b4c342bbaf85fc2b28647008",
+          "currentValue": "417.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "417.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_291f4578b30e436294cf65c2db1f7750",
+          "currentValue": "418.8",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "418.8",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_e93b8f458ad84148ae593f4bd559b28e",
+      "sourceOrder": 20,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_e3a6f719045d4a39b389e585f42e1154",
+          "currentValue": "2022-09",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2022-09",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_4ded6901e1da43018da56ec60f7ccfa5",
+          "currentValue": "415.8",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "415.8",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_d02792879f964aa499aafb95707177ea",
+          "currentValue": "419.0",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "419.0",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_536938d452fb4e6aa5925b0319e0014e",
+      "sourceOrder": 21,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_27a185cef7b742e58bb2e86fcf56e2c0",
+          "currentValue": "2022-10",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2022-10",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_b923a2f6fc4b414584441521ce673967",
+          "currentValue": "415.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "415.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_f9ad60db28c34ebfa1c0ba557fdb1e0d",
+          "currentValue": "418.9",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "418.9",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_7275288d518e405eab27ba5522709435",
+      "sourceOrder": 22,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_f765d346cafa44dd9e70d5339efe3cb7",
+          "currentValue": "2022-11",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2022-11",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_2648d0369f8c4a8992e6c063dcb97002",
+          "currentValue": "417.4",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "417.4",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_83c1141ec2234571a9f144273be8d10b",
+          "currentValue": "419.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "419.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_5fb803d60045469d9c4ff3991125112f",
+      "sourceOrder": 23,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_c3f801dc2c774a808b2c08399d645420",
+          "currentValue": "2022-12",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2022-12",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_d22df5d736d8454b8b1032df16675744",
+          "currentValue": "419.0",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "419.0",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_786b6e18ad8e48fe82a8e87bda36b625",
+          "currentValue": "419.8",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "419.8",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_cc0c7c9ecf6c4731ad0186772b4c89aa",
+      "sourceOrder": 24,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_255d49e70fb841bdb04f9e65be12c0cb",
+          "currentValue": "2023-01",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2023-01",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_65d3693a3386425cbffe57400eea56e8",
+          "currentValue": "419.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "419.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_b748233e0912435d991be48b4f61cc3b",
+          "currentValue": "419.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "419.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_c9431e5cde5c4f12ad68c54243185ec6",
+      "sourceOrder": 25,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_c51622071b6241f6a583c36296099c41",
+          "currentValue": "2023-02",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2023-02",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_9201afee3c0e4cd9947bc0bac432672d",
+          "currentValue": "420.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "420.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_bd70d5d418b24252858ce68130ae314b",
+          "currentValue": "419.2",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "419.2",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_c0351715d1fe4c3e845fb02471fd8e2f",
+      "sourceOrder": 26,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_286e992c8dfd4d468c7b628bbd9966ae",
+          "currentValue": "2023-03",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2023-03",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_447606694edb4059b1199f1f2f1aba1a",
+          "currentValue": "420.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "420.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_49fb702052454254bb4aeff554dee511",
+          "currentValue": "420.8",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "420.8",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_36156c12d7324ea2af2b223e864c3716",
+      "sourceOrder": 27,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_4557d4bdbc3d499a9b99ae94ad3ce193",
+          "currentValue": "2023-04",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2023-04",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_44115eeb8eae4dfd81822c73a59802a9",
+          "currentValue": "423.4",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "423.4",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_2f0291323e8e40c197886d2504fdf4f4",
+          "currentValue": "420.7",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "420.7",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_d557b5fe16d749f1ab9c0d55a9ac316e",
+      "sourceOrder": 28,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_4d568d288f194dd79790226e7158a527",
+          "currentValue": "2023-05",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2023-05",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_cd6c4e0528864adab700c11c9aa6eec4",
+          "currentValue": "424.0",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "424.0",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_8d6978b726ea475f8f5b2158a519d168",
+          "currentValue": "421.3",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "421.3",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_ec954aa38e9f46f7ba162b7b291c310b",
+      "sourceOrder": 29,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_deff7f2fb00f4d598d4b1c3ad4d2e628",
+          "currentValue": "2023-06",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2023-06",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_504d0deff6b44e728f7fc46de1463f0d",
+          "currentValue": "423.7",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "423.7",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_c1b05fd0963b4ec199e24d9e6a5e7863",
+          "currentValue": "421.4",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "421.4",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_e20f0774546348d6a27b501d69a4d9bb",
+      "sourceOrder": 30,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_10066359b4104bbead0a00ac0eca6d3f",
+          "currentValue": "2023-07",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2023-07",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_045efca0058845b28382552297f74514",
+          "currentValue": "421.8",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "421.8",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_67a702b40ce542fcb09b64a6d9901e08",
+          "currentValue": "421.9",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "421.9",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_4f6654e8ec0946d28eb65f4f248e2dcc",
+      "sourceOrder": 31,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_1b9f0cd23fd049bb9c1147fcf7ca6349",
+          "currentValue": "2023-08",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2023-08",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_d5ec9d3150014dc1a8055942d3af14ad",
+          "currentValue": "419.7",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "419.7",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_c99e8ad357c645b289c995afc76808a1",
+          "currentValue": "422.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "422.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_3be65744f71944fdbb10a9ae22c7d116",
+      "sourceOrder": 32,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_569ada07fb48439b9d03464c35fda8f7",
+          "currentValue": "2023-09",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2023-09",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_d4fa7fa4c7d44551b280cdb42b4d1085",
+          "currentValue": "418.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "418.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_eedcdda251a24fdd820a1b8dab02ef2e",
+          "currentValue": "422.4",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "422.4",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_66c18b8ece504ba0b1b60a8595c7b99f",
+      "sourceOrder": 33,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_a992e2ff243b487ea8ae0eb6b696368e",
+          "currentValue": "2023-10",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2023-10",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_a176c1f426cc4f0d83bc4ea2d7236220",
+          "currentValue": "418.8",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "418.8",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_12133304fe9c477c979e86be52e0b0fb",
+          "currentValue": "422.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "422.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_8248f09c6afe41c9b568d09f7f2b4a97",
+      "sourceOrder": 34,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_b5d8bd2a13b4483cafd6fc6328352976",
+          "currentValue": "2023-11",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2023-11",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_9fa549e95bd74129810a1e093dd3b549",
+          "currentValue": "420.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "420.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_2ac9aaf5f19c46cca15e2b458df08946",
+          "currentValue": "423.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "423.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_cc04af4c0d78498b822c370c4218a425",
+      "sourceOrder": 35,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_ffbd201a515c41449f92d4edb79a55f9",
+          "currentValue": "2023-12",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2023-12",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_5c5953235c004b968683f3381b65bac3",
+          "currentValue": "421.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "421.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_7f17e511c4314e83b6e95a31156264f3",
+          "currentValue": "423.9",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "423.9",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_8b4e3c0144eb4561a61239c789982304",
+      "sourceOrder": 36,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_258039a5165743debc12e8534250764f",
+          "currentValue": "2024-01",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2024-01",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_c3c0b4a784c44f9ba7e2455e802b7778",
+          "currentValue": "422.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "422.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_3aeb034616354edcbb0b61811c72e5fd",
+          "currentValue": "423.9",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "423.9",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_0be626bd5f69499ea1e6f03d2af8dc1b",
+      "sourceOrder": 37,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_0fedb64f88ea4800bdc3e9f576a972ad",
+          "currentValue": "2024-02",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2024-02",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_e3dbf00d488146428d1a2fa3032c857f",
+          "currentValue": "424.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "424.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_81d38cd5020242d7acefcd941e2acf36",
+          "currentValue": "423.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "423.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_e5d2fd52023b49988d198cc30abfde8b",
+      "sourceOrder": 38,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_894d15d2b939451ab2285f2da005eaf1",
+          "currentValue": "2024-03",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2024-03",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_bd19b3fa01e8406ea546a7449480e6b7",
+          "currentValue": "425.4",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "425.4",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_5d9e78a28f2946178a28c301fb889736",
+          "currentValue": "424.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "424.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_911632772d2f48628e15499d835a8f93",
+      "sourceOrder": 39,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_2a2d0217fac9445d8652f0a3c946280e",
+          "currentValue": "2024-04",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2024-04",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_47274830393d49c5ac514c5b45f985b2",
+          "currentValue": "426.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "426.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_66931537757345dbb20b7db80beb9eec",
+          "currentValue": "425.2",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "425.2",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_5c11813a2fe04e78a4cd05dff6c21b92",
+      "sourceOrder": 40,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_7c8748523613417eb1c52bfa69714dbe",
+          "currentValue": "2024-05",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2024-05",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_cfa70e231df9441fa4576a5bfedb09a4",
+          "currentValue": "426.9",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "426.9",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_767aa509178c4520a2fa1bdc98d614b2",
+          "currentValue": "424.9",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "424.9",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_9ccd4d54b0044ef39a2326ec42a3f5a1",
+      "sourceOrder": 41,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_a1e2eacd8dcb44c7b9263f70908a48ba",
+          "currentValue": "2024-06",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2024-06",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_e1a3baa43f034710b72b1f8cd94638ff",
+          "currentValue": "426.9",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "426.9",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_e0381e03d8d8442a80c64bbb1fd77d16",
+          "currentValue": "425.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "425.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_008de4e55ea948bea7be4b1a15fab15c",
+      "sourceOrder": 42,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_58963d4800314428976bc3d3da5c4675",
+          "currentValue": "2024-07",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2024-07",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_907c593b4fbb4ca7bf5cb9123c681028",
+          "currentValue": "425.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "425.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_ebd3bd62aa2847858159d30948ef718d",
+          "currentValue": "425.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "425.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_7f7522f1e6aa4c7a8b32585686a7a1d3",
+      "sourceOrder": 43,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_246a32cd47554cf7875161478887100d",
+          "currentValue": "2024-08",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2024-08",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_671f3f7025674d3eaf78774095b42a51",
+          "currentValue": "422.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "422.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_08beb7238ba641d4a826d3d41ce2ef81",
+          "currentValue": "425.8",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "425.8",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_3d7e8a7bb1c94b408442b7b5f9dcbfab",
+      "sourceOrder": 44,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_570e76a71f1545069a94075dafa3c291",
+          "currentValue": "2024-09",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2024-09",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_13aa44f3c2944d9695fce5beb592af81",
+          "currentValue": "421.4",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "421.4",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_5a74b153f3af49f696b6b45bbb8ff8eb",
+          "currentValue": "426.2",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "426.2",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_bf9cae8eae4d4a778db97b99d6fdde38",
+      "sourceOrder": 45,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_bb5388a7ecea4d69a796e20f624539c6",
+          "currentValue": "2024-10",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2024-10",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_1bf1fab3fcdc4844b4fcb548c5f6bc9a",
+          "currentValue": "422.4",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "422.4",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_28be2aa2ae8944b7a930744adfed312c",
+          "currentValue": "426.3",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "426.3",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_2d0cdda42d124265bee7d27b9a77e795",
+      "sourceOrder": 46,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_38370fba56e94e4fba6572fdaebf3128",
+          "currentValue": "2024-11",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2024-11",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_ced3b25042884882b0a967afa1e5aadf",
+          "currentValue": "423.8",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "423.8",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_91a7093da675489c9498dd7965758779",
+          "currentValue": "426.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "426.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_99b5a74054d8450f9b5c9c5cc9fb8f67",
+      "sourceOrder": 47,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_fa52561c17e34613a3dadf8f9bcbb77c",
+          "currentValue": "2024-12",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2024-12",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_1cfbfb4fb94f47b8bda3535fa6c99181",
+          "currentValue": "425.4",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "425.4",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_bf497fd4c8834341952fc8dc6600ac85",
+          "currentValue": "426.7",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "426.7",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_dc3bd97aa89a419bb928eeec643a60de",
+      "sourceOrder": 48,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_23ef2619908f4106ad6b6b90a72ffaef",
+          "currentValue": "2025-01",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2025-01",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_a6b7be6c316a465e8b37d7294d472c7a",
+          "currentValue": "426.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "426.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_56a5ac85a6db40e7b57f259973d56a2f",
+          "currentValue": "427.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "427.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_57ca615940b244ddba2257ea30f2236d",
+      "sourceOrder": 49,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_284ed2b8a22a4ad080aef2b696a29f91",
+          "currentValue": "2025-02",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2025-02",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_302d69c61b9c4285842b970a021b2941",
+          "currentValue": "428.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "428.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_81077be9466e425fbbc7883d8c4d9837",
+          "currentValue": "427.2",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "427.2",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_c4f5c0461cea413f8c3200efecbcf705",
+      "sourceOrder": 50,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_1f395a1db1734c7ba494ed4e903c0fd9",
+          "currentValue": "2025-03",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2025-03",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_6402be0d328b41509a9038aab9cbef80",
+          "currentValue": "429.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "429.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_eb31d816beba4b5ba36ed3b412bd79c8",
+          "currentValue": "427.2",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "427.2",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_20bf919498f74517b7f9ec6954f6a2fc",
+      "sourceOrder": 51,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_685e2fcacf534e52bf8ac491070609af",
+          "currentValue": "2025-04",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2025-04",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_1adbaf4972c94a60b3196257e3016d86",
+          "currentValue": "430.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "430.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_8e67a3b465474eb2b44a94004816a6d9",
+          "currentValue": "427.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "427.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_c7b18bdba60a455aa08709577a7ce881",
+      "sourceOrder": 52,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_43cc7939fba1414a98aa788808281eae",
+          "currentValue": "2025-05",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2025-05",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_6bd01869aec141ffab7c2b719f287291",
+          "currentValue": "429.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "429.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_f73414413771441998b9a0256027f7b0",
+          "currentValue": "427.4",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "427.4",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_17200883d73f487ea241c49788ccfb1d",
+      "sourceOrder": 53,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_a4a3cd99ec734f33bb96ec7de57ddec7",
+          "currentValue": "2025-06",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2025-06",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_770f865aa89848318b744a401316c2e3",
+          "currentValue": "427.9",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "427.9",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_15278dfc8d3e4b20adc49180d7908b6f",
+          "currentValue": "427.8",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "427.8",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_d1bd5b3f260e4125849fa886cc8466f4",
+      "sourceOrder": 54,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_e838a1c49a1846d7910954a3ce9b7b8e",
+          "currentValue": "2025-07",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2025-07",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_3aa447864952419fadb96405179ad6fc",
+          "currentValue": "425.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "425.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_aa82ec65f3004930adc9c46e838340ba",
+          "currentValue": "428.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "428.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_cd5a449749fb4e08b0b57ae3ddc7a7fc",
+      "sourceOrder": 55,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_487a0c83752b476c9f2a5dfa9d828da6",
+          "currentValue": "2025-08",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2025-08",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_27165feedf254537bbf97d5408d42e4b",
+          "currentValue": "424.4",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "424.4",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_33d65f9823134dcab1baabb6f7599632",
+          "currentValue": "428.4",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "428.4",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_241b8b81d1c24efca5cf916a32028f6a",
+      "sourceOrder": 56,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_71ce679a54904f3a959ab9a1db909540",
+          "currentValue": "2025-09",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2025-09",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_dbdda586951844a8956596b14a05e22b",
+          "currentValue": "424.9",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "424.9",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_e6d1908bb8664625a4c9cd205d9c3cdc",
+          "currentValue": "428.2",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "428.2",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_cfa8a9a0a3814e37bb26485ddc539c11",
+      "sourceOrder": 57,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_9a02bdcb9eea402ea45126571c477042",
+          "currentValue": "2025-10",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2025-10",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_eb760066b24a4ed1af2b159284265194",
+          "currentValue": "426.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "426.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_4b402a4a0c7d4052958eed37bf011b08",
+          "currentValue": "428.3",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "428.3",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_4981d82dd77c4c2dbe39525d03b19379",
+      "sourceOrder": 58,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_b6f93d6ac2c447b2b9bb9a3a005666d4",
+          "currentValue": "2025-11",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2025-11",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_5dbe28850da64faaa010d22815d793bb",
+          "currentValue": "427.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "427.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_597218c09028456e8e35f835cda16516",
+          "currentValue": "428.4",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "428.4",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_2b272567500640b5a5b26331ec628997",
+      "sourceOrder": 59,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_1e60badcaa1d45319937f554b041da1c",
+          "currentValue": "2025-12",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2025-12",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_2eac39ee6414421096e5a20074280add",
+          "currentValue": "428.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "428.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_133b629f10af494bb29475228965d46e",
+          "currentValue": "428.7",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "428.7",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_b7f81e889f3a4afcb9cbd5601152a05d",
+      "sourceOrder": 60,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_78baa540d765432e89a90f923fd75355",
+          "currentValue": "2026-01",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2026-01",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_c0d83e35c1d746cba811c1746207b14d",
+          "currentValue": "429.3",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "429.3",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_30309d1f5e2241b98ea8738ead2359b7",
+          "currentValue": "428.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "428.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_624fca0e709440e9bf12e3ef487baf58",
+      "sourceOrder": 61,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_130a5115e4d14230bbf1d6e08bd6be4c",
+          "currentValue": "2026-02",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2026-02",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_f2dfb24f75d348eb9e37cc9787ba2e6d",
+          "currentValue": "430.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "430.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_c1330085c11845f092a39f9e271a44f2",
+          "currentValue": "428.9",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "428.9",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_5fc12d3e1b2444c0a33f7db7c135a933",
+      "sourceOrder": 62,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_d4541d55b28e4311bbd474684b8a34d1",
+          "currentValue": "2026-03",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2026-03",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_01a730d59daa4a88873cf68924bf3459",
+          "currentValue": "431.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "431.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_a62c2306681f42ad83f135d35a0e7337",
+          "currentValue": "428.7",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "428.7",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_2f08507f55b74f1bae5ac83cfdc84b6e",
+      "sourceOrder": 63,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_d8eef764682048c7bc61993168046445",
+          "currentValue": "2026-04",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2026-04",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_0b84c7736d274bf1b8943edb325b07e4",
+          "currentValue": "432.3",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "432.3",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_49a879fd42804b13bb0279d5d0aef987",
+          "currentValue": "429.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "429.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_a11f156b37ef417abfac0350b232142d",
+      "sourceOrder": 64,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_829300a90e3448d59cbc9d9f960750ad",
+          "currentValue": "2026-05",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2026-05",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_fd008e96a3c84acdbcc628d935e4cc40",
+          "currentValue": "431.4",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "431.4",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_541ef6e4a9644b349be9bc7b06d3af70",
+          "currentValue": "429.0",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "429.0",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_363d8df8963b4bf5bc10d66a70385f0c",
+      "sourceOrder": 65,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_1880f91e124542989b0044cd5a2f9bd3",
+          "currentValue": "2026-06",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2026-06",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_e44a183c66bf426580cbb0ddd4c17f2d",
+          "currentValue": "429.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "429.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_40678207364045dd89cf7411b3743cdc",
+          "currentValue": "429.1",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "429.1",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_0256d3adabda4fb9a96df395fac8ccd4",
+      "sourceOrder": 66,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_268ee496bd474fdab4603b3575b49e04",
+          "currentValue": "2026-07",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2026-07",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_24b5f33dbad840b98b1395d2d4eab342",
+          "currentValue": "427.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "427.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_afcc507a20af4fb79051a7a673203382",
+          "currentValue": "429.5",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "429.5",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    },
+    {
+      "rowId": "row_f9ed20ce5be54a7aa8ebeee69bfda180",
+      "sourceOrder": 67,
+      "cells": {
+        "col_4c44f9ce9f1e4d6cb0e231645101981c": {
+          "cellId": "cell_3c35ea23316747c1a5ef5b3af84c4c94",
+          "currentValue": "2026-08",
+          "valueType": "text",
+          "missingReason": null,
+          "rawText": "2026-08",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_effb1fd5923847f19a6f83107f347cda": {
+          "cellId": "cell_ec240061146b41d3a630fb37ef22dbb9",
+          "currentValue": "426.0",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "426.0",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        },
+        "col_6b9e58b098a94b7182c05f062209324b": {
+          "cellId": "cell_aaac7a8a84ec49dc87155ea6070fc28c",
+          "currentValue": "429.6",
+          "valueType": "decimal",
+          "missingReason": null,
+          "rawText": "429.6",
+          "origin": "estimated",
+          "reviewStatus": "unreviewed",
+          "provenanceIds": [
+            "prov_6012486bcad7475eb0d9b67b152ce4db"
+          ],
+          "parentCellIds": [],
+          "notes": []
+        }
+      }
+    }
+  ]
+}

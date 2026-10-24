@@ -24,7 +24,7 @@ Export CSV, exact JSON, and the provenance manifest. After undo, the CSV first r
 
 ## 1:50–2:00 — what this is not
 
-Work is session-only unless PostgreSQL durability is actually configured and tested. Chart extraction (Gemini) is a separate, slower path and is **not** scored here. There is no public URL, no account wall, and no quota. Do not claim scientific validation from one image.
+Work is session-only unless PostgreSQL durability is actually configured and tested. Chart extraction is a separate, slower path (165.9 s on this NOAA figure; 73/136 points within 0.2 ppm of the publisher file — see `docs/EVALUATION.md`). There is no public URL, no account wall, and no quota. Do not claim scientific validation from one image.
 
 ## Track evidence (same product)
 
@@ -32,4 +32,4 @@ Work is session-only unless PostgreSQL durability is actually configured and tes
 | --- | --- |
 | Data reuse | A government CSV becomes a versioned table + export with locators |
 | Financial / research understanding | Values stay linked to the source line; edits are reversible and labelled |
-| AI for science | Not demonstrated in this two-minute CSV path. Gemini is only for consented image/PDF regions; accuracy against NOAA’s published series is **unmeasured** on this revision |
+| AI for science | Not this two-minute CSV path. A separate consented Gemini run on the NOAA Mauna Loa chart is scored in `docs/EVALUATION.md` (one image; 73/136 within 0.2 ppm) |
