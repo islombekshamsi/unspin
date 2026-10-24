@@ -33,7 +33,6 @@ _Updated by the coordinator at milestones. No secrets or source contents._
 
 ## In progress
 
-- End-to-end checkpoint (real CSV/XLSX through export; real image through Gemini via the HTTP route).
 - QA phase 2: browser workflow, measurements, `docs/TEST_REPORT.md`.
 
 ## Blocked / not configured
@@ -47,9 +46,12 @@ _Updated by the coordinator at milestones. No secrets or source contents._
 - `npm run typecheck`: pass.
 - `npx eslint src tests`: 0 errors; 1 warning (`react-hooks/incompatible-library` on `useVirtualizer`).
 - `npm test`: 556 passed, 13 skipped.
-- `npx next build`: pass (after the ingestion merge).
-- HTTP smoke against `next start` on port 3106: last run was 20 pass / 6 blocked (upload validation), before the ingestion merge. Re-run is next.
-- Live Gemini: one real public-domain FDA chart extracted by the extraction specialist calling the service directly. It has not been run through the HTTP route yet.
+- `npx next build`: pass.
+- HTTP smoke against `next start` on port 3106: **30 pass, 0 blocked, 0 fail**.
+- **HTTP end-to-end, real files, production server on 3106:**
+  - NOAA CO₂ monthly CSV excerpt: skip 40 comment records, 629 × 8, first row `1974,5,1974.3750,333.19,…`, provenance line 42. Export wrote CSV, JSON and a manifest.
+  - EIA STEO XLSX sheet `2tab` range `A6:E6`: `WTIPUUS` / `83.22` / `91.64` / `108.5`. Export wrote CSV, JSON and a manifest.
+  - NOAA Mauna Loa CO₂ trend PNG through Gemini (`consentToExternalProcessing`): 69 × 3, method `vision_estimate`, 98 s, first row `2021-01`, `415.5`, `415.2`. Accuracy against the NOAA key was not measured (the key’s 2021-01 averages are 415.49 and 415.23). Export of this dataset was not run.
 
 ## Known limits
 
@@ -58,4 +60,4 @@ _Updated by the coordinator at milestones. No secrets or source contents._
 
 ## Next owner
 
-Coordinator: HTTP smoke re-run, real upload-to-export checkpoint, then QA phase 2.
+Coordinator: QA phase 2 (browser workflow, measurements, test report). Deployment stays private until quotas exist.
