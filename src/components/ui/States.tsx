@@ -40,8 +40,8 @@ export function ErrorState({
   className?: string;
 }) {
   return (
-    <div role="alert" className={cx("rounded-md border border-danger-rule bg-danger-soft px-4 py-3 text-left", className)}>
-      <p className="flex items-center gap-2 text-sm font-semibold text-danger">
+    <div role="alert" className={cx("rounded-2xl border border-danger-rule bg-danger-soft px-4 py-3 text-left", className)}>
+      <p className="flex items-center gap-2 text-sm font-medium text-danger">
         <svg viewBox="0 0 16 16" className="h-4 w-4 shrink-0" aria-hidden="true">
           <path d="M8 1.5 15 14H1L8 1.5Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
           <path d="M8 6v3.5M8 11.5v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -64,7 +64,7 @@ export function ErrorState({
 /** Neutral explanation for a capability that is honestly unavailable. */
 export function UnavailableNote({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <p className={cx("rounded-md border border-dashed border-rule-strong bg-sunken px-3 py-2 text-[13px] leading-5 text-ink-muted", className)}>
+    <p className={cx("rounded-2xl border border-dashed border-rule-strong bg-sunken px-3 py-2 text-[13px] leading-5 text-ink-muted", className)}>
       {children}
     </p>
   );

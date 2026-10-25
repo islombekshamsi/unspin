@@ -108,7 +108,7 @@ export function errorView(code: string, retryable: boolean): ErrorView {
     case "timeout":
       return { title: "The model took too long", hint: "Retry, or select a smaller region.", canRetry: true, suggestAdjust: true };
     case "no_data_found":
-      return { title: "No data found in this region", hint: "Select a region that contains one chart or table.", canRetry: false, suggestAdjust: true };
+      return { title: "No data found in this region", hint: "Select a chart or table, or choose Build from text for paragraphs with reported numbers.", canRetry: false, suggestAdjust: true };
     case "unreadable_source":
       return { title: "The region could not be read", hint: "Select a larger or sharper region.", canRetry: false, suggestAdjust: true };
     case "extraction_failed":

@@ -11,6 +11,7 @@ import {
   MemorySourceRepository,
   memoryState,
 } from "./memory";
+import { MemoryAnalysisRepository, MemoryViewRepository } from "./views";
 import { getPool, probe } from "./pool";
 import { claimGuestWorkspacePg, createPostgresRepositories } from "./postgres";
 import type { ClaimResult } from "./shared";
@@ -88,6 +89,8 @@ function build(): Backend {
       selections: new MemorySelectionRepository(state),
       datasets: new MemoryDatasetRepository(state),
       jobs: new MemoryJobRepository(state),
+      views: new MemoryViewRepository(state),
+      analysis: new MemoryAnalysisRepository(state),
       blobs: blobs.store,
       // A share link that silently dies on restart would mislead its recipient.
       shares: null,

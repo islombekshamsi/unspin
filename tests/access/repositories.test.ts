@@ -37,6 +37,8 @@ function queuedJob(selectionId: string): Job {
     measuredProgress: null,
     error: null,
     resultDatasetId: null,
+    resultAnalysisId: null,
+    analysis: null,
   };
 }
 

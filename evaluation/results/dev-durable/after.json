@@ -1,0 +1,36 @@
+{
+  "phase": "after",
+  "health": {
+    "persistence": {
+      "mode": "postgres",
+      "durable": true,
+      "ready": true
+    },
+    "blobStorage": {
+      "mode": "filesystem",
+      "ready": true
+    },
+    "jobs": {
+      "mode": "worker"
+    }
+  },
+  "sourceFilename": "noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv",
+  "selectionKind": "csv_records",
+  "skipLeadingRecords": 40,
+  "versions": [
+    "ver_d4d8a21dd7f146c3a941f146729390f3",
+    "ver_45fe4026396841f4aa0308e30defeb3c"
+  ],
+  "currentAfterReopen": "ver_45fe4026396841f4aa0308e30defeb3c",
+  "firstAverageAfterReopen": "333.20",
+  "historyEntries": 2,
+  "sourceBytesSha256": "a653f1af074f08f25f7b51e97d4b93b2e5485269a10a11df167e73e5cd7e6fad",
+  "sourceBytesMatchInput": true,
+  "blobFileCount": 1,
+  "blobCountUnchanged": true,
+  "undoRestoredV1": true,
+  "firstAverageAfterUndo": "333.19",
+  "exportCsvSha256": "44138e6ce91a4af1fbef295815f4914334e85bb9b5d050ff06faaab197b9be35",
+  "exportHas33319": true,
+  "exportHas33320": false
+}

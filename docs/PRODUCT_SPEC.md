@@ -56,6 +56,10 @@ Initial design targets: 10 MiB upload, 20,000 structured rows, 64 columns, one s
 
 Original document/image or structured record view. Linked highlights show real source anchors. If only page/figure identification is available, navigate there and say that precise anchoring is unavailable. Never draw a fabricated bounding box because the model proposed coordinates.
 
+### Overview and analysis
+
+The workspace shows a short deterministic profile as soon as a dataset exists: time-series range and change, category counts, or an honest “not enough structure” note. Optional Gemini analysis is a separate consent from image/PDF extraction and receives a bounded fact catalog, not the spreadsheet file. Insight cards render numbers from those facts. Show evidence selects the supporting rows. Analysis never edits cells.
+
 ### Editable grid
 
 Virtualized/paginated rows with stable IDs. Cells expose original text, current typed value, units, origin, and review status. Sorting/filtering changes the view, not the saved dataset. Editing produces a new version or staged edit transaction; use explicit save/apply behavior. Keyboard support, focus retention, undo, and column controls are required.

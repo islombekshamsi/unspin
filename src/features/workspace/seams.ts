@@ -18,6 +18,7 @@ import type {
 // --- Ingestion (src/features/ingestion/index.ts) ---------------------------
 
 export interface UploadPanelProps {
+  onDemoReady?: (datasetId: string) => void;
   limits: Limits | null;
   /** Called with the server-validated Source after a successful upload. */
   onSourceCreated: (source: Source) => void;
@@ -63,6 +64,8 @@ export interface GridView {
   sortDirection: "asc" | "desc";
   filterColumnId: string | null;
   filterText: string | null;
+  search: string | null;
+  preset: "all" | "needs_review" | "estimated" | "edited";
   /** Visible columns in display order. */
   columnIds: string[];
 }
@@ -77,6 +80,12 @@ export interface DataGridProps {
   onDetailChange: (detail: DatasetDetail) => void;
   /** Reports the current view (sort/filter/columns) for "export current view". */
   onViewChange?: (view: GridView) => void;
+  /** Opens the source at the given rows/cells. Without it, Show source only links the selection. */
+  onShowSource?: (event: SelectionEvent) => void;
+  /** Opens cleaning and review for this dataset. */
+  onOpenCleaning?: () => void;
+  /** False while the grid's tab is hidden; its scroll position is restored when it is shown again. */
+  visible?: boolean;
 }
 
 // --- Cleaning (src/features/cleaning/index.ts) -----------------------------
@@ -102,6 +111,14 @@ export interface ChartPanelProps {
   detail: DatasetDetail;
   linked: SelectionEvent | null;
   onLinkedSelect: (event: SelectionEvent) => void;
+  /** Opens analysis for the current linked point. Hover never sends a request. */
+  onAskSelection?: (event: SelectionEvent) => void;
+  /** Shows the selected points' rows in the data table. */
+  onShowInData?: (event: SelectionEvent) => void;
+  /** Shows the selected points in the original source. */
+  onShowSource?: (event: SelectionEvent) => void;
+  /** False while the chart's tab is hidden: the plot is not drawn into a zero-size box. */
+  visible?: boolean;
 }
 
 // --- Comparison (src/features/comparison/index.ts) -------------------------

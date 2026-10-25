@@ -29,6 +29,8 @@ async function collectViewRowIds(datasetId: string, versionId: string, view: Gri
       sortDirection: view.sortDirection,
       filterColumnId: view.filterColumnId,
       filterText: view.filterText,
+      search: view.search,
+      preset: view.preset,
     });
     ids.push(...page.rows.map((r) => r.id));
     cursor = page.nextCursor;
@@ -58,7 +60,13 @@ export function ExportDialog({
 
   const { dataset, version } = detail;
   const needsAck = dataset.coverage !== "complete_selection" && !dataset.coverageAcknowledgedAt;
-  const viewIsFiltered = !!view && (!!view.filterText || !!view.sortColumnId || view.columnIds.length !== version.columns.length);
+  const viewIsFiltered =
+    !!view &&
+    (!!view.filterText ||
+      !!view.search ||
+      (view.preset && view.preset !== "all") ||
+      !!view.sortColumnId ||
+      view.columnIds.length !== version.columns.length);
   const chosen = (Object.keys(formats) as ExportFormat[]).filter((f) => formats[f]);
   const unreviewed = version.reviewSummary.unreviewed;
 
@@ -191,6 +199,8 @@ export function ExportDialog({
 function describeView(detail: DatasetDetail, view: GridView): string {
   const label = (id: string | null) => detail.version.columns.find((c) => c.id === id)?.label ?? "";
   const parts = [`${view.columnIds.length} of ${detail.version.columns.length} columns`];
+  if (view.preset && view.preset !== "all") parts.push(`preset ${view.preset.replace("_", " ")}`);
+  if (view.search) parts.push(`search “${view.search}”`);
   if (view.filterColumnId && view.filterText) parts.push(`filtered where “${label(view.filterColumnId)}” contains “${view.filterText}”`);
   if (view.sortColumnId) parts.push(`sorted by “${label(view.sortColumnId)}” ${view.sortDirection === "asc" ? "ascending" : "descending"}`);
   return parts.join(", ");

@@ -2,7 +2,7 @@
 
 import { useId, useState, type ReactNode } from "react";
 import type { SelectionInput, SourceSelection } from "@/contracts";
-import { Badge, Button, ErrorState, Panel } from "@/components/ui";
+import { Badge, Button, Disclosure, ErrorState, Panel } from "@/components/ui";
 import type { SourceSelectorProps } from "@/features/workspace/seams";
 import { ApiClientError, api } from "@/lib/api/client";
 import { formatBytes } from "../lib/format";
@@ -41,14 +41,15 @@ export function SourceSelector({ source, onSelectionCreated, onReplaceSource }: 
   return (
     <Panel
       title={`Choose what to use from this ${KIND_LABEL[source.kind].toLowerCase()}`}
+      className="min-h-0 flex-1"
       actions={
         <Button size="sm" variant="ghost" onClick={onReplaceSource}>
           Upload a different file
         </Button>
       }
-      bodyClassName="p-4 sm:p-5"
+      bodyClassName="flex min-h-0 flex-1 flex-col p-4 sm:p-5"
     >
-      <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-ink-muted">
+      <div className="mb-3 flex shrink-0 flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-ink-muted">
         <span className="min-w-0 truncate font-medium text-ink" title={source.filename}>
           {source.filename}
         </span>
@@ -95,7 +96,7 @@ export function SelectionFooter({
 }) {
   const hintId = useId();
   return (
-    <div className="mt-5 flex flex-col gap-3 border-t border-rule pt-4">
+    <div className="mt-3 flex shrink-0 flex-col gap-2 border-t border-rule pt-3">
       {onHintChange && (
         <div className="flex flex-col gap-1">
           <label htmlFor={hintId} className="text-[12px] font-medium text-ink-muted">
@@ -115,16 +116,22 @@ export function SelectionFooter({
           </p>
         </div>
       )}
-      <div className="rounded-md bg-sunken px-3 py-2 text-[13px] leading-5 text-ink">
-        <p className="font-medium">{scope}</p>
-        <p className="text-ink-muted">{disclosure}</p>
-      </div>
+      <p className="text-[13px] leading-5 text-ink">{scope}</p>
+      <Disclosure summary="How this is parsed" className="text-[12px] text-ink-muted">
+        <p>{disclosure}</p>
+      </Disclosure>
       {extra}
       {state.error && (
         <ErrorState title="This selection could not be used" message={state.error.message} code={state.error.code === "network" ? undefined : state.error.code} requestId={state.error.requestId ?? undefined} />
       )}
       <div className="flex flex-wrap items-center gap-3">
-        <Button variant="primary" onClick={onSubmit} disabled={!canSubmit} loading={state.submitting}>
+        <Button
+          variant="primary"
+          onClick={onSubmit}
+          disabled={!canSubmit}
+          loading={state.submitting}
+          className="h-10! rounded-full! px-5! transition-[background-color,border-color,transform] active:scale-[0.98]"
+        >
           Use this selection
         </Button>
         {!canSubmit && disabledReason && <span className="text-[12px] text-ink-muted">{disabledReason}</span>}

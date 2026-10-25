@@ -1,6 +1,6 @@
 import { AppError, type ExtractionInput } from "@/contracts";
 import { classifyProviderError } from "./errors";
-import { PROMPT_VERSION, RESPONSE_JSON_SCHEMA, buildSystemInstruction, buildUserPrompt, sanitizeHint } from "./prompt";
+import { TEXT_PROMPT_VERSION, TEXT_SYSTEM_INSTRUCTION, TEXT_RESPONSE_JSON_SCHEMA, PROMPT_VERSION, RESPONSE_JSON_SCHEMA, buildSystemInstruction, buildUserPrompt, sanitizeHint } from "./prompt";
 import { parseProviderResponse, type ModelExtraction } from "./response";
 import type { GeminiRawResult, GeminiTransport, TokenUsage } from "./transport";
 
@@ -70,6 +70,7 @@ export class GeminiProvider {
     input: Pick<ExtractionInput, "bytes" | "mimeType" | "pixelSize" | "pageHint" | "disclosure">,
     userHint: string | null,
     signal: AbortSignal,
+    mode: "chart_table" | "text" = "chart_table",
   ): Promise<ProviderExtraction> {
     const now = this.opts.now ?? Date.now;
     const sleep = this.opts.sleep ?? abortableSleep;
@@ -80,7 +81,7 @@ export class GeminiProvider {
 
     const request = {
       model: this.opts.model,
-      systemInstruction: buildSystemInstruction(this.opts.maxRows),
+      systemInstruction: mode === "text" ? TEXT_SYSTEM_INSTRUCTION.replace("MAX_ROWS", String(this.opts.maxRows)) : buildSystemInstruction(this.opts.maxRows),
       prompt: buildUserPrompt({
         maxRows: this.opts.maxRows,
         pixelSize: input.pixelSize,
@@ -89,7 +90,7 @@ export class GeminiProvider {
         userHint: sanitizeHint(userHint, this.opts.maxHintChars),
       }),
       media: { mimeType: input.mimeType, base64: toBase64(input.bytes) },
-      responseJsonSchema: RESPONSE_JSON_SCHEMA,
+      responseJsonSchema: mode === "text" ? TEXT_RESPONSE_JSON_SCHEMA : RESPONSE_JSON_SCHEMA,
       maxOutputTokens: this.opts.maxOutputTokens,
     };
 
@@ -132,7 +133,7 @@ export class GeminiProvider {
         truncated: parsed.truncated,
         model: this.opts.model,
         modelVersion: raw.modelVersion,
-        promptVersion: PROMPT_VERSION,
+        promptVersion: mode === "text" ? TEXT_PROMPT_VERSION : PROMPT_VERSION,
         requestedAt,
         attempts: attempt,
         elapsedMs: now() - started,

@@ -5,7 +5,7 @@ export interface GeminiRequest {
   model: string;
   systemInstruction: string;
   prompt: string;
-  media: { mimeType: string; base64: string };
+  media: { mimeType: string; base64: string } | null;
   responseJsonSchema: unknown;
   maxOutputTokens: number;
   /** Per-attempt bound; the caller's signal still cancels earlier. */
@@ -48,7 +48,9 @@ export class SdkTransport implements GeminiTransport {
       contents: [
         {
           role: "user",
-          parts: [{ inlineData: { mimeType: request.media.mimeType, data: request.media.base64 } }, { text: request.prompt }],
+          parts: request.media
+            ? [{ inlineData: { mimeType: request.media.mimeType, data: request.media.base64 } }, { text: request.prompt }]
+            : [{ text: request.prompt }],
         },
       ],
       config: {

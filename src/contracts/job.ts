@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CreateAnalysisRequestSchema } from "./analysis";
 import { IdSchema, IsoDateTimeSchema } from "./common";
 
 export const JobStatusSchema = z.enum(["queued", "running", "completed", "failed", "cancelled"]);
@@ -24,7 +25,7 @@ export type JobError = z.infer<typeof JobErrorSchema>;
 export const JobSchema = z.object({
   id: IdSchema,
   sourceSelectionId: IdSchema,
-  operationType: z.enum(["extraction", "structured_parse"]),
+  operationType: z.enum(["extraction", "structured_parse", "analysis"]),
   status: JobStatusSchema,
   stage: JobStageSchema,
   cancellationRequested: z.boolean(),
@@ -36,6 +37,15 @@ export const JobSchema = z.object({
   measuredProgress: z.object({ done: z.number().int(), total: z.number().int(), unit: z.string() }).nullable(),
   error: JobErrorSchema.nullable(),
   resultDatasetId: IdSchema.nullable(),
+  /** Set when operationType is analysis. */
+  resultAnalysisId: IdSchema.nullable().default(null),
+  analysis: z
+    .object({
+      datasetId: IdSchema,
+      request: CreateAnalysisRequestSchema,
+    })
+    .nullable()
+    .default(null),
 });
 export type Job = z.infer<typeof JobSchema>;
 
@@ -43,5 +53,6 @@ export const CreateExtractionRequestSchema = z.object({
   selectionId: IdSchema,
   /** Required true when the selection will be sent to an external model. */
   consentToExternalProcessing: z.boolean(),
+  extractionMode: z.enum(["chart_table", "text"]).optional(),
 });
 export type CreateExtractionRequest = z.infer<typeof CreateExtractionRequestSchema>;

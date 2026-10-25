@@ -24,6 +24,7 @@ import {
 } from "@/contracts";
 import { guardPool, withTransaction, type Db } from "./pool";
 import { conflict, notFound, TERMINAL_JOB_STATUSES, type ClaimResult } from "./shared";
+import { PostgresAnalysisRepository, PostgresViewRepository } from "./views";
 
 /**
  * PostgreSQL repositories implementing the frozen interfaces in src/contracts/repositories.ts.
@@ -598,6 +599,8 @@ export interface PostgresRepositorySet {
   datasets: PostgresDatasetRepository;
   jobs: PostgresJobRepository;
   shares: PostgresShareRepository;
+  views: PostgresViewRepository;
+  analysis: PostgresAnalysisRepository;
 }
 
 export function createPostgresRepositories(pool: Pool): PostgresRepositorySet {
@@ -608,5 +611,7 @@ export function createPostgresRepositories(pool: Pool): PostgresRepositorySet {
     datasets: new PostgresDatasetRepository(db),
     jobs: new PostgresJobRepository(db),
     shares: new PostgresShareRepository(db),
+    views: new PostgresViewRepository(db),
+    analysis: new PostgresAnalysisRepository(db),
   };
 }

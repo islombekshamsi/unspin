@@ -8,15 +8,15 @@ type Size = "sm" | "md";
 
 const VARIANTS: Record<Variant, string> = {
   primary:
-    "bg-accent text-accent-ink border border-accent hover:bg-accent-strong hover:border-accent-strong disabled:bg-rule-strong disabled:border-rule-strong",
-  secondary: "bg-surface text-ink border border-rule-strong hover:bg-sunken disabled:text-ink-faint",
-  ghost: "bg-transparent text-ink border border-transparent hover:bg-sunken disabled:text-ink-faint",
+    "bg-accent text-accent-ink border border-accent hover:bg-accent-strong hover:border-accent-strong disabled:bg-rule-strong disabled:border-rule-strong disabled:text-ink-faint",
+  secondary: "bg-surface text-ink border border-rule-strong hover:bg-raised disabled:text-ink-faint",
+  ghost: "bg-transparent text-ink border border-transparent hover:bg-raised disabled:text-ink-faint",
   danger: "bg-surface text-danger border border-danger-rule hover:bg-danger-soft disabled:text-ink-faint",
 };
 
 const SIZES: Record<Size, string> = {
-  sm: "h-8 px-2.5 text-[13px] gap-1.5",
-  md: "h-9 px-3.5 text-sm gap-2",
+  sm: "h-8 px-3.5 text-[13px] gap-1.5",
+  md: "h-10 px-5 text-[14px] gap-2",
 };
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -43,7 +43,7 @@ export function Button({
       disabled={disabled || loading}
       aria-busy={loading || undefined}
       className={cx(
-        "inline-flex items-center justify-center rounded-md font-medium whitespace-nowrap transition-colors duration-[var(--motion-fast)] disabled:cursor-not-allowed",
+        "inline-flex items-center justify-center rounded-full font-medium whitespace-nowrap transition-[background-color,border-color,transform] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] enabled:active:scale-[0.98] disabled:cursor-not-allowed",
         VARIANTS[variant],
         SIZES[size],
         className,
@@ -70,9 +70,9 @@ export function IconButton({ label, variant = "ghost", size = "sm", className, c
       aria-label={label}
       title={label}
       className={cx(
-        "inline-flex items-center justify-center rounded-md transition-colors duration-[var(--motion-fast)] disabled:cursor-not-allowed disabled:opacity-50",
+        "inline-flex items-center justify-center rounded-full transition-[background-color,border-color,transform] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] enabled:active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50",
         VARIANTS[variant],
-        size === "sm" ? "h-8 w-8" : "h-9 w-9",
+        size === "sm" ? "h-8 w-8 px-0" : "h-10 w-10 px-0",
         className,
       )}
       {...rest}

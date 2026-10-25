@@ -14,6 +14,8 @@ export interface RowQuery {
   sortDirection: "asc" | "desc";
   filterColumnId: string | null;
   filterText: string | null;
+  search: string | null;
+  preset: "all" | "needs_review" | "estimated" | "edited";
 }
 
 interface WindowState {
@@ -26,8 +28,10 @@ interface WindowState {
 }
 
 const isAbort = (e: unknown) => e instanceof DOMException && e.name === "AbortError";
-const queryKey = (q: RowQuery) => JSON.stringify([q.datasetId, q.versionId, q.sortColumnId, q.sortDirection, q.filterColumnId, q.filterText]);
-const viewKey = (q: RowQuery) => JSON.stringify([q.datasetId, q.sortColumnId, q.sortDirection, q.filterColumnId, q.filterText]);
+const queryKey = (q: RowQuery) =>
+  JSON.stringify([q.datasetId, q.versionId, q.sortColumnId, q.sortDirection, q.filterColumnId, q.filterText, q.search, q.preset]);
+const viewKey = (q: RowQuery) =>
+  JSON.stringify([q.datasetId, q.sortColumnId, q.sortDirection, q.filterColumnId, q.filterText, q.search, q.preset]);
 
 /**
  * Server-paginated rows in the current view order (sort/filter are view parameters only).
@@ -53,7 +57,7 @@ export function useRowWindow(q: RowQuery) {
     const keep = prev && prev.view === viewKey(q) ? prev.count : 0;
     const limit = Math.min(SCAN_PAGE_SIZE, Math.max(PAGE_SIZE, keep));
     api
-      .getRows(q.datasetId, { versionId: q.versionId, limit, cursor: null, sortColumnId: q.sortColumnId, sortDirection: q.sortDirection, filterColumnId: q.filterColumnId, filterText: q.filterText }, ac.signal)
+      .getRows(q.datasetId, { versionId: q.versionId, limit, cursor: null, sortColumnId: q.sortColumnId, sortDirection: q.sortDirection, filterColumnId: q.filterColumnId, filterText: q.filterText, search: q.search, preset: q.preset }, ac.signal)
       .then(
         (page) => setState({ key, rows: page.rows, total: page.totalRows, nextCursor: page.nextCursor, error: null, loadingMore: false }),
         (e) => {
@@ -83,6 +87,8 @@ export function useRowWindow(q: RowQuery) {
           sortDirection: q.sortDirection,
           filterColumnId: q.filterColumnId,
           filterText: q.filterText,
+          search: q.search,
+          preset: q.preset,
         });
         const p = stateRef.current;
         if (p.key !== key || p.nextCursor !== cursor) return false;

@@ -13,7 +13,11 @@ export type IdPrefix =
   | "exp"
   | "shr"
   | "chart"
-  | "req";
+  | "req"
+  | "view"
+  | "fact"
+  | "anl"
+  | "cns";
 
 /** Opaque, unguessable identifier. Works in Node and browsers (Web Crypto). */
 export function newId(prefix: IdPrefix): string {

@@ -27,6 +27,7 @@ import {
 import { buildChartQuery } from "@/features/visualization/lib/chart-query";
 import { LIMITS } from "@/server/config/limits";
 import { buildCsv, buildJsonData, buildManifest, type ExportContext } from "@/server/exports";
+import { applyView } from "@/server/analysis/view-match";
 import { computeFindings } from "@/server/quality";
 import { getRepositories } from "@/server/storage";
 import { computeTransform, operationHash } from "@/server/transforms";
@@ -34,13 +35,13 @@ import { getSelection, getSourceRecord } from "./sources";
 
 const now = () => new Date().toISOString();
 
-async function requireDataset(owner: Owner, datasetId: string): Promise<Dataset> {
+export async function requireDataset(owner: Owner, datasetId: string): Promise<Dataset> {
   const d = await getRepositories().datasets.get(owner, datasetId);
   if (!d) throw new AppError("not_found", "Dataset not found.");
   return d;
 }
 
-async function requireVersion(owner: Owner, datasetId: string, versionId: string): Promise<DatasetVersionSnapshot> {
+export async function requireVersion(owner: Owner, datasetId: string, versionId: string): Promise<DatasetVersionSnapshot> {
   const v = await getRepositories().datasets.getVersion(owner, datasetId, versionId);
   if (!v) throw new AppError("not_found", "Dataset version not found.");
   return v;
@@ -105,10 +106,12 @@ export async function getRows(owner: Owner, datasetId: string, q: RowsQuery): Pr
     const wanted = new Set(q.rowIds);
     rows = rows.filter((r) => wanted.has(r.id));
   }
-  if (q.filterColumnId && q.filterText) {
-    const needle = q.filterText.toLocaleLowerCase();
-    rows = rows.filter((r) => displayText(r.cells[q.filterColumnId!]).toLocaleLowerCase().includes(needle));
-  }
+  rows = applyView(rows, {
+    preset: q.preset ?? "all",
+    search: q.search ?? null,
+    filterColumnId: q.filterColumnId ?? null,
+    filterText: q.filterText ?? null,
+  });
   if (q.sortColumnId) {
     const dir = q.sortDirection === "desc" ? -1 : 1;
     const col = q.sortColumnId;
@@ -297,7 +300,13 @@ export async function chartQuery(owner: Owner, datasetId: string, req: ChartQuer
   if (!cols.has(req.xColumnId) || req.yColumnIds.some((id) => !cols.has(id))) {
     throw new AppError("bad_request", "Unknown column in chart query.");
   }
-  return buildChartQuery(snapshot, req, Math.min(req.maxPoints ?? LIMITS.maxChartPoints, LIMITS.maxChartPoints));
+  let scoped = snapshot;
+  if (req.savedViewId) {
+    const view = await getRepositories().views.get(owner, datasetId, req.savedViewId);
+    if (!view) throw new AppError("not_found", "Saved view not found.");
+    scoped = { ...snapshot, rows: applyView(snapshot.rows, view.spec) };
+  }
+  return buildChartQuery(scoped, req, Math.min(req.maxPoints ?? LIMITS.maxChartPoints, LIMITS.maxChartPoints));
 }
 
 export async function createExport(owner: Owner, datasetId: string, req: CreateExportRequest): Promise<ExportResult> {

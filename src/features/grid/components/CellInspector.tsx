@@ -51,6 +51,7 @@ export function CellInspector({
   editRequest,
   onDetailChange,
   onEditorClosed,
+  onOpenRecord,
 }: {
   target: InspectorTarget | null;
   detail: DatasetDetail;
@@ -61,6 +62,7 @@ export function CellInspector({
   editRequest: number;
   onDetailChange: (d: DatasetDetail) => void;
   onEditorClosed: () => void;
+  onOpenRecord?: (rowId: string) => void;
 }) {
   const [editing, setEditing] = useState<{ cellId: string; request: number } | null>(null);
   const [handledRequest, setHandledRequest] = useState(editRequest);
@@ -105,9 +107,16 @@ export function CellInspector({
   return (
     <div className="flex flex-col gap-4 p-4 text-[13px]">
       <header>
-        <p className="text-[11px] tracking-wide text-ink-muted uppercase">
-          Row {row.sourceOrder + 1} in source · {column.label}
-        </p>
+        <div className="flex items-start justify-between gap-2">
+          <p className="text-[11px] tracking-wide text-ink-muted uppercase">
+            Row {row.sourceOrder + 1} in source · {column.label}
+          </p>
+          {onOpenRecord && (
+            <Button size="sm" variant="ghost" onClick={() => onOpenRecord(row.id)}>
+              Open record
+            </Button>
+          )}
+        </div>
         {cell ? (
           <p className="mt-1 text-base break-words text-ink">
             <StateText s={cell} />
@@ -256,7 +265,9 @@ function CellEditor({
   const formId = useId();
 
   useEffect(() => {
-    formRef.current?.querySelector<HTMLElement>("input:not([type=checkbox]), select")?.focus();
+    const target = formRef.current?.querySelector<HTMLElement>("[data-edit-value]");
+    target?.focus();
+    if (target instanceof HTMLInputElement) target.select();
   }, []);
 
   useEffect(() => {
@@ -315,6 +326,7 @@ function CellEditor({
           {(id) => (
             <Select
               id={id}
+              data-edit-value
               value={reason}
               onChange={(e) => {
                 setReason(e.target.value as MissingReason);
@@ -365,6 +377,7 @@ function CellEditor({
               type === "boolean" ? (
                 <Select
                   id={id}
+                  data-edit-value
                   value={value === "true" ? "true" : "false"}
                   onChange={(e) => {
                     setValue(e.target.value);
@@ -377,6 +390,7 @@ function CellEditor({
               ) : (
                 <TextInput
                   id={id}
+                  data-edit-value
                   value={value}
                   inputMode={type === "decimal" ? "decimal" : undefined}
                   className={type === "decimal" ? "tabular" : undefined}

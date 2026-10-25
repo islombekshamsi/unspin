@@ -1,0 +1,29 @@
+[
+  {
+    "mode": "finance",
+    "tables": 7,
+    "checked_cells": 741,
+    "missing_cells": 76,
+    "source_hash_verified": true,
+    "numeric_mismatches": 0,
+    "scope": "PDF numeric cells and printed missing markers; every CSV field. Reconstructed category/header labels are reviewed separately."
+  },
+  {
+    "mode": "academic",
+    "tables": 5,
+    "checked_cells": 578,
+    "missing_cells": 6,
+    "source_hash_verified": true,
+    "numeric_mismatches": 0,
+    "scope": "PDF numeric cells and printed missing markers; every CSV field. Reconstructed category/header labels are reviewed separately."
+  },
+  {
+    "mode": "research",
+    "tables": 1,
+    "checked_cells": 2752,
+    "missing_cells": 19,
+    "source_hash_verified": true,
+    "numeric_mismatches": 0,
+    "scope": "PDF numeric cells and printed missing markers; every CSV field. Reconstructed category/header labels are reviewed separately."
+  }
+]

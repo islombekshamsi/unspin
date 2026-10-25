@@ -228,7 +228,7 @@ Status: **one real-browser pass completed**. This is not an accuracy score and n
 
 Screenshots: `evaluation/results/walkthrough/01-landing-desktop.png` … `19-landing-mobile.png`. Machine log: `notes.json`. Narrative: `OBSERVATIONS.md`.
 
-Refresh and failed extraction were real. Gemini accuracy was not scored.
+Refresh and failed extraction were real. **This walkthrough did not score Gemini.** A later UNSPIN T1 measurement on the same NOAA chart (commit `c7f7122`) did score it: see the addendum below. Do not treat this Phase 2 section as “accuracy not scored” for the product as a whole.
 
 ## Defects (owners)
 
@@ -248,3 +248,75 @@ Phase 1 defect 1 (CSV cannot skip a `#` preamble) **did not reproduce** on this 
 | File hashes of the two committed NOAA inputs | match Phase 1 / `evaluation/sources.json` |
 
 No unit-test rerun in this role. No Gemini call. No invented timings.
+
+---
+
+# Addendum — T1 scores, skipped tests, durable restart (2026-10-24)
+
+This addendum supersedes the Phase 2 sentence that Gemini was unscored. Phase 1 skip counts (44) are historical; they are not the current `npm test` skip list.
+
+## T1 NOAA chart (UNSPIN arm), committed in `c7f7122`
+
+Source: `evaluation/results/T1/score.json` and `evaluation/results/T1_NOAA.md`. One consented `gemini-3.8-flash` call, crop 48,78,688,468 px, 165.9 s, coverage `uncertain`, all origins `estimated`. The reference key was opened only after export.
+
+| Item | Value |
+| --- | --- |
+| Tolerance (declared before scoring) | normalized error ≤ 0.01 of the 20 ppm axis (412.5–432.5) = **0.2 ppm** |
+| Expected key rows | 138 (69 months × 2 series, 2021-01..2026-09) |
+| Extracted | 68 × 3 table → 136 long observations |
+| matched | 136 |
+| missing | 2 (`2026-09` monthly mean and deseasonalized) |
+| extra | 0 |
+| wrong_series | 16 (numerical closeness to the other series, not a whole-column swap) |
+| abs_error | median 0.135 ppm, p90 1.18 ppm, max 2.37 ppm (`2025-07` average: extracted 425.5, key 427.87) |
+| within 0.2 ppm | **73 / 136** matched |
+| within 0.5 ppm | 93 / 136 |
+| within 1.0 ppm | 116 / 136 |
+
+Limitations: one image, one crop, one model call, one operator, no cell corrections. It does not establish Gemini accuracy in general, UNSPIN superiority, or fitness for scientific analysis. General-AI and WebPlotDigitizer arms were not run. T2 was not run.
+
+## The 13 skipped tests on default `npm test`
+
+Recorded count: **567 passed, 13 skipped, 0 failed.** Skips are not a hidden persistence hole in the HTTP path; 9 of them *are* Postgres tests that opt in via `UNSPIN_TEST_DATABASE_URL`.
+
+| Count | Where | Why skipped | Required behavior? |
+| --- | --- | --- | --- |
+| 7 | `src/server/jobs/runner.test.ts` `JobWorker (postgres)` | `UNSPIN_TEST_DATABASE_URL` unset | Yes: worker claim/lease/cancel against Postgres. Memory twin of the same 7 tests **does** run. |
+| 2 | `src/server/storage/postgres.test.ts` | same unset URL | Yes: migration idempotence and advisory-lock serialization. |
+| 3 | `tests/ingestion/real-inputs.test.ts` (`it.runIf(pdfPresent)`) | EIA STEO PDF is not in the repo; needs `evaluation/fetch-inputs.sh` | PDF page/geometry ingestion. Not persistence. |
+| 1 | `tests/orchestration/extraction.test.ts` placeholder-parser failure | Parser now exists, so `it.runIf(parserIsPlaceholder)` does not run | Obsolete honest-failure branch. The real-parser NOAA job test **runs**. |
+
+**Not in the 13:** 23 `postgres repositories` contract tests in `repository-contract.ts` are registered only `if (url)`. Default `npm test` never sees them (not skipped, not counted). They cover ownership isolation, version compare-and-set, restore, job leases, shares, deletion cascade, guest claim.
+
+On this pass, with `UNSPIN_TEST_DATABASE_URL=postgres:///unspin_infra_test`:
+
+```text
+npx vitest run src/server/storage/postgres.test.ts src/server/jobs/runner.test.ts
+# Test Files  2 passed; Tests  39 passed (0 skip)
+```
+
+That 39 = 7 memory worker + 7 postgres worker + 2 migrate + 23 repository contract. Persistence unit coverage exists; default `npm test` still omits it unless the URL is set. It does not replace the HTTP restart acceptance.
+
+## Durable HTTP restart
+
+See `evaluation/results/durable/REPORT.md`. Pass on `:3110`. Everyday `:3000` was then pointed at `unspin_dev` (Gemini keys kept; persistence keys appended). Health `durable=true`; restart/reopen pass in `evaluation/results/dev-durable/REPORT.md`.
+
+---
+
+# Addendum — interactive workspace (2026-10-24)
+
+Isolated production `next start -p 3122` against `postgres:///unspin_interactive`, filesystem `.data/interactive-blobs`, `UNSPIN_JOBS_MODE=inline`. Everyday `:3000` / worker on `unspin_dev` were not stopped.
+
+NOAA Mauna Loa monthly CSV excerpt, skip 40 leading records: 629 × 8, first average `333.19`, provenance CSV record 1 / line 42. Deterministic overview: time series, `average` over `decimal date` 1974.375 → 2026.7083, 333.19 to 426.07 (+92.88). Saved view `NOAA all` persisted across reload. Record panel and chart Ask AI on a selected point. Search `zzzznomatch` → “No rows match this view.” Consent, then Gemini `gemini-3.8-flash`: overview job completed with 4 insight cards; question “How did average change from the first to the latest observation?” completed with 1 card. Show evidence on the trend card selected source row 1 (`333.19`). JSON schema success was not treated as grounding; an earlier entire-dataset call was rejected until fact ids and validation salvage were in place.
+
+`npx vitest run tests/analysis/view-profile.test.ts`: 10 passed. `npx tsc --noEmit`: pass. `npm run build`: pass.
+
+Known remaining: Penn State expense PDF and Fed borrowing-rate PDF not started. T1 general-AI and WebPlotDigitizer arms not run. Auth0 / public deploy parked. Client insight rendering on this production bundle omitted unit suffixes (`629 across 8`); source now appends units.
+
+## Build from text (2026-10-25)
+
+Added an explicit prose mode for PDF/image selections using the existing durable extraction pipeline. Only reported numerical observations are accepted. Present values require transcribed supporting quotes; validation rejects estimated values, absent quotes, and numbers inconsistent with their quoted text. Quotes are model transcriptions, not independently verified PDF text. Chart suitability still depends on meaningful compatible numeric columns; no values are fabricated for prose without observations.
+
+Checks run: TypeScript `npx tsc --noEmit` passed. Focused extraction/provider/ingestion/presentation/orchestration suite: 85 passed, 1 skipped. After adding mode-isolation/idempotency coverage, orchestration alone: 18 passed, 1 skipped. Protocol fixtures test behavior and do not measure real extraction accuracy.
+
+Real browser on existing :3000: October-2026-Newsletter.pdf, whole page 3, selected Build from text, confirmed external-processing disclosure, submitted to configured Gemini. Observed queued → waiting for model → no_data_found: “The selected text has no explicit numerical observations suitable for a chart. No numbers were invented.” Thus the real failure path is verified; a successful prose-derived table/chart for this document is NOT established. No dataset was created from this response. Screenshot: `docs/text-mode-browser.png`. Existing restart/undo/export acceptances were not rerun or newly claimed.

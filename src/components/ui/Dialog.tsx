@@ -47,7 +47,7 @@ export function Dialog({
         onClose();
       }}
       className={cx(
-        "m-auto w-[min(640px,calc(100vw-2rem))] max-h-[calc(100vh-4rem)] rounded-lg border border-rule bg-surface p-0 text-ink shadow-overlay backdrop:bg-ink/30",
+        "m-auto w-[min(640px,calc(100vw-2rem))] max-h-[calc(100vh-4rem)] rounded-[24px] border border-rule bg-surface p-0 text-ink shadow-overlay backdrop:bg-[rgba(9,10,11,0.72)]",
         className,
       )}
     >
@@ -55,7 +55,7 @@ export function Dialog({
         <div className="flex max-h-[calc(100vh-4rem)] flex-col">
           <header className="flex items-start justify-between gap-4 border-b border-rule px-5 py-4">
             <div>
-              <h2 id={titleId} className="text-base font-semibold">
+              <h2 id={titleId} className="text-[1.15rem] font-medium tracking-[-0.03em] text-ink-strong">
                 {title}
               </h2>
               {description && (

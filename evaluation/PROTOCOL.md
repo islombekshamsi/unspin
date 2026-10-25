@@ -1,6 +1,6 @@
 # Comparison protocol: UNSPIN vs general AI workflow vs established digitizer
 
-Status: **designed, not run.** No measurements exist yet. Nothing in this file is a result.
+Status: **designed.** The UNSPIN arm of T1 was run and scored on 2026-10-24 (`evaluation/results/T1_NOAA.md`). General-AI and WebPlotDigitizer arms were not run. T2 was not run. Nothing else in this file is a result.
 
 ## Question
 

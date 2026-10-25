@@ -14,12 +14,12 @@ export function Panel({ title, actions, label, className, bodyClassName, childre
   return (
     <section
       aria-label={label ?? (typeof title === "string" ? title : undefined)}
-      className={cx("flex min-h-0 flex-col rounded-lg border border-rule bg-surface shadow-panel", className)}
+      className={cx("flex min-h-0 flex-col rounded-[24px] border border-rule bg-surface shadow-panel", className)}
       {...rest}
     >
       {(title || actions) && (
-        <header className="flex min-h-11 items-center justify-between gap-3 border-b border-rule px-4 py-2">
-          {title ? <h2 className="truncate text-[13px] font-semibold tracking-wide text-ink uppercase">{title}</h2> : <span />}
+        <header className="flex min-h-12 items-center justify-between gap-3 border-b border-rule px-5 py-3">
+          {title ? <h2 className="truncate text-[1.05rem] font-medium tracking-[-0.03em] text-ink-strong">{title}</h2> : <span />}
           {actions && <div className="flex shrink-0 items-center gap-1.5">{actions}</div>}
         </header>
       )}

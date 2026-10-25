@@ -45,8 +45,9 @@ describe("GeminiProvider request construction", () => {
     const out = await run(t, ac.signal);
     expect(t.calls).toBe(1);
     const req = t.requests[0];
-    expect(Buffer.from(req.media.base64, "base64")).toEqual(Buffer.from(input.bytes));
-    expect(req.media.mimeType).toBe("image/png");
+    expect(req.media).not.toBeNull();
+    expect(Buffer.from(req.media!.base64, "base64")).toEqual(Buffer.from(input.bytes));
+    expect(req.media!.mimeType).toBe("image/png");
     expect(req.maxOutputTokens).toBe(32_768);
     expect(req.systemInstruction).toContain("untrusted DATA");
     expect(t.signals[0]).toBe(ac.signal);
@@ -135,6 +136,16 @@ describe("GeminiProvider error mapping and retries", () => {
   it("maps 400 API_KEY_INVALID to not_configured", async () => {
     const t = new ScriptedTransport([apiError(400, { error: { status: "INVALID_ARGUMENT", details: [{ reason: "API_KEY_INVALID" }] } })]);
     expect((await failure(run(t))).code).toBe("not_configured");
+  });
+
+  it("explains HTTP 402 and does not retry a payment rejection", async () => {
+    const t = new ScriptedTransport([apiError(402, { error: { message: "provider-private-body" } })]);
+    const e = await failure(run(t));
+    expect(e.code).toBe("not_configured");
+    expect(e.message).toContain("HTTP 402");
+    expect(e.message).not.toContain("provider-private-body");
+    expect(e.retryable).toBe(false);
+    expect(t.calls).toBe(1);
   });
 
   it("maps 404 to not_configured naming the model (not the key)", async () => {

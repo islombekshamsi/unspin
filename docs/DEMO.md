@@ -4,7 +4,7 @@ Use a production server (`nvm use` then `npm run build` && `npm run start`). Thi
 
 ## 0:00–0:15 — the inconvenient file
 
-Open the app. The heading is: **Turn charts and spreadsheets into data you can inspect, correct, and reuse.** Drop `evaluation/inputs/noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv` (29.1 KB). Spreadsheets stay on this server; they are not sent to a model.
+Open the app. The heading is: **Turn charts and spreadsheets into data you can inspect, correct, and reuse.** Drop `evaluation/inputs/noaa-gml-co2-mm-mlo-1974-05_2026-09.excerpt.csv` (29.1 KB). Spreadsheets are parsed on this server. Optional analysis, if you confirm it later, sends computed facts rather than the file.
 
 ## 0:15–0:40 — choose the data, not the comments
 
@@ -24,7 +24,7 @@ Export CSV, exact JSON, and the provenance manifest. After undo, the CSV first r
 
 ## 1:50–2:00 — what this is not
 
-Work is session-only unless PostgreSQL durability is actually configured and tested. Chart extraction is a separate, slower path (165.9 s on this NOAA figure; 73/136 points within 0.2 ppm of the publisher file — see `docs/EVALUATION.md`). There is no public URL, no account wall, and no quota. Do not claim scientific validation from one image.
+Everyday `npm run dev` plus `npm run worker` is durable on local Postgres `unspin_dev` (`docs/EVALUATION.md` §D). Chart extraction is a separate, slower path (165.9 s on this NOAA figure; 73/136 points within 0.2 ppm of the publisher file — see `docs/EVALUATION.md`). There is no public URL, no account wall, and no quota. Do not claim scientific validation from one image.
 
 ## Track evidence (same product)
 

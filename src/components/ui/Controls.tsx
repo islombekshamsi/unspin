@@ -4,7 +4,7 @@ import { useId, useRef, useState, type InputHTMLAttributes, type ReactNode, type
 import { cx } from "./cx";
 
 const FIELD =
-  "h-9 w-full rounded-md border border-rule-strong bg-surface px-2.5 text-sm text-ink placeholder:text-ink-faint disabled:bg-sunken disabled:text-ink-faint";
+  "h-9 w-full rounded-full border border-rule-strong bg-sunken px-3 text-sm text-ink placeholder:text-ink-faint disabled:bg-sunken disabled:text-ink-faint";
 
 export function Field({ label, hint, children, className }: { label: string; hint?: ReactNode; children: (id: string) => ReactNode; className?: string }) {
   const id = useId();
@@ -67,7 +67,7 @@ export function SegmentedControl<T extends string>({
     refs.current[options.indexOf(next)]?.focus();
   };
   return (
-    <div role="radiogroup" aria-label={label} className={cx("inline-flex rounded-md border border-rule-strong bg-sunken p-0.5", className)}>
+    <div role="radiogroup" aria-label={label} className={cx("inline-flex rounded-full border border-rule-strong bg-sunken p-0.5", className)}>
       {options.map((o, i) => {
         const checked = o.value === value;
         return (
@@ -93,8 +93,8 @@ export function SegmentedControl<T extends string>({
               }
             }}
             className={cx(
-              "h-7 rounded-[5px] px-2.5 text-[13px] font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-40",
-              checked ? "bg-surface text-ink shadow-panel" : "text-ink-muted hover:text-ink",
+              "h-7 rounded-full px-2.5 text-[13px] font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-40",
+              checked ? "bg-accent text-accent-ink" : "text-ink-muted hover:text-ink",
             )}
           >
             {o.label}
@@ -108,7 +108,7 @@ export function SegmentedControl<T extends string>({
 /** Disclosure on native <details>/<summary>: keyboard and screen-reader support built in. */
 export function Disclosure({ summary, children, defaultOpen, className }: { summary: ReactNode; children: ReactNode; defaultOpen?: boolean; className?: string }) {
   return (
-    <details open={defaultOpen} className={cx("group rounded-md border border-rule", className)}>
+    <details open={defaultOpen} className={cx("group rounded-2xl border border-rule", className)}>
       <summary className="flex cursor-pointer list-none items-center gap-2 px-3 py-2 text-[13px] font-medium text-ink select-none">
         <svg viewBox="0 0 16 16" className="h-3 w-3 transition-transform group-open:rotate-90" aria-hidden="true">
           <path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.5" />

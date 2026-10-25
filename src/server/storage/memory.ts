@@ -1,5 +1,7 @@
 import {
   AppError,
+  type AnalysisConsent,
+  type AnalysisRecord,
   type BlobStore,
   type CommitVersionArgs,
   type CreateDatasetArgs,
@@ -12,6 +14,7 @@ import {
   type JobRepository,
   type Owner,
   type Provenance,
+  type SavedView,
   type SelectionRepository,
   type Share,
   type ShareRepository,
@@ -58,6 +61,9 @@ export class MemoryState {
   blobs = new Map<string, Uint8Array>();
   shares = new Map<string, ShareEntry>();
   claims = new Map<string, string>();
+  views = new Map<string, Owned<SavedView>>();
+  analysis = new Map<string, Owned<AnalysisRecord>>();
+  consents = new Map<string, Owned<AnalysisConsent>>();
 }
 
 export function memoryState(): MemoryState {
@@ -67,6 +73,9 @@ export function memoryState(): MemoryState {
   const s = g.__unspinMemory as Partial<MemoryState>;
   s.shares ??= new Map();
   s.claims ??= new Map();
+  s.views ??= new Map();
+  s.analysis ??= new Map();
+  s.consents ??= new Map();
   return g.__unspinMemory;
 }
 
@@ -81,6 +90,9 @@ function cascadeSelections(s: MemoryState, selectionIds: Set<string>) {
 function deleteDatasetEntry(s: MemoryState, datasetId: string) {
   s.datasets.delete(datasetId);
   for (const [id, e] of s.shares) if (e.share.datasetId === datasetId) s.shares.delete(id);
+  for (const [id, e] of s.views) if (e.value.datasetId === datasetId) s.views.delete(id);
+  for (const [id, e] of s.analysis) if (e.value.datasetId === datasetId) s.analysis.delete(id);
+  for (const [id, e] of s.consents) if (e.value.datasetId === datasetId) s.consents.delete(id);
 }
 
 export class MemorySourceRepository implements SourceRepository {

@@ -42,7 +42,7 @@ export function FileDropzone({
         if (file) onFile(file);
       }}
       className={cx(
-        "flex flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed px-6 py-10 text-center transition-colors",
+        "flex flex-col items-center justify-center gap-3 rounded-[24px] border-2 border-dashed px-6 py-10 text-center transition-colors",
         dragging ? "border-accent bg-accent-soft" : "border-rule-strong bg-surface",
         disabled && "opacity-60",
         className,
@@ -65,7 +65,7 @@ export function FileDropzone({
       <label
         htmlFor={id}
         className={cx(
-          "inline-flex h-10 cursor-pointer items-center rounded-md border border-accent bg-accent px-4 text-sm font-medium text-accent-ink hover:bg-accent-strong",
+          "inline-flex h-10 cursor-pointer items-center rounded-full border border-accent bg-accent px-5 text-sm font-medium text-accent-ink hover:bg-accent-strong",
           "has-[:focus-visible]:outline-2",
           disabled && "pointer-events-none",
         )}

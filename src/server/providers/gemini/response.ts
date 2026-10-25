@@ -35,6 +35,7 @@ export const ModelCellSchema = z.object({
   missingReason: z.enum(MISSING_REASONS).nullable(),
   box: z.array(z.number()).nullable(),
   note: ModelText.nullable(),
+  sourceQuote: ModelText.nullable().optional(),
 });
 export type ModelCell = z.infer<typeof ModelCellSchema>;
 

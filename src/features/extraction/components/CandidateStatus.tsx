@@ -16,7 +16,9 @@ const SEVERITY_LABEL = { blocking: "Blocking", review: "Review", info: "Note" } 
 
 export function CandidateStatus({ detail, onAcknowledged }: CandidateStatusProps) {
   const { dataset, version } = detail;
-  const method = methodStatus(dataset.extractionMethod);
+  const method = dataset.extraction?.promptVersion === "text-data-v1"
+    ? { tone: "estimate" as const, label: "Structured from text — review required", detail: "AI transcribed explicit statements into a table. Source quotes are model transcriptions; verify them against the selected page. The displayed chart was built from this table." }
+    : methodStatus(dataset.extractionMethod);
   const coverage = coverageStatus(dataset);
   const [acking, setAcking] = useState(false);
   const [ackError, setAckError] = useState<string | null>(null);
@@ -43,10 +45,15 @@ export function CandidateStatus({ detail, onAcknowledged }: CandidateStatusProps
   }
 
   return (
-    <section aria-label="Extraction status" className="flex flex-col gap-2 text-[13px] leading-5">
+    <section aria-label="Extraction status" className="flex flex-col gap-1 text-[13px] leading-5">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
         <Badge tone={method.tone}>{method.label}</Badge>
-        {method.detail && <span className="text-ink-muted">{method.detail}</span>}
+        {dataset.coverage === "complete_selection" && <span className="text-[12px] text-ink-muted">{coverage.label}</span>}
+        {version.unresolvedFindingCount > 0 && (
+          <span className="text-[12px] text-ink-muted">
+            {version.unresolvedFindingCount} finding{version.unresolvedFindingCount === 1 ? "" : "s"} to review
+          </span>
+        )}
         {dataset.extraction && (
           <span className="text-[12px] text-ink-faint">
             Gemini · <span className="font-mono">{dataset.extraction.model}</span> · prompt{" "}
@@ -80,14 +87,21 @@ export function CandidateStatus({ detail, onAcknowledged }: CandidateStatusProps
         </div>
       )}
 
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] text-ink-muted">
-        {dataset.coverage === "complete_selection" && <span>{coverage.label}</span>}
-        <span className="tabular">
-          Review: {summary.unreviewed} of {summary.cellsTotal} values unreviewed · {summary.accepted} accepted · {summary.corrected} corrected
-          {summary.unavailable > 0 ? ` · ${summary.unavailable} unavailable` : ""}
-        </span>
-        {issues.length === 0 && <span>No import notes</span>}
-      </div>
+      <Disclosure
+        summary="Import details"
+        className="text-[12px] text-ink-muted"
+      >
+        {method.detail && <p className="text-ink-muted">{method.detail}</p>}
+        <p className="tabular text-ink-muted">
+          {summary.unreviewed.toLocaleString()} of {summary.cellsTotal.toLocaleString()} values have not been manually reviewed
+          {summary.accepted > 0 ? ` · ${summary.accepted.toLocaleString()} accepted` : ""}
+          {summary.corrected > 0 ? ` · ${summary.corrected.toLocaleString()} corrected` : ""}
+          {summary.unavailable > 0 ? ` · ${summary.unavailable.toLocaleString()} unavailable` : ""}. That is not a detected error.
+        </p>
+        {issues.length === 0 ? (
+          <p className="mt-1">No import notes.</p>
+        ) : null}
+      </Disclosure>
 
       {issues.length > 0 && (
         <Disclosure

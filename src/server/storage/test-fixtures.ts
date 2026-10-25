@@ -227,6 +227,8 @@ export function job(selectionId: string, overrides: Partial<Job> = {}): Job {
     measuredProgress: null,
     error: null,
     resultDatasetId: null,
+    resultAnalysisId: null,
+    analysis: null,
     ...overrides,
   };
 }

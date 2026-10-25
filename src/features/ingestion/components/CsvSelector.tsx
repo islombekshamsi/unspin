@@ -89,7 +89,8 @@ export function CsvSelector({ source, state }: { source: Source; state: SubmitSt
   const previewData = records.slice(headerCount, headerCount + PREVIEW_DATA_ROWS);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex min-h-0 flex-1 flex-col gap-3">
+      <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-auto">
       <div className="flex flex-wrap items-end gap-4">
         <label className="flex flex-col gap-1 text-[12px] font-medium text-ink-muted">
           Delimiter
@@ -185,7 +186,7 @@ export function CsvSelector({ source, state }: { source: Source; state: SubmitSt
       )}
 
       {ins && (
-        <div className="overflow-auto rounded-md border border-rule" style={{ maxHeight: "24rem" }}>
+        <div className="min-h-[12rem] flex-1 overflow-auto rounded-md border border-rule">
           <table className="w-max min-w-full border-collapse text-[12px]">
             <caption className="sr-only">Preview of the first {previewData.length} data records as written in the file</caption>
             <thead className="sticky top-0 bg-sunken">
@@ -268,6 +269,7 @@ export function CsvSelector({ source, state }: { source: Source; state: SubmitSt
           )}
         </fieldset>
       )}
+      </div>
 
       <SelectionFooter
         scope={

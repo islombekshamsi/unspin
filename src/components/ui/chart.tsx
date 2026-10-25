@@ -54,7 +54,7 @@ export function ChartContainer({
         data-chart={chartId}
         data-slot="chart"
         className={cx(
-          "flex aspect-video justify-center text-[12px]",
+          "flex aspect-auto h-full justify-center text-[12px]",
           "[&_.recharts-cartesian-axis-tick_text]:fill-[var(--ink-muted)]",
           "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-[var(--rule)]",
           "[&_.recharts-curve.recharts-tooltip-cursor]:stroke-[var(--rule-strong)]",

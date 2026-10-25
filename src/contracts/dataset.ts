@@ -54,6 +54,12 @@ export const DatasetSchema = z
     coverageAcknowledgedAt: IsoDateTimeSchema.nullable(),
     extraction: ExtractionInfoSchema.nullable(),
     importIssues: z.array(ImportIssueSchema),
+    /** Prepared demonstrations can supply a meaningful initial plot; users may change it. */
+    defaultChart: z.object({
+      kind: z.enum(["bar", "line", "scatter"]),
+      xColumnId: IdSchema,
+      yColumnIds: z.array(IdSchema).min(1).max(12),
+    }).optional(),
   })
   .refine((d) => d.coverage === "complete_selection" || (d.coverageNote ?? "").trim().length > 0, {
     message: "coverageNote is required unless coverage is complete_selection",

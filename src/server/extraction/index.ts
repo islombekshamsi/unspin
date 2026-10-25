@@ -70,7 +70,7 @@ export async function extractWithProvider(provider: GeminiProvider, args: Extrac
   if (input.bytes.byteLength === 0) throw new AppError("unreadable_source", "The prepared region is empty.");
 
   const started = Date.now();
-  const result = await provider.extract(input, selection.userHint, signal);
+  const result = await provider.extract(input, selection.userHint, signal, selection.extractionMode ?? "chart_table");
   const draft = buildExtractionDraft({
     source,
     selection,

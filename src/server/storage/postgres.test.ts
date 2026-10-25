@@ -37,9 +37,9 @@ describe.skipIf(!url)("postgres (real database)", () => {
     const db = await freshSchema();
     try {
       const first = await migrate(db.pool, schemaDir);
-      expect(first.applied).toEqual(["001_init"]);
+      expect(first.applied).toEqual(["001_init", "002_views_analysis"]);
       const second = await migrate(db.pool, schemaDir);
-      expect(second).toEqual({ applied: [], skipped: ["001_init"] });
+      expect(second).toEqual({ applied: [], skipped: ["001_init", "002_views_analysis"] });
       const { rows } = await db.pool.query("SELECT version, checksum FROM schema_migrations");
       expect(rows).toHaveLength(1);
       expect(rows[0].checksum).toMatch(/^[a-f0-9]{64}$/);
@@ -52,7 +52,7 @@ describe.skipIf(!url)("postgres (real database)", () => {
     const db = await freshSchema();
     try {
       const results = await Promise.all([migrate(db.pool, schemaDir), migrate(db.pool, schemaDir)]);
-      expect(results.flatMap((r) => r.applied)).toEqual(["001_init"]);
+      expect(results.flatMap((r) => r.applied).sort()).toEqual(["001_init", "002_views_analysis"]);
     } finally {
       await db.drop();
     }

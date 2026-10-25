@@ -1,0 +1,21 @@
+import { connect } from "./cdp.mjs";
+
+const c = await connect();
+await c.viewport(1440, 900);
+const active = () => c.evaluate(`(() => { const a = document.activeElement; return (a.getAttribute('role') ?? a.tagName) + ':' + a.textContent.trim().slice(0, 40); })()`);
+console.log("buttons:", await c.evaluate(`[...document.querySelectorAll('header button')].map(b => JSON.stringify(b.textContent.trim())).join(' ')`));
+await c.evaluate(`[...document.querySelectorAll('header button')].find(b => b.textContent.trim().startsWith('More')).focus()`);
+await c.key("Enter");
+await c.wait(300);
+console.log("menu:", await c.evaluate(`[...document.querySelectorAll('[role=menuitem]')].map(m => m.textContent.trim()).join(' | ')`), "| focus", await active());
+await c.key("ArrowDown");
+await c.wait(100);
+console.log("focus after ArrowDown:", await active());
+await c.key("Enter");
+await c.wait(600);
+console.log("drawer:", await c.evaluate(`[...document.querySelectorAll('dialog[open]')].map(d => d.querySelector('h2')?.textContent + ' modal=' + d.matches(':modal')).join(',')`), "| focus", await active());
+await c.shot("/Users/islomshamsiev/Desktop/unspin/evaluation/results/workspace-redesign/after-history-drawer-1440.png");
+await c.key("Escape");
+await c.wait(400);
+console.log("after Escape:", await c.evaluate(`document.querySelectorAll('dialog[open]').length`), "| focus", await active());
+c.close();

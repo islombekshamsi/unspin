@@ -9,6 +9,7 @@ import {
   MemorySourceRepository,
   MemoryState,
 } from "@/server/storage/memory";
+import { MemoryAnalysisRepository, MemoryViewRepository } from "@/server/storage/views";
 import * as fx from "@/server/storage/test-fixtures";
 import { createShare, getSharedSourceBytes, hashShareToken, listShares, resolveShare, revokeShare } from ".";
 
@@ -24,6 +25,8 @@ function memoryRepos(): Repositories {
     jobs: new MemoryJobRepository(s),
     blobs: new MemoryBlobStore(s),
     shares: new MemoryShareRepository(s),
+    views: new MemoryViewRepository(s),
+    analysis: new MemoryAnalysisRepository(s),
     ready: async () => true,
   };
 }

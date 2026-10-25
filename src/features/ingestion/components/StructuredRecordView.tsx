@@ -97,6 +97,7 @@ function CsvRecords({ source, selection, provenance, activeProvenanceIds, onSour
       {error && <ErrorState title="Source records unavailable" message={error} />}
       {groups.length === 0 && <p className="text-ink-muted">Select a value in the data table to see the exact record and line it came from. The first selected records are shown below.</p>}
       {groups.length > MAX_RECORDS_SHOWN && <p className="text-[12px] text-ink-muted">Showing {MAX_RECORDS_SHOWN} of {groups.length} linked records.</p>}
+      <div className="grid gap-3 lg:grid-cols-2 2xl:grid-cols-3">
       {shown.map((g) => {
         const rec = tokens?.records[g.recordIndex + dataOffset];
         const lines = g.lineStart === g.lineEnd ? `line ${g.lineStart}` : `lines ${g.lineStart}–${g.lineEnd}`;
@@ -111,7 +112,7 @@ function CsvRecords({ source, selection, provenance, activeProvenanceIds, onSour
               {g.absent && <Badge tone="estimate">a linked field is absent from this record</Badge>}
             </header>
             {rec ? (
-              <dl className="grid grid-cols-[minmax(5rem,max-content)_minmax(0,1fr)] gap-x-3 px-3 py-2 text-[12px]">
+              <dl className="grid grid-cols-[minmax(5rem,max-content)_minmax(0,1fr)] gap-x-3 gap-y-0.5 px-3 py-2 text-[13px]">
                 {rec.fields.map((f, fi) => {
                   const hit = g.fields.has(fi);
                   return (
@@ -131,6 +132,7 @@ function CsvRecords({ source, selection, provenance, activeProvenanceIds, onSour
           </article>
         );
       })}
+      </div>
     </div>
   );
 }

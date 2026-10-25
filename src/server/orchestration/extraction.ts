@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import {
   AppError,
   CONTRACT_SCHEMA_VERSION,
@@ -29,7 +30,17 @@ const now = () => new Date().toISOString();
 
 export async function createExtraction(owner: Owner, req: CreateExtractionRequest): Promise<Job> {
   const repos = getRepositories();
-  const selection = await getSelection(owner, req.selectionId);
+  let selection = await getSelection(owner, req.selectionId);
+  if (req.extractionMode && !isStructuredSelection(selection) && req.extractionMode !== (selection.extractionMode ?? "chart_table")) {
+    // A separate immutable selection prevents a text-mode run reusing a chart-mode job or dataset.
+    const id = `sel_${createHash("sha256").update(`${selection.id}:${req.extractionMode}`).digest("hex").slice(0, 32)}`;
+    const existing = await repos.selections.get(owner, id);
+    if (existing) selection = existing;
+    else {
+      selection = { ...selection, id, extractionMode: req.extractionMode, createdAt: now() };
+      await repos.selections.create(owner, selection);
+    }
+  }
   const structured = isStructuredSelection(selection);
 
   if (!structured) {
@@ -56,6 +67,8 @@ export async function createExtraction(owner: Owner, req: CreateExtractionReques
     measuredProgress: null,
     error: null,
     resultDatasetId: null,
+    resultAnalysisId: null,
+    analysis: null,
   };
 
   const baseKey = `${selection.id}:${CONTRACT_SCHEMA_VERSION}`;

@@ -76,6 +76,8 @@ const ImageRegionInput = z.object({
   kind: z.literal("image_region"),
   region: NormalizedRectSchema,
   userHint: UserHintSchema.nullable(),
+  /** Explicit-value structuring from prose; absent keeps chart/table extraction. */
+  extractionMode: z.enum(["chart_table", "text"]).optional(),
 });
 
 const PdfRegionInput = z.object({
@@ -84,6 +86,8 @@ const PdfRegionInput = z.object({
   /** Null selects the whole page. */
   region: NormalizedRectSchema.nullable(),
   userHint: UserHintSchema.nullable(),
+  /** Explicit-value structuring from prose; absent keeps chart/table extraction. */
+  extractionMode: z.enum(["chart_table", "text"]).optional(),
 });
 
 export const CsvDelimiterSchema = z.enum([",", ";", "\t", "|"]);

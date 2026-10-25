@@ -2,7 +2,7 @@ import Decimal from "decimal.js";
 import type { BaselinePolicy, ChartPoint, ChartQueryResult, Column, ExtractionMethod, SelectionEvent } from "@/contracts";
 
 /** Mirrors --chart-1..6 / --series-1..6 in globals.css. */
-export const SERIES_COLORS = ["#0f6e66", "#b45309", "#4338ca", "#be185d", "#4d7c0f", "#0369a1"] as const;
+export const SERIES_COLORS = ["#8ee8db", "#f5c26b", "#a5b4fc", "#f9a8d4", "#bef264", "#7dd3fc"] as const;
 /** Each series also differs by marker symbol and dash so color is never the only signal. */
 export const SERIES_SYMBOLS = ["circle", "square", "diamond", "triangle-up", "triangle-down", "star"] as const;
 export const SERIES_DASHES = ["solid", "dash", "dot", "dashdot", "longdash", "longdashdot"] as const;

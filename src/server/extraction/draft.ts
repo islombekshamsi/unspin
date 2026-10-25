@@ -33,6 +33,7 @@ const CONTENT_LABEL: Record<ModelExtraction["contentKind"], string> = {
   area_chart: "Area chart",
   pie_chart: "Pie chart",
   table: "Table",
+  prose_data: "Data structured from text",
   summary_statistics_plot: "Summary-statistics plot",
   continuous_curve_without_markers: "Continuous curve",
   other_chart: "Figure",
@@ -157,6 +158,12 @@ function issue(
 export function buildExtractionDraft(ctx: DraftContext): ParsedDatasetDraft {
   const { source, selection, input, result } = ctx;
   const ex = result.extraction;
+  const textMode = !isStructured(selection) && selection.extractionMode === "text";
+  if (textMode && (ex.status === "no_data" || ex.rows.length === 0)) {
+    throw new AppError("no_data_found", "No explicit numerical observations were found in this text. Select paragraphs containing reported values, dates, or quantities. Numbers will not be invented.");
+  }
+  if (textMode) validateTextEvidence(ex);
+  else if (ex.contentKind === "prose_data") throw invalid("Use Build from text to structure prose. Nothing was saved.");
   assertExtractable(ex, ctx.maxRows);
 
   if (ex.columns.length === 0) throw invalid("The model returned values without any columns. Nothing was saved.");
@@ -171,7 +178,8 @@ export function buildExtractionDraft(ctx: DraftContext): ParsedDatasetDraft {
 
   const createdAt = new Date().toISOString();
   const issues: ImportIssue[] = [];
-  const isTable = ex.contentKind === "table";
+  if (textMode) issues.push(issue("extraction_issue", "review", "AI structured explicit statements from prose. Check each value, unit, reporting period, and source quote before reuse. Source quotes are model transcriptions, not independently verified text."));
+  const isTable = ex.contentKind === "table" || textMode;
 
   // Region-level provenance: the user chose this region, so its locator is user-confirmed.
   const regionProv: Provenance = {
@@ -266,6 +274,7 @@ export function buildExtractionDraft(ctx: DraftContext): ParsedDatasetDraft {
       const rc = r.cells.get(plan.model.key)!;
       const cellId = newId("cell");
       const notes = [...rc.notes];
+      if (textMode && rc.model?.sourceQuote) notes.push(`Source quote (model transcription; verify): ${truncate(rc.model.sourceQuote, 900)}`);
       const method = rc.model?.method ?? "not_read";
       const origin: Cell["origin"] =
         method === "transcribed" ? "transcribed" : method === "estimated" ? "estimated" : isTable ? "transcribed" : "estimated";
@@ -478,7 +487,9 @@ export function buildExtractionDraft(ctx: DraftContext): ParsedDatasetDraft {
       : input.disclosure === "rendered_pdf_region"
         ? "a rendered image of the selected PDF region"
         : "the selected image region";
-  const methodText = isTable
+  const methodText = textMode
+    ? "Explicit values in prose were transcribed into a new table by a vision model. Source quotes are unverified transcriptions; no values were inferred or calculated. The chart displays this reconstructed table, not a chart from the original document."
+    : isTable
     ? "Table text was transcribed by a vision model from an image (no text-layer path was used); check it against the source."
     : `Chart values were read from an image by a vision model: ${estimatedCount} estimated from mark positions, ${transcribedCount} transcribed from printed text such as labels or categories. Estimates are approximate.`;
   const description = truncate(
@@ -504,4 +515,36 @@ export function buildExtractionDraft(ctx: DraftContext): ParsedDatasetDraft {
     provenance,
     issues,
   };
+}
+
+
+function isStructured(selection: SourceSelection): selection is Extract<SourceSelection, { kind: "csv_records" | "xlsx_range" }> {
+  return selection.kind === "csv_records" || selection.kind === "xlsx_range";
+}
+
+/** A prose cell cannot use an inferred value or a quote that lacks its literal text. */
+export function validateTextEvidence(ex: ModelExtraction): void {
+  if (ex.contentKind !== "prose_data") throw invalid("The model did not return a text-derived table. Nothing was saved.");
+  const numericKeys = new Set(ex.columns.filter((c) => c.dataType === "number" && c.role !== "identifier").map((c) => c.key));
+  let numericCount = 0;
+  const normalize = (s: string) => s.normalize("NFKC").replace(/\s+/g, " ").trim();
+  for (const row of ex.rows) {
+    for (const cell of row.cells) {
+      if (cell.text === null || cell.method === "not_read") continue;
+      if (cell.method !== "transcribed" || !cell.sourceQuote?.trim()) {
+        throw invalid("A text-derived value was inferred or lacked a supporting source quote. Nothing was saved.");
+      }
+      const value = normalize(cell.text);
+      const quote = normalize(cell.sourceQuote);
+      if (!value || !quote.includes(value)) throw invalid("A text-derived value did not match its supporting quote. Nothing was saved.");
+      if (numericKeys.has(cell.column)) {
+        const escaped = value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        if (!new RegExp(`(?<![\\d.])${escaped}(?![\\d.])`).test(quote)) {
+          throw invalid("A number did not match a complete value in its source quote. Nothing was saved.");
+        }
+        numericCount += 1;
+      }
+    }
+  }
+  if (numericCount === 0) throw new AppError("no_data_found", "The selected text has no explicit numerical observations suitable for a chart. No numbers were invented.");
 }

@@ -120,7 +120,7 @@ Selection event: { origin: grid | chart | source, datasetVersionId, rowIds, cell
 
 ## Job state
 
-Job: id, sourceSelectionId, operationType, status, createdAt, startedAt/null, finishedAt/null, attemptCount, stage, measuredProgress/null, error/null, resultDatasetId/null.
+Job: id, sourceSelectionId, operationType (extraction | structured_parse | analysis), status, createdAt, startedAt/null, finishedAt/null, attemptCount, stage, measuredProgress/null, error/null, resultDatasetId/null, resultAnalysisId/null, analysis payload/null.
 
 Statuses: queued → running → completed | failed | cancelled. cancellation_requested is a request flag while running. No completed state before the dataset commit succeeds. Failed attempts retain bounded failure metadata and do not fabricate a result.
 
@@ -139,7 +139,13 @@ All endpoints below use /api/v1. Routes are thin coordinator-owned adapters call
 | GET /jobs/:id | Actual state; bounded polling hints |
 | POST /jobs/:id/cancel | Best-effort cancellation request |
 | GET /datasets/:id | Metadata, columns, version, coverage, quality summary |
-| GET /datasets/:id/rows | versionId, cursor, limit, allowlisted sort/filter; paginated rows |
+| GET /datasets/:id/rows | versionId, cursor, limit, allowlisted sort/filter/search/preset; paginated rows |
+| GET /datasets/:id/overview | Deterministic profile and fact catalog for a version/view |
+| GET/POST /datasets/:id/views | List and save named display views (not dataset versions) |
+| PATCH/DELETE /datasets/:id/views/:viewId | Rename, update spec, or delete a saved view |
+| POST /datasets/:id/analysis/consent | Analysis consent, distinct from extraction consent |
+| GET/POST /datasets/:id/analysis | List records or enqueue a grounded analysis job |
+| GET /datasets/:id/analysis/:analysisId | One persisted analysis record |
 | GET /datasets/:id/findings | Actual quality findings for a version |
 | POST /datasets/:id/transforms/preview | Preview validated operation with expectedVersionId |
 | POST /datasets/:id/transforms/apply | Apply exact previewed operation transactionally |
@@ -164,3 +170,10 @@ CSV: selected committed data version, column labels/units, documented null/local
 Manifest: schemaVersion, source hash and permitted bibliographic metadata, source selection/crop transform, extraction method/model/version if available, original/current dataset versions, operations, provenance, review states, coverage/omissions, export scope/time, and software version. Exclude API keys, private storage URLs, unrelated user identity, and source contents not requested in the export.
 
 Reproducible code: deterministically generated from supported stored operations and chart config. Code is delivered as a file; the server does not execute model-generated code. State prerequisites and any source input that the recipient must supply.
+
+
+## Explicit values from prose (2026-10-25)
+
+`CreateExtractionRequest.extractionMode` accepts `chart_table` (default) or `text`. Image/PDF source selections retain the optional mode. The server creates a separate immutable, owner-scoped selection for a different mode so previous chart jobs/datasets cannot be reused as prose results. Existing selections remain compatible.
+
+Text mode uses `text-data-v1`, `contentKind=prose_data`, and the structured cell `sourceQuote`. Every present cell must be `transcribed`, have a quote, and its exact text must occur in that quote; numeric substring matches inside a larger value are rejected. At least one non-identifier numeric observation is required. This checks model consistency; it does not certify the quote against a PDF text layer. Source quotes are stored in cell notes and the selected region/page remains bound through provenance. Dataset extractionMethod remains `vision_estimate` because the pathway reads a raster image; individual cells retain `transcribed` origin and unreviewed status. UI labels the resulting chart as built from text.

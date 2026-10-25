@@ -50,6 +50,15 @@ export function classifyProviderError(e: unknown, callerSignal: AbortSignal, mod
   const status = statusOf(e);
   const body = bodyOf(e);
 
+  if (status === 402) {
+    return {
+      error: new AppError("not_configured", "The model service returned HTTP 402 (payment required). Check billing, credits, and access for the configured key before retrying. Your source and selection are still saved."),
+      transient: false,
+      retryAfterMs: null,
+      category: "payment_required",
+    };
+  }
+
   if (status === 401 || status === 403 || (status === 400 && /API[_ ]KEY[_ ]INVALID|API key not valid|API key expired/i.test(body))) {
     return {
       error: new AppError("not_configured", "The configured Gemini key was rejected. An administrator needs to update the server configuration."),

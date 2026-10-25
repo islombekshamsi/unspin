@@ -40,11 +40,20 @@ export function isCanonicalDecimal(s: string): boolean {
   return DecimalStringSchema.safeParse(s).success;
 }
 
+/** Safe notation-only normalization. No locale, currency, percent or identifier guesses. */
+export function importNumber(s: string): string | null {
+  let value = s.trim().replace(/^\+/, "");
+  if (/^-?\.\d+(?:[eE][+-]?\d+)?$/.test(value)) value = value.replace(/^(-?)\./, "$10.");
+  if (/^-?(0|[1-9]\d*)\.(?:[eE][+-]?\d+)?$/.test(value)) value = value.replace(/\.(?=[eE]|$)/, ".0");
+  return isCanonicalDecimal(value) ? value : null;
+}
+const NUMERIC_MISSING = new Set(["NA", "N/A"]);
+
 /**
  * Assigns stable ids, provenance, and conservative types. A column is typed
- * "decimal" only when every present value is already a canonical decimal string
- * (so "007", "1,234", "12%", " 5" keep the whole column as text); values are
- * never routed through Number.
+ * "decimal" when all nonmissing values are unambiguous numbers. Whitespace,
+ * explicit plus and leading decimal points are normalized without Number.
+ * Leading-zero codes, locale formats, symbols and genuinely mixed text stay text.
  */
 export function buildDraft(input: {
   sourceId: string;
@@ -61,8 +70,9 @@ export function buildDraft(input: {
     for (const row of input.rows) {
       const t = row.cells[c]?.text;
       if (t === null || t === undefined) continue;
+      if (NUMERIC_MISSING.has(t.trim())) continue;
       present++;
-      if (!isCanonicalDecimal(t)) {
+      if (importNumber(t) === null) {
         allDecimal = false;
         break;
       }
@@ -90,6 +100,8 @@ export function buildDraft(input: {
     const ids: string[] = [];
     for (let c = 0; c < columnCount; c++) {
       const src = r.cells[c];
+      const numericMissing = decimalColumn[c] && src.text !== null && NUMERIC_MISSING.has(src.text.trim());
+      const typedValue = numericMissing ? null : decimalColumn[c] && src.text !== null ? importNumber(src.text) : src.text;
       const prov: Provenance = {
         id: newId("prov"),
         sourceId: input.sourceId,
@@ -105,14 +117,14 @@ export function buildDraft(input: {
       const cell: Cell = {
         id: newId("cell"),
         rawText: src.rawText,
-        currentValue: src.text,
+        currentValue: typedValue,
         valueType: decimalColumn[c] ? "decimal" : "text",
-        missingReason: src.text === null ? (src.missingReason ?? "blank") : null,
+        missingReason: numericMissing ? "not_reported" : typedValue === null ? (src.missingReason ?? "blank") : null,
         origin: "parsed",
         reviewStatus: "unreviewed",
         provenanceIds: [prov.id],
         parentCellIds: [],
-        notes: src.notes.map((n) => n.slice(0, 1000)),
+        notes: [...src.notes.map((n) => n.slice(0, 1000)), ...(numericMissing ? ["NA/N/A in a numeric column is treated as missing; original text retained."] : typedValue !== src.text ? ["Numeric notation normalized without rounding; original text retained."] : [])],
       };
       cells[columns[c].id] = cell;
       ids.push(cell.id);

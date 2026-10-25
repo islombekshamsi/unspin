@@ -1,8 +1,10 @@
+import type { AnalysisConsent, AnalysisRecord } from "./analysis";
 import type { Dataset, DatasetVersion, DatasetVersionSnapshot } from "./dataset";
 import type { Job } from "./job";
 import type { Actor, HistoryEntry } from "./operations";
 import type { Provenance } from "./provenance";
 import type { Source, SourceSelection } from "./source";
+import type { SavedView } from "./view";
 
 /**
  * Server-derived identity. Never constructed from request bodies.
@@ -120,6 +122,22 @@ export interface ShareRepository {
   listByDataset(owner: Owner, datasetId: string): Promise<Share[]>;
 }
 
+export interface ViewRepository {
+  list(owner: Owner, datasetId: string): Promise<SavedView[]>;
+  get(owner: Owner, datasetId: string, viewId: string): Promise<SavedView | null>;
+  create(owner: Owner, view: SavedView): Promise<void>;
+  update(owner: Owner, view: SavedView): Promise<boolean>;
+  delete(owner: Owner, datasetId: string, viewId: string): Promise<boolean>;
+}
+
+export interface AnalysisRepository {
+  list(owner: Owner, datasetId: string): Promise<AnalysisRecord[]>;
+  get(owner: Owner, datasetId: string, analysisId: string): Promise<AnalysisRecord | null>;
+  create(owner: Owner, record: AnalysisRecord): Promise<void>;
+  putConsent(owner: Owner, consent: AnalysisConsent): Promise<void>;
+  getConsent(owner: Owner, consentId: string): Promise<AnalysisConsent | null>;
+}
+
 export interface Repositories {
   mode: "memory" | "postgres";
   durable: boolean;
@@ -130,6 +148,8 @@ export interface Repositories {
   jobs: JobRepository;
   blobs: BlobStore;
   shares: ShareRepository | null;
+  views: ViewRepository;
+  analysis: AnalysisRepository;
   /** Readiness probe (e.g. SELECT 1); never throws. */
   ready(): Promise<boolean>;
 }

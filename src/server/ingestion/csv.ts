@@ -327,7 +327,7 @@ export function parseCsvSelection(
   const range = start === 0 && endExclusive === total ? `all ${total} records` : `records ${start + 1}–${endExclusive} of ${total}`;
   return {
     title: name,
-    description: `Imported from ${source.filename} (${range}; ${DELIMITER_NAMES[selection.delimiter].toLowerCase()}-delimited; ${skipped.count ? `${skipped.count} leading records skipped; ` : ""}${selection.headerRecordCount ? "header record used for labels" : "no header record"}). Values are kept exactly as written; nothing was converted.`,
+    description: `Imported from ${source.filename} (${range}; ${DELIMITER_NAMES[selection.delimiter].toLowerCase()}-delimited; ${skipped.count ? `${skipped.count} leading records skipped; ` : ""}${selection.headerRecordCount ? "header record used for labels" : "no header record"}). Original source strings are retained. Unambiguous numeric columns are typed as numbers without rounding; numeric NA/N/A markers remain missing. Ambiguous formats and mixed text are not coerced.`,
     extractionMethod: "deterministic_parser",
     coverage: "complete_selection",
     coverageNote: null,

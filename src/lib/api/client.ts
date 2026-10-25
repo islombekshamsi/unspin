@@ -1,12 +1,20 @@
 import type {
+  DemoMode,
+  PreparedDemoReport,
   ApiErrorBody,
   ApplyTransformRequest,
   ChartQueryRequest,
   ChartQueryResult,
+  AnalysisRecord,
+  AnalysisConsent,
+  CreateAnalysisConsentRequest,
+  CreateAnalysisRequest,
   CreateExportRequest,
+  CreateSavedViewRequest,
   CsvDelimiter,
   Dataset,
   DatasetDetail,
+  DatasetOverview,
   ErrorCode,
   ExportResult,
   Health,
@@ -17,6 +25,9 @@ import type {
   RestoreVersionRequest,
   RowsPage,
   RowsQuery,
+  SavedView,
+  UpdateSavedViewRequest,
+  ViewSpec,
   SelectionInput,
   Source,
   SourceSelection,
@@ -83,6 +94,8 @@ function qs(params: Record<string, string | number | null | undefined>): string 
 }
 
 export const api = {
+  prepareDemo: (sourceId: string, mode: DemoMode) => request<{ report: PreparedDemoReport }>(`/sources/${sourceId}/prepared-demo`, json("POST", { mode })).then((r) => r.report),
+  getPreparedDemo: (sourceId: string) => request<{ report: PreparedDemoReport | null }>(`/sources/${sourceId}/prepared-demo`).then((r) => r.report),
   health: () => request<{ health: Health }>("/health").then((r) => r.health),
 
   uploadSource: (file: File, signal?: AbortSignal) => {
@@ -103,8 +116,8 @@ export const api = {
     request<{ selection: SourceSelection }>("/selections", json("POST", { sourceId, selection }, signal)).then((r) => r.selection),
   getSelection: (id: string) => request<{ selection: SourceSelection }>(`/selections/${id}`).then((r) => r.selection),
 
-  createExtraction: (selectionId: string, consentToExternalProcessing: boolean, signal?: AbortSignal) =>
-    request<{ job: Job }>("/extractions", json("POST", { selectionId, consentToExternalProcessing }, signal)).then((r) => r.job),
+  createExtraction: (selectionId: string, consentToExternalProcessing: boolean, signal?: AbortSignal, extractionMode?: "chart_table" | "text") =>
+    request<{ job: Job }>("/extractions", json("POST", { selectionId, consentToExternalProcessing, extractionMode }, signal)).then((r) => r.job),
   getJob: (id: string) => request<{ job: Job; pollAfterMs: number | null }>(`/jobs/${id}`),
   cancelJob: (id: string) => request<{ job: Job }>(`/jobs/${id}/cancel`, { method: "POST" }).then((r) => r.job),
 
@@ -119,6 +132,8 @@ export const api = {
         sortDirection: q.sortDirection,
         filterColumnId: q.filterColumnId ?? undefined,
         filterText: q.filterText ?? undefined,
+        search: q.search ?? undefined,
+        preset: q.preset,
         rowIds: q.rowIds?.join(","),
       })}`,
       { signal },
@@ -136,6 +151,31 @@ export const api = {
     request<{ result: ChartQueryResult }>(`/datasets/${id}/chart-query`, json("POST", body, signal)).then((r) => r.result),
   createExport: (id: string, body: CreateExportRequest) =>
     request<{ export: ExportResult }>(`/datasets/${id}/exports`, json("POST", body)).then((r) => r.export),
+
+  getOverview: (id: string, versionId: string, spec: Partial<ViewSpec> = {}, signal?: AbortSignal) =>
+    request<{ overview: DatasetOverview }>(
+      `/datasets/${id}/overview${qs({
+        versionId,
+        preset: spec.preset,
+        search: spec.search ?? undefined,
+        filterColumnId: spec.filterColumnId ?? undefined,
+        filterText: spec.filterText ?? undefined,
+      })}`,
+      { signal },
+    ).then((r) => r.overview),
+  listViews: (id: string) => request<{ views: SavedView[] }>(`/datasets/${id}/views`).then((r) => r.views),
+  createView: (id: string, body: CreateSavedViewRequest) =>
+    request<{ view: SavedView }>(`/datasets/${id}/views`, json("POST", body)).then((r) => r.view),
+  updateView: (id: string, viewId: string, body: UpdateSavedViewRequest) =>
+    request<{ view: SavedView }>(`/datasets/${id}/views/${viewId}`, json("PATCH", body)).then((r) => r.view),
+  deleteView: (id: string, viewId: string) => request<{ deleted: boolean }>(`/datasets/${id}/views/${viewId}`, { method: "DELETE" }),
+  createAnalysisConsent: (id: string, body: CreateAnalysisConsentRequest) =>
+    request<{ consent: AnalysisConsent }>(`/datasets/${id}/analysis/consent`, json("POST", body)).then((r) => r.consent),
+  createAnalysis: (id: string, body: CreateAnalysisRequest) =>
+    request<{ job: Job }>(`/datasets/${id}/analysis`, json("POST", body)).then((r) => r.job),
+  listAnalysis: (id: string) => request<{ records: AnalysisRecord[] }>(`/datasets/${id}/analysis`).then((r) => r.records),
+  getAnalysisRecord: (id: string, analysisId: string) =>
+    request<{ record: AnalysisRecord }>(`/datasets/${id}/analysis/${analysisId}`).then((r) => r.record),
 };
 
 export type Api = typeof api;

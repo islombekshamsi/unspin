@@ -1,0 +1,46 @@
+{
+  "phase": "before",
+  "health": {
+    "persistence": {
+      "mode": "postgres",
+      "durable": true,
+      "ready": true
+    },
+    "blobStorage": {
+      "mode": "filesystem",
+      "ready": true
+    },
+    "jobs": {
+      "mode": "worker"
+    }
+  },
+  "sourceId": "src_171dae12de67474293080bc20b5e812f",
+  "selectionId": "sel_d2708a11c8fb4c559a1dc9c3d59cdd38",
+  "datasetId": "ds_8d09a252f1e444408e8092a05a7a1a06",
+  "v1": "ver_b924421ca6b84dd29bec0808186bdbab",
+  "v2": "ver_2c4b99c59dd14a29bdb857bea3f6414a",
+  "jobId": "job_1945722b738b425e8c8ee8687e526623",
+  "inputSha256": "a653f1af074f08f25f7b51e97d4b93b2e5485269a10a11df167e73e5cd7e6fad",
+  "storedSha256": "a653f1af074f08f25f7b51e97d4b93b2e5485269a10a11df167e73e5cd7e6fad",
+  "storedBytes": 29804,
+  "blobFileCount": 3,
+  "blobFiles": [
+    {
+      "rel": "/sources/guest_2a64efffef48271ebb135c4b99f7d05893169f563562c06a/src_daf789f07591417a9966acc8a8ac2897",
+      "bytes": 29804,
+      "mode": "600"
+    },
+    {
+      "rel": "/sources/guest_3d532f31536eac488ddb05a20c10ea294ed992d0c4381e5f/src_171dae12de67474293080bc20b5e812f",
+      "bytes": 29804,
+      "mode": "600"
+    },
+    {
+      "rel": "/sources/guest_d2e1b79a61ae341fb51e056cd927722340f3f7009dfe8fe4/src_4a0e59500d8f443d8754d77f37e8f10d",
+      "bytes": 29804,
+      "mode": "600"
+    }
+  ],
+  "firstAverageAfterEdit": "ver_2c4b99c59dd14a29bdb857bea3f6414a",
+  "cookieSet": true
+}

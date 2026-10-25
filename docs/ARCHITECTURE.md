@@ -15,7 +15,7 @@ Recommended building blocks, subject to current-doc and license checks by the co
 - TanStack Table/Virtual for grid structure and virtualization.
 - Plotly with a client-only, selectively loaded bundle for scientific/chart interaction. Coordinate responsive sizing and selection events through an adapter.
 - decimal.js for exact decimal transformations. Do not silently push identifiers/large values into JavaScript Number.
-- PostgreSQL for durable metadata/data/history. Tiger Data can supply the PostgreSQL service; local PostgreSQL is sufficient during development.
+- PostgreSQL for durable metadata/data/history. Local `unspin_dev` is the everyday database. A hosted Postgres (Supabase, Tiger Data) is a `DATABASE_URL` substitution; the app does not use a vendor SDK.
 - Auth0 for authenticated accounts when enabled.
 - Private filesystem blob storage locally; an S3-compatible private object-storage adapter for deployment when configured.
 
@@ -36,6 +36,7 @@ Coordinator controls package/lockfile changes. Each specialist submits dependenc
     src/server/storage/               Metadata/data/blob repositories
     src/server/identity/              Server-derived guest/account ownership
     src/server/jobs/                  Durable job state and worker runner
+    src/server/analysis/              Deterministic profiler, view matching, grounded insight validation
     src/server/exports/               CSV/manifests/code/XLSX generation
     src/server/sharing/               Revocable, scoped share capabilities
     src/features/ingestion/           Upload and region/sheet selection UI
@@ -57,7 +58,7 @@ Coordinator controls package/lockfile changes. Each specialist submits dependenc
 3. Parse structured sources deterministically or queue extraction for an explicit unstructured selection.
 4. Gemini returns candidate rows/labels/source hints. Validate structure and semantics independently.
 5. Persist an immutable initial dataset version and unresolved findings. The first version is not silently “clean.”
-6. Serve paginated grid rows and bounded chart queries. Model context is not storage.
+6. Serve paginated grid rows, view presets, a deterministic overview, and bounded chart queries. Optional analysis jobs send a fact catalog, not the source file. Model context is not storage.
 7. Preview/apply validated operations against an expected version. Persist the resulting version and operation transactionally.
 8. Export the selected committed version and its lineage.
 

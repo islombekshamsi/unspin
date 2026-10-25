@@ -182,6 +182,21 @@ async function seedImageSelection(owner = makeOwner()) {
 }
 
 describe("job creation", () => {
+  it("isolates text-mode jobs while preserving idempotency and the original selection", async () => {
+    process.env.UNSPIN_JOBS_MODE = "worker";
+    process.env.GEMINI_API_KEY = "test-only-protocol";
+    process.env.GEMINI_MODEL = "test-model";
+    const { owner, selection } = await seedImageSelection();
+    const chart = await createExtraction(owner, { selectionId: selection.id, consentToExternalProcessing: true });
+    const request = { selectionId: selection.id, consentToExternalProcessing: true, extractionMode: "text" as const };
+    const text = await createExtraction(owner, request);
+    const repeated = await createExtraction(owner, request);
+    expect(text.id).not.toBe(chart.id);
+    expect(repeated.id).toBe(text.id);
+    const original = await getRepositories().selections.get(owner, selection.id);
+    expect(original).toEqual(selection);
+  });
+
   it("is idempotent per selection while a job is pending (worker mode)", async () => {
     process.env.UNSPIN_JOBS_MODE = "worker";
     const { owner, selection } = await seedCsvSourceAndSelection();

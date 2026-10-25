@@ -50,6 +50,7 @@ export const ChartConfigSchema = z.object({
 export type ChartConfig = z.infer<typeof ChartConfigSchema>;
 
 export const ChartQueryRequestSchema = z.object({
+  savedViewId: IdSchema.optional(),
   versionId: IdSchema,
   xColumnId: IdSchema,
   yColumnIds: z.array(IdSchema).min(1).max(12),

@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useState } from "react";
 import { isStructuredSelection } from "@/contracts";
-import { Button, ErrorState, Panel, ProgressStatus, UnavailableNote } from "@/components/ui";
+import { Button, Select, Disclosure, ErrorState, Panel, ProgressStatus, UnavailableNote } from "@/components/ui";
 import type { ExtractionLauncherProps } from "@/features/workspace/seams";
 import { describeSentInput, describeStructuredSelection, errorView, formatElapsed, stageLabel } from "../lib/presentation";
 import { useExtractionRun, type RunState } from "../lib/useExtractionRun";
@@ -24,7 +24,8 @@ function startedAtOf(state: RunState): number | null {
 
 export function ExtractionLauncher({ source, selection, gemini, onDatasetReady, onBackToSelection }: ExtractionLauncherProps) {
   const structured = isStructuredSelection(selection);
-  const run = useExtractionRun(selection.id, onDatasetReady);
+  const [extractionMode, setExtractionMode] = useState<"chart_table" | "text">("chart_table");
+  const run = useExtractionRun(selection.id, onDatasetReady, extractionMode);
   const elapsed = useElapsed(startedAtOf(run.state));
   const [consent, setConsent] = useState(false);
   const consentId = useId();
@@ -140,14 +141,14 @@ export function ExtractionLauncher({ source, selection, gemini, onDatasetReady, 
 
   if (structured) {
     return (
-      <Panel title="Import data" bodyClassName="flex flex-col gap-4 p-4">
-        <div className="flex flex-col gap-1.5 text-[13px] leading-5">
-          <p className="text-ink">{describeStructuredSelection(selection)}</p>
-          <p className="text-ink-muted">
-            The file is parsed on this server with a deterministic parser. Nothing is sent to an external service, and values keep their original text;
-            numbers, dates, and percentages are not reinterpreted.
+      <Panel title="Import data" className="h-full min-h-[12rem]" bodyClassName="flex flex-col gap-3 overflow-auto p-4">
+        <p className="text-[13px] leading-5 text-ink">{describeStructuredSelection(selection)}</p>
+        <p className="text-[12px] text-ink-muted">Parsed on this server. Values keep their original text.</p>
+        <Disclosure summary="Import details" className="text-[12px] text-ink-muted">
+          <p>
+            A deterministic parser runs on this server. Nothing is sent to an external service. Numbers, dates, and percentages are not reinterpreted.
           </p>
-        </div>
+        </Disclosure>
         {progress}
         {runControls}
         {outcome}
@@ -178,10 +179,22 @@ export function ExtractionLauncher({ source, selection, gemini, onDatasetReady, 
   const hint = "userHint" in selection ? selection.userHint : null;
 
   return (
-    <Panel title="Extract data" bodyClassName="flex flex-col gap-4 p-4">
+    <Panel title={extractionMode === "text" ? "Build data from text" : "Extract data"} className="h-full min-h-[12rem]" bodyClassName="flex flex-col gap-3 overflow-auto p-4">
+      <label className="flex flex-col gap-1 text-[12px] text-ink-muted">
+        What should we read?
+        <Select value={extractionMode} disabled={busy} onChange={(e) => { setExtractionMode(e.target.value as "chart_table" | "text"); run.reset(); }}>
+          <option value="chart_table">Existing chart or table</option>
+          <option value="text">Build from text</option>
+        </Select>
+      </label>
+      {extractionMode === "text" && (
+        <p className="rounded-2xl border border-accent/30 bg-accent-soft p-3 text-[13px] leading-5 text-ink">
+          Turn reported numbers in paragraphs into a table and chart automatically. Each value keeps a source quote and page reference for review. Only explicit values are used; missing numbers, trends, and forecasts are never invented. Select a region containing the relevant text and its context.
+        </p>
+      )}
       <p className="text-[13px] leading-5 text-ink">
         Extraction covers only {selection.kind === "pdf_region" ? `the selection on page ${selection.pageNumber}` : "the selected region"}, not the rest of the
-        file. Values read from a chart are estimates that you review against the source.
+        file. {extractionMode === "text" ? "Values are transcribed from the text and organized by AI; review their quotes, units, and periods against the source." : "Values read from a chart are estimates that you review against the source."}
       </p>
 
       <section aria-labelledby={`${consentId}-sent`} className="flex flex-col gap-2 rounded-md border border-rule-strong bg-canvas px-3 py-3">
@@ -235,7 +248,7 @@ export function ExtractionLauncher({ source, selection, gemini, onDatasetReady, 
         <div className="flex flex-col gap-2">
           <div className="flex flex-wrap gap-2">
             <Button variant="primary" onClick={() => void run.start(true)} disabled={disabledReason !== null} aria-describedby={disabledReason ? `${consentId}-why` : undefined}>
-              Start extraction
+              {extractionMode === "text" ? "Build table and chart" : "Start extraction"}
             </Button>
             <Button variant="ghost" onClick={onBackToSelection}>
               Adjust selection

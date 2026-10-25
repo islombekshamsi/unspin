@@ -1,10 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type { BaselinePolicy, ChartKind, ChartPoint, Column } from "@/contracts";
+import type { BaselinePolicy, ChartKind, ChartPoint, Column, SavedView } from "@/contracts";
+import { api } from "@/lib/api/client";
 import {
   Badge,
   Button,
+  Disclosure,
   EmptyState,
   ErrorState,
   Field,
@@ -36,6 +38,7 @@ import {
 } from "../lib/presentation";
 import { readChartSettings, writeChartSettings } from "../lib/chart-settings";
 import { useChartQuery } from "../lib/use-chart-query";
+import { hasNumericPlotPoint } from "../lib/axis-layout";
 import { ChartDataTable } from "./ChartDataTable";
 import { RechartsChart } from "./RechartsChart";
 import { PointNavigator } from "./PointNavigator";
@@ -62,9 +65,21 @@ function defaultKind(x: Column | undefined): ChartKind {
   return x && (x.dataType === "decimal" || x.dataType === "date" || x.dataType === "datetime") ? "line" : "bar";
 }
 
-export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) {
+export function ChartPanel({ detail, linked, onLinkedSelect, onAskSelection, onShowInData, onShowSource, visible = true }: ChartPanelProps) {
   const { dataset, version } = detail;
   const columns = version.columns;
+  const [savedViews, setSavedViews] = useState<SavedView[]>([]);
+  const [selectedView, setSelectedView] = useState<{ datasetId: string; id: string } | null>(null);
+  const [viewsError, setViewsError] = useState(false);
+  const savedViewId = selectedView?.datasetId === dataset.id ? selectedView.id : "";
+  useEffect(() => {
+    if (!visible) return;
+    let cancelled = false;
+    api.listViews(dataset.id).then((views) => {
+      if (!cancelled) { setSavedViews(views); setViewsError(false); }
+    }, () => { if (!cancelled) setViewsError(true); });
+    return () => { cancelled = true; };
+  }, [dataset.id, visible]);
   const byId = useMemo(() => new Map(columns.map((c) => [c.id, c])), [columns]);
 
   // Column choices survive version changes while their ids exist; a different dataset starts fresh.
@@ -90,7 +105,11 @@ export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) 
 
   useEffect(() => {
     setSettingsReady(false);
-    const stored = readChartSettings(dataset.id, columns);
+    const stored = readChartSettings(dataset.id, columns) ?? (dataset.defaultChart ? {
+      ...dataset.defaultChart, hidden: [], scale: "linear" as const,
+      baseline: dataset.defaultChart.kind === "bar" ? "include_zero" as const : "fit_data" as const,
+      bounds: { min: "", max: "" },
+    } : null);
     if (stored) {
       setRawChoice({ datasetId: dataset.id, xColumnId: stored.xColumnId, yColumnIds: stored.yColumnIds, hidden: stored.hidden });
       setKindChoice(stored.kind);
@@ -128,7 +147,7 @@ export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) 
   const baseline: BaselineMode = baselineChoice ?? (kind === "bar" ? "include_zero" : "fit_data");
   const timeNote = xAxisNote(xColumn, columns);
 
-  const query = useChartQuery(dataset.id, version.id, choice.xColumnId, choice.yColumnIds);
+  const query = useChartQuery(dataset.id, version.id, choice.xColumnId, choice.yColumnIds, savedViewId || undefined);
   const result = query.result;
 
   const seriesList = useMemo(
@@ -168,7 +187,8 @@ export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) 
     [baseline, plottedYs, effectiveScale, bounds],
   );
 
-  const yCols = visibleSeries.map((s) => byId.get(s.yColumnId)).filter((c): c is Column => !!c);
+  const drawnYIds = new Set(plottedPoints.filter((point) => point.y !== null && safeDecimal(point.y) !== null).map((point) => point.yColumnId));
+  const yCols = visibleSeries.filter((series) => drawnYIds.has(series.yColumnId)).map((s) => byId.get(s.yColumnId)).filter((c): c is Column => !!c);
   const yTitleInfo = yCols.length ? yAxisTitle(yCols) : { title: "Value", mixedUnits: false };
   const yTitle = yRange.label ? `${yTitleInfo.title} — ${yRange.label}` : yTitleInfo.title;
   const xTitle = xColumn ? axisTitle(xColumn) : "x";
@@ -231,10 +251,33 @@ export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) 
     setBaselineChoice("explicit_bounds");
   };
 
+  const selectionEvent = result && linked && linked.datasetVersionId === result.versionId && linked.rowIds.length > 0 ? linked : null;
+
   return (
-    <div className="flex h-full min-h-0 flex-col gap-3 overflow-auto p-3">
-      {/* Controls */}
-      <div className="flex flex-wrap items-end gap-x-4 gap-y-3">
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap items-end gap-3">
+        <Field label="Saved view" className="w-full sm:w-64">
+          {(id) => <Select id={id} value={savedViewId} onChange={(e) => {
+            const id = e.target.value;
+            setSelectedView({ datasetId: dataset.id, id });
+            const view = savedViews.find((v) => v.id === id && v.datasetId === dataset.id);
+            const selectedColumns = view?.spec.columnIds ? columns.filter((c) => view.spec.columnIds!.includes(c.id)) : columns;
+            const next = initialChoice(selectedColumns);
+            const available = new Set(selectedColumns.map((c) => c.id));
+            const retainedY = choice.yColumnIds.filter((columnId) => available.has(columnId));
+            update(choice.xColumnId && available.has(choice.xColumnId) && retainedY.length
+              ? { xColumnId: choice.xColumnId, yColumnIds: retainedY, hidden: choice.hidden.filter((columnId) => available.has(columnId)) }
+              : { xColumnId: next.xColumnId, yColumnIds: next.yColumnIds, hidden: [] });
+          }}>
+            <option value="">All data</option>
+            {savedViews.filter((v) => v.datasetId === dataset.id).map((v) => <option key={v.id} value={v.id}>{v.name}</option>)}
+          </Select>}
+        </Field>
+        <p className="text-[13px] text-ink-muted" role="status">
+          {viewsError ? "Saved views could not be loaded. Reopen Overview to retry." : savedViewId ? "Chart uses this saved view’s row filters. Points remain ordered by the X axis." : "Choose a view saved in Data, or chart all data."}
+        </p>
+      </div>
+      <div className="flex flex-wrap items-end gap-x-5 gap-y-3">
         <div className="flex flex-col gap-1">
           <span className="text-[12px] font-medium text-ink-muted">Chart type</span>
           <SegmentedControl<ChartKind>
@@ -248,7 +291,7 @@ export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) 
             ]}
           />
         </div>
-        <Field label="X axis" className="min-w-40 flex-1">
+        <Field label="X axis" className="w-full min-w-48 sm:w-64">
           {(id) => (
             <Select id={id} value={choice.xColumnId ?? ""} onChange={(e) => update({ xColumnId: e.target.value, yColumnIds: choice.yColumnIds.filter((y) => y !== e.target.value) })}>
               {columns.map((c) => (
@@ -273,13 +316,7 @@ export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) 
         </div>
       </div>
 
-      {scale === "log" && !logCheck.ok && (
-        <p role="alert" className="text-[13px] text-danger">
-          {logCheck.message}
-        </p>
-      )}
-
-      <fieldset className="flex flex-col gap-2">
+      <fieldset className="flex flex-col gap-1">
         <legend className="mb-1 text-[12px] font-medium text-ink-muted">Series (y)</legend>
         <ul className="flex flex-wrap gap-2">
           {seriesList.map((s) => (
@@ -325,13 +362,102 @@ export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) 
         </ul>
       </fieldset>
 
-      {renderBody()}
+      {scale === "log" && !logCheck.ok && (
+        <p role="alert" className="text-[13px] text-danger">
+          {logCheck.message}
+        </p>
+      )}
+      <div className="h-[clamp(280px,52vh,540px)]">{renderBody()}</div>
+
+      {result && result.points.length > 0 && visibleSeries.length > 0 && (
+        <div className="flex flex-col gap-1.5 text-[12px] text-ink-muted">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <Badge tone={dataset.extractionMethod === "vision_estimate" ? "estimate" : "neutral"}>{(dataset.extraction?.promptVersion === "text-data-v1" ? "Chart built from text · verify quoted values against the source" : caption(dataset.extractionMethod))}</Badge>
+            <ul className="flex flex-wrap gap-x-4 gap-y-1" aria-label="Marker key">
+              {kind === "bar" ? (
+                <>
+                  {originsPresent.has("estimated") && <li>Hatched bar (///): estimated from chart</li>}
+                  {originsPresent.has("user_edit") && <li>Cross-hatched bar (xxx): edited by you</li>}
+                  {hasZeroBars && <li>Bars labelled 0 are zero values</li>}
+                </>
+              ) : (
+                <>
+                  {originsPresent.has("estimated") && <li>Open marker (○): estimated from chart</li>}
+                  {originsPresent.has("user_edit") && <li>Open marker with dot (⊙): edited by you</li>}
+                  {visibleSeries.length > 1 && <li>Each series has its own marker shape and line dash</li>}
+                </>
+              )}
+              {hasGaps && <li>Tick along the bottom (|): missing value, drawn as a gap</li>}
+            </ul>
+          </div>
+          {yTitleInfo.mixedUnits && <p>These series use different units on one axis. Use Compare to check whether they belong together.</p>}
+          {timeNote && <p>{timeNote}</p>}
+          {summary.map((s) => (
+            <p key={s} role="note">
+              {s}
+              {result.excluded.nonNumericY > 0 && s.includes("non-numeric") ? ` ${PARSE_HINT}` : ""}
+            </p>
+          ))}
+        </div>
+      )}
+
+      {result && (
+        <div className="flex flex-col gap-3">
+          <div className="flex min-h-9 flex-wrap items-center gap-2 text-[13px] text-ink-muted">
+            <span className="min-w-0 flex-1 basis-64">
+              {hovered ? describe(hovered) : selectedOne ? `Selected: ${describe(selectedOne)}` : selectedCount > 1 ? `${selectedCount} points selected` : "Click or drag across points to select them."}
+            </span>
+            {selectionEvent && onShowInData && (
+              <Button size="sm" onClick={() => onShowInData(selectionEvent)}>
+                Show in data
+              </Button>
+            )}
+            {selectionEvent && onShowSource && (
+              <Button size="sm" onClick={() => onShowSource(selectionEvent)}>
+                Show source
+              </Button>
+            )}
+            {onAskSelection && (hovered || (linked && linked.rowIds.length > 0)) && (
+              <Button
+                size="sm"
+                onClick={() => {
+                  if (hovered) {
+                    const event = selectionEventFor([hovered], result.versionId);
+                    onLinkedSelect(event);
+                    onAskSelection(event);
+                    return;
+                  }
+                  if (linked) onAskSelection(linked);
+                }}
+              >
+                Ask AI
+              </Button>
+            )}
+            <Button size="sm" variant="ghost" aria-expanded={showTable} onClick={() => setShowTable((v) => !v)}>
+              {showTable ? "Hide data table" : "Show data table"}
+            </Button>
+          </div>
+          <PointNavigator series={navSeries} describe={describe} onFocusPoint={setFocusPointId} onSelect={(p) => emit([p])} />
+          <Disclosure summary={baseline === "explicit_bounds" ? "Y axis range · set bounds" : baseline === "include_zero" ? "Y axis range · includes zero" : "Y axis range · fitted to data"} className="border-rule">
+            {renderRangeControls()}
+          </Disclosure>
+          {showTable && (
+            <ChartDataTable
+              series={figureSeries.map((s) => ({ seriesId: s.seriesId, label: s.label, yColumn: byId.get(s.yColumnId), points: sortByX(s.points, result.xKind, result.points) }))}
+              xColumn={xColumn}
+              highlighted={highlighted}
+              onSelect={(p) => emit([p])}
+            />
+          )}
+          {result.sampling && <UnavailableNote>The table lists the sampled points only; exports contain every row.</UnavailableNote>}
+        </div>
+      )}
     </div>
   );
 
   function renderRangeControls() {
     return (
-      <div className="flex flex-col gap-2 border-t border-rule pt-3">
+      <div className="flex flex-col gap-2 py-1">
         <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
           <div className="flex flex-col gap-1">
             <span className="text-[12px] font-medium text-ink-muted">Y axis range</span>
@@ -417,26 +543,23 @@ export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) 
     if (visibleSeries.length === 0) {
       return <EmptyState title="All series are hidden">Use Show on a series above to draw it.</EmptyState>;
     }
+    if (model && !hasNumericPlotPoint(model.series.flatMap((series) => series.plotPoints))) {
+      return <EmptyState title="No numeric values to plot">
+        <p>The visible series have no readable numeric values in this view.</p>
+        <p className="mt-1">{PARSE_HINT} You can also show a numeric series or choose another saved view. Missing values stay missing.</p>
+      </EmptyState>;
+    }
 
     return (
-      <figure className="flex min-h-0 flex-col gap-2">
-        <figcaption className="flex flex-wrap items-center gap-2 text-[12px] text-ink-muted">
-          <Badge className="whitespace-normal!" tone={dataset.extractionMethod === "deterministic_parser" ? "neutral" : "estimate"}>
-            {caption(dataset.extractionMethod)}
-          </Badge>
-          {yTitleInfo.mixedUnits && <span>These series use different units on one axis. Use Compare to check whether they belong together.</span>}
-          {timeNote && <span>{timeNote}</span>}
-        </figcaption>
-        {summary.map((s) => (
-          <p key={s} className="text-[12px] text-ink-muted" role="note">
-            {s}
-            {result.excluded.nonNumericY > 0 && s.includes("non-numeric") ? ` ${PARSE_HINT}` : ""}
-          </p>
-        ))}
-
-        {model && (
+      <figure className="flex h-full min-h-0 flex-col gap-1">
+        <figcaption className="sr-only">{(dataset.extraction?.promptVersion === "text-data-v1" ? "Chart built from text · verify quoted values against the source" : caption(dataset.extractionMethod))}</figcaption>
+        {model && !visible && <div aria-hidden="true" className="min-h-0 w-full flex-1" />}
+        {model && visible && (
           <RechartsChart
-            className="h-[min(420px,60vh)] min-h-[260px] w-full shrink-0"
+            exportTitle={dataset.title}
+            exportBlocked={dataset.coverage !== "complete_selection" && !dataset.coverageAcknowledgedAt}
+            exportNote={`${savedViewId ? `Saved view: ${savedViews.find((v) => v.id === savedViewId)?.name ?? savedViewId}. ` : ""}${scale === "log" ? "Logarithmic Y scale. " : ""}Version ${version.id} · ${dataset.extraction?.promptVersion === "text-data-v1" ? "Chart built from text; verify quoted values against the source." : caption(dataset.extractionMethod)} ${dataset.coverage !== "complete_selection" ? `Partial/uncertain coverage: ${dataset.coverageNote ?? dataset.coverage}.` : ""} ${exclusionSummary(result).join(" ")} Estimated values use open markers or hatching; edits use dotted markers or cross-hatching. Missing values remain gaps.`}
+            className="min-h-0 w-full flex-1"
             model={model}
             label={`${kind} chart of ${visibleSeries.map((s) => s.label).join(", ")} against ${xTitle}. Use the point navigator or the data table below for exact values.`}
             onPointClick={(id) => pick([id])}
@@ -445,46 +568,6 @@ export function ChartPanel({ detail, linked, onLinkedSelect }: ChartPanelProps) 
             onHover={setHoverId}
           />
         )}
-
-        <ul className="flex flex-wrap gap-x-4 gap-y-1 text-[12px] text-ink-muted" aria-label="Marker key">
-          {kind === "bar" ? (
-            <>
-              {originsPresent.has("estimated") && <li>Hatched bar (///): estimated from chart</li>}
-              {originsPresent.has("user_edit") && <li>Cross-hatched bar (xxx): edited by you</li>}
-              {hasZeroBars && <li>Bars labelled 0 are zero values</li>}
-            </>
-          ) : (
-            <>
-              {originsPresent.has("estimated") && <li>Open marker (○): estimated from chart</li>}
-              {originsPresent.has("user_edit") && <li>Open marker with dot (⊙): edited by you</li>}
-              {visibleSeries.length > 1 && <li>Each series has its own marker shape and line dash</li>}
-            </>
-          )}
-          {hasGaps && <li>Tick along the bottom (|): missing value, drawn as a gap</li>}
-        </ul>
-
-        <p className="min-h-4 text-[12px] text-ink-muted">
-          {hovered ? describe(hovered) : selectedOne ? `Selected: ${describe(selectedOne)}` : selectedCount > 1 ? `${selectedCount} points selected` : "Click or drag across points to select them in the table and source."}
-        </p>
-
-        {renderRangeControls()}
-
-        <PointNavigator series={navSeries} describe={describe} onFocusPoint={setFocusPointId} onSelect={(p) => emit([p])} />
-
-        <div>
-          <Button size="sm" variant="ghost" aria-expanded={showTable} onClick={() => setShowTable((v) => !v)}>
-            {showTable ? "Hide data table" : "Show data table"}
-          </Button>
-        </div>
-        {showTable && (
-          <ChartDataTable
-            series={figureSeries.map((s) => ({ seriesId: s.seriesId, label: s.label, yColumn: byId.get(s.yColumnId), points: sortByX(s.points, result.xKind, result.points) }))}
-            xColumn={xColumn}
-            highlighted={highlighted}
-            onSelect={(p) => emit([p])}
-          />
-        )}
-        {result.sampling && <UnavailableNote>The table lists the sampled points only; exports contain every row.</UnavailableNote>}
       </figure>
     );
   }

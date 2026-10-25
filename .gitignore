@@ -40,6 +40,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Local document inspections and Python caches
+/tmp/
+__pycache__/
+*.py[cod]
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

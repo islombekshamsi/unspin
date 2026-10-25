@@ -160,6 +160,17 @@ Database and blobs are backed up separately, so a restore can contain a source r
 missing (the app reports "The stored source file is no longer available") or an orphan blob (harmless;
 it is never addressable without its row).
 
+## Supabase as the PostgreSQL provider
+
+UNSPIN does not use the Supabase JS client, Auth, or Storage. Substitute only `DATABASE_URL`.
+
+- Copy a Postgres URI from the project **Connect** panel ([current connection docs](https://supabase.com/docs/guides/database/connecting-to-postgres)).
+- Use the **direct** connection (`:5432` on `db.<project>.supabase.co`) for migrations and for the Node web/worker processes. Those processes need session-level features (migration advisory lock, `FOR UPDATE SKIP LOCKED` job claims). Transaction pooler (`:6543`) is the wrong mode for that.
+- On IPv4-only networks, use Supavisor **session** mode (`:5432` on `*.pooler.supabase.com`) instead of the direct IPv6 endpoint.
+- Keep `sslmode=require` (or `verify-full` with the dashboard CA). Never `sslmode=no-verify`.
+- Leave `UNSPIN_STORAGE_MODE=filesystem` (or configure the existing S3 adapter). Do not point blob storage at Supabase Storage without a new adapter.
+- `npm run db:migrate` is unchanged. Schema uses ordinary PostgreSQL tables.
+
 ## Tiger Data as the PostgreSQL provider
 
 - Create a Tiger Data (Timescale) service and use its connection string as `DATABASE_URL` with

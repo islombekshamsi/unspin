@@ -47,7 +47,7 @@ function wait(ms: number, signal: AbortSignal): Promise<void> {
  * after a failure or "stop waiting" is safe: the server reuses an existing job
  * for the same selection instead of sending a second request.
  */
-export function useExtractionRun(selectionId: string, onDatasetReady: (datasetId: string) => void) {
+export function useExtractionRun(selectionId: string, onDatasetReady: (datasetId: string) => void, extractionMode: "chart_table" | "text" = "chart_table") {
   const [state, setState] = useState<RunState>({ phase: "idle" });
   const session = useRef<AbortController | null>(null);
   const ready = useRef(onDatasetReady);
@@ -98,7 +98,7 @@ export function useExtractionRun(selectionId: string, onDatasetReady: (datasetId
 
       let job: Job;
       try {
-        job = await api.createExtraction(selectionId, consent, ctrl.signal);
+        job = await api.createExtraction(selectionId, consent, ctrl.signal, extractionMode);
       } catch (e) {
         if (ctrl.signal.aborted) return;
         setState({ phase: "failed", error: toRunError(e) });
@@ -127,7 +127,7 @@ export function useExtractionRun(selectionId: string, onDatasetReady: (datasetId
         }
       }
     },
-    [selectionId, settle],
+    [selectionId, settle, extractionMode],
   );
 
   /** Best-effort cancellation of a tracked job; polling continues until the server reports the outcome. */

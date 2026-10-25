@@ -375,3 +375,52 @@ describe("semantic validation", () => {
     expect(draft.description).toMatch(/no text-layer path/);
   });
 });
+
+// Isolated protocol cases only: these never power product/demo data.
+describe("explicit values structured from prose", () => {
+  const proseSelection: SourceSelection = { ...selection, kind: "image_region", extractionMode: "text" };
+  const prose = () => response({
+    contentKind: "prose_data",
+    rows: [{ cells: [
+      { ...cell({ column: "c1", text: "2020", method: "transcribed" }), sourceQuote: "Output in 2020 was 12.50 t." },
+      { ...cell({ column: "c2", text: "12.50", method: "transcribed" }), sourceQuote: "Output in 2020 was 12.50 t." },
+    ] }],
+  });
+
+  it("keeps exact reported numbers, quotes, source IDs, and a chartable Y column", async () => {
+    const d = await extract(prose(), { sel: proseSelection });
+    expect(d.extraction?.promptVersion).toBe("text-data-v1");
+    const y = d.columns.find((c) => c.semanticRole === "y")!;
+    const value = d.rows[0].cells[y.id];
+    expect(value.rawText).toBe("12.50");
+    expect(value.origin).toBe("transcribed");
+    expect(value.notes.join(" ")).toContain("Output in 2020 was 12.50 t.");
+    expect(value.provenanceIds.length).toBeGreaterThan(0);
+    expect(d.provenance[0].sourceId).toBe(source.id);
+    expect(d.description).toContain("Data structured from text");
+    expect(y.dataType).toBe("decimal");
+  });
+
+  it("rejects missing quotes, geometry estimates, and fabricated quoted numbers", async () => {
+    for (const patch of [
+      { sourceQuote: null },
+      { method: "estimated" },
+      { text: "99" },
+      { text: "12" },
+    ]) {
+      const body = prose();
+      Object.assign(body.rows[0].cells[1], patch);
+      expect((await failure(extract(body, { sel: proseSelection }))).code).toBe("invalid_provider_response");
+    }
+  });
+
+  it("refuses to generate values when prose has no explicit numbers", async () => {
+    const e = await failure(extract(response({ status: "no_data", contentKind: "prose_data", rows: [], columns: [] }), { sel: proseSelection }));
+    expect(e.code).toBe("no_data_found");
+    expect(e.message).toContain("Numbers will not be invented");
+  });
+
+  it("keeps text extraction separate from chart/table mode", async () => {
+    expect((await failure(extract(prose()))).code).toBe("invalid_provider_response");
+  });
+});

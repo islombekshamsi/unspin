@@ -6,6 +6,13 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   // Native canvas addon (PDF region rendering) cannot be bundled by Turbopack; load both with Node's require.
   serverExternalPackages: ["@napi-rs/canvas", "pdfjs-dist"],
+  // The landing page owns "/". Workspace links saved before the move (/?source=…&dataset=…) keep working.
+  async redirects() {
+    return [
+      { source: "/", has: [{ type: "query", key: "source" }], destination: "/app", permanent: false },
+      { source: "/", has: [{ type: "query", key: "dataset" }], destination: "/app", permanent: false },
+    ];
+  },
   turbopack: {
     rules: {
       "*.css": {

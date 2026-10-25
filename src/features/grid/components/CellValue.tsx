@@ -1,4 +1,4 @@
-import type { Cell } from "@/contracts";
+import type { Cell, Column } from "@/contracts";
 import { cx } from "@/components/ui";
 import { MISSING_LABELS, valueText } from "../lib/format";
 
@@ -6,12 +6,20 @@ import { MISSING_LABELS, valueText } from "../lib/format";
  * One cell's current value with non-color markers:
  * missing -> "— reason" token; estimate -> dashed underline + "≈"; edited -> "✎"; reviewed -> "✓".
  */
-export function CellValue({ cell }: { cell: Cell | undefined }) {
+export function CellValue({ cell, column }: { cell: Cell | undefined; column?: Column }) {
   if (!cell) return <span className="text-ink-faint italic">no cell</span>;
   const missing = cell.currentValue === null;
   const estimated = cell.origin === "estimated";
   const edited = cell.origin === "user_edit";
   const text = valueText(cell.currentValue);
+  const suffix =
+    !missing && column
+      ? column.currency
+        ? ` ${column.currency}`
+        : column.percentRepresentation === "percent_number"
+          ? "%"
+          : ""
+      : "";
   return (
     <span className="flex min-w-0 items-center gap-1">
       {missing ? (
@@ -21,7 +29,7 @@ export function CellValue({ cell }: { cell: Cell | undefined }) {
       ) : (
         <span className={cx("truncate", estimated && "estimate-mark", cell.valueType === "decimal" && "tabular ml-auto", text === "" && "text-ink-faint")}>
           {estimated && <span aria-hidden="true">≈</span>}
-          {text === "" ? "(empty text)" : text}
+          {text === "" ? "(empty text)" : `${text}${suffix}`}
         </span>
       )}
       <span className="sr-only">

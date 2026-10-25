@@ -61,3 +61,17 @@ node evaluation/scripts/score-noaa-t1.mjs   # only after export
 ## C. EIA STEO XLSX
 
 Not re-run in the core-finish browser pass. An earlier production HTTP check on this repo reported sheet `2tab`, range `A6:E6` → `WTIPUUS` / `83.22` / `91.64` / `108.5`, formulas not executed. Treat that as historical until it is repeated on this revision.
+
+## D. Durable restart (not an accuracy score)
+
+2026-10-24. Dedicated production server `:3110` + worker, local database `unspin_core_finish`, filesystem blobs. `.env.local` was not modified.
+
+| Item | Observed |
+| --- | --- |
+| Health after restart | persistence postgres durable true; blob filesystem; jobs worker |
+| Source bytes | sha256 `a653f1af074f08f25f7b51e97d4b93b2e5485269a10a11df167e73e5cd7e6fad` before and after |
+| After reopen | current version held edited `333.20`; skip 40 still stored |
+| After undo + export CSV | sha256 `44138e6ce91a4af1fbef295815f4914334e85bb9b5d050ff06faaab197b9be35` |
+| Evidence | `evaluation/results/durable/REPORT.md` |
+
+Everyday `:3000` later used a separate database `unspin_dev` (not this evaluation DB). Health: durable true. Restart/reopen: `evaluation/results/dev-durable/REPORT.md`.

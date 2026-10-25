@@ -1,58 +1,81 @@
 @import "tailwindcss";
 
+/* Give every single-choice dropdown a consistent, inset arrow. Native arrows
+ * ignore text padding on some browsers and otherwise sit against the border. */
+select:not([multiple]):not([size]) {
+  appearance: none;
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%23c9c3b6' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.875rem center;
+  background-size: 1rem 1rem;
+}
+
+@media (forced-colors: active) {
+  select:not([multiple]):not([size]) {
+    appearance: auto;
+    background-image: none;
+  }
+}
+
 /*
  * UNSPIN design tokens (coordinator-owned).
- * Calm editorial workspace: warm near-white canvas, dark ink, fine rules, one teal accent.
+ * One dark instrument surface shared with the landing page: near-black page, raised #14171a
+ * panels, warm off-white ink, fine translucent rules, one mint accent.
  * Amber marks estimates/review states; red is reserved for actionable failures.
  * Never rely on color alone: pair with text, icons, or patterns.
  */
 :root {
-  --canvas: #faf8f4;
-  --surface: #ffffff;
-  --surface-sunken: #f3f0ea;
-  --ink: #1b1a17;
-  --ink-muted: #5c5850;
-  --ink-faint: #8a857b;
-  --rule: #e3ded4;
-  --rule-strong: #cfc8bb;
+  color-scheme: dark;
 
-  --accent: #0f6e66;
-  --accent-strong: #0a524c;
-  --accent-soft: #e2f1ef;
-  --accent-ink: #ffffff;
+  --canvas: #090a0b;
+  --surface: #14171a;
+  --surface-sunken: #101214;
+  --surface-raised: #1b1f23;
+  --ink: #f4f0e6;
+  --ink-strong: #f7f6f3;
+  --ink-muted: #c9c3b6;
+  --ink-faint: #9c978e;
+  --rule: rgba(244, 240, 230, 0.14);
+  --rule-strong: rgba(244, 240, 230, 0.28);
 
-  --estimate: #92400e;
-  --estimate-soft: #fdf2dc;
-  --estimate-rule: #e8c98a;
+  --accent: #8ee8db;
+  --accent-strong: #b6fff4;
+  --accent-soft: rgba(142, 232, 219, 0.12);
+  --accent-ink: #071513;
 
-  --danger: #b42318;
-  --danger-soft: #fdecea;
-  --danger-rule: #f1b8b2;
+  --estimate: #f5c26b;
+  --estimate-soft: rgba(245, 194, 107, 0.1);
+  --estimate-rule: rgba(245, 194, 107, 0.45);
 
-  --success: #2f6b2f;
-  --success-soft: #e8f3e6;
+  --danger: #ff8a80;
+  --danger-soft: rgba(255, 138, 128, 0.1);
+  --danger-rule: rgba(255, 138, 128, 0.45);
 
-  --focus: #0f6e66;
+  --success: #9be29b;
+  --success-soft: rgba(155, 226, 155, 0.1);
+
+  --focus: #b6fff4;
 
   --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 10px;
+  --radius-md: 10px;
+  --radius-lg: 24px;
 
-  --shadow-panel: 0 1px 0 rgba(27, 26, 23, 0.04), 0 1px 3px rgba(27, 26, 23, 0.06);
-  --shadow-overlay: 0 12px 32px rgba(27, 26, 23, 0.16), 0 2px 6px rgba(27, 26, 23, 0.08);
+  --shadow-panel: none;
+  --shadow-overlay: 0 24px 64px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(244, 240, 230, 0.08);
 
   --motion-fast: 120ms;
   --motion-base: 200ms;
   --motion-slow: 400ms;
   --ease: cubic-bezier(0.2, 0, 0, 1);
 
-  /* Chart series palette: distinguishable, paired with marker symbols in charts. */
-  --series-1: #0f6e66;
-  --series-2: #b45309;
-  --series-3: #4338ca;
-  --series-4: #be185d;
-  --series-5: #4d7c0f;
-  --series-6: #0369a1;
+  /* Chart series palette: readable on the dark surface, paired with marker symbols in charts. */
+  --series-1: #8ee8db;
+  --series-2: #f5c26b;
+  --series-3: #a5b4fc;
+  --series-4: #f9a8d4;
+  --series-5: #bef264;
+  --series-6: #7dd3fc;
 
   /* shadcn Chart tokens (Recharts v3): reference as var(--chart-n), not hsl(var(--chart-n)). */
   --chart-1: var(--series-1);
@@ -67,7 +90,9 @@
   --color-canvas: var(--canvas);
   --color-surface: var(--surface);
   --color-sunken: var(--surface-sunken);
+  --color-raised: var(--surface-raised);
   --color-ink: var(--ink);
+  --color-ink-strong: var(--ink-strong);
   --color-ink-muted: var(--ink-muted);
   --color-ink-faint: var(--ink-faint);
   --color-rule: var(--rule);
@@ -108,7 +133,7 @@ body {
 /* Visible focus everywhere; never removed without replacement. */
 :focus-visible {
   outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
 ::selection {
@@ -118,6 +143,14 @@ body {
 
 .tabular {
   font-variant-numeric: tabular-nums;
+}
+
+/* Landing / selection eyebrow: mono, tracked, mint. */
+.eyebrow {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
 }
 
 /* Estimates are marked with a dashed underline in addition to color. */

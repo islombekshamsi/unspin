@@ -18,6 +18,8 @@ import { getRepositories } from "@/server/storage";
 import { commitManualEdit, seedDataset, type SeededDataset } from "../helpers/fixtures";
 import { NOAA_SAMPLE, noaaTable } from "../helpers/noaa";
 import { makeOwner } from "../helpers/owners";
+import { createView } from "@/server/orchestration/views";
+import { defaultViewSpec } from "@/server/analysis/view-match";
 
 async function code(p: Promise<unknown>): Promise<{ code: string; status: number; details?: Record<string, unknown> }> {
   try {
@@ -237,6 +239,19 @@ describe("exports: guards that do not depend on the export module", () => {
 });
 
 describe("chart query guards", () => {
+  it("applies saved row filters before charting and rejects another owner's view", async () => {
+    const expected = String(s.snapshot.rows[0].cells[avg()].currentValue);
+    const view = await createView(A, s.dataset.id, { name: "One value", spec: { ...defaultViewSpec(), filterColumnId: avg(), filterText: expected } });
+    const request = { versionId: s.snapshot.version.id, xColumnId: s.columns[2].id, yColumnIds: [avg()], savedViewId: view.id };
+    const result = await chartQuery(A, s.dataset.id, request);
+    expect(result.points).toHaveLength(1);
+    expect(result.points[0].y).toBe(expected);
+    const foreign = await seedDataset(B, noaaTable(NOAA_SAMPLE));
+    const otherView = await createView(B, foreign.dataset.id, { name: "Private", spec: defaultViewSpec() });
+    expect((await code(chartQuery(A, s.dataset.id, { ...request, savedViewId: otherView.id }))).code).toBe("not_found");
+    expect((await chartQuery(A, s.dataset.id, { ...request, savedViewId: undefined })).points.length).toBeGreaterThan(1);
+  });
+
   it("unknown columns are a 400, not an empty chart", async () => {
     const r = await code(chartQuery(A, s.dataset.id, { versionId: s.snapshot.version.id, xColumnId: s.columns[2].id, yColumnIds: [newId("col")] }));
     expect(r.code).toBe("bad_request");

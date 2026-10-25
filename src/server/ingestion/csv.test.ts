@@ -43,6 +43,14 @@ describe("CSV upload validation", () => {
 });
 
 describe("CSV import", () => {
+  it("types numeric columns despite NA and safe whitespace/decimal notation, keeping original text", async () => {
+    const d = await importCsv("code,measurement,category\n007, 1.250 ,NA\n008,+.5,test\n009,NA,label\n010,2.,word\n");
+    expect(d.columns.map((c) => c.dataType)).toEqual(["text", "decimal", "text"]);
+    expect(d.rows.map((r) => r.cells[d.columns[1].id].currentValue)).toEqual(["1.250", "0.5", null, "2.0"]);
+    expect(d.rows[0].cells[d.columns[1].id].rawText).toBe(" 1.250 ");
+    expect(d.rows[2].cells[d.columns[1].id]).toMatchObject({ rawText: "NA", currentValue: null, valueType: "decimal", missingReason: "not_reported" });
+    expect(d.rows[0].cells[d.columns[2].id].currentValue).toBe("NA");
+  });
   it("preserves raw strings: leading zeros, 20-digit integers, percents, dates, currency, Unicode", async () => {
     const d = await importCsv('id,big,pct,date,price,name\n007,12345678901234567890,12%,03/04/2021,"$1,200",Zoë\n010,98765432109876543210,5%,2021-04-03,$3,東京\n');
     expect(values(d)).toEqual([

@@ -2,6 +2,7 @@ import { randomBytes } from "node:crypto";
 import os from "node:os";
 import { databaseUrl } from "@/server/config/env";
 import { LIMITS } from "@/server/config/limits";
+import { runAnalysisJob } from "@/server/orchestration/analysis";
 import { runJob } from "@/server/orchestration/extraction";
 import { getRepositories } from "@/server/storage";
 import { closePools } from "@/server/storage/pool";
@@ -54,7 +55,12 @@ async function main() {
     if (recovered > 0) console.warn(`[worker] failed ${recovered} orphaned inline job(s) left running by a stopped server`);
   }
 
-  const worker = new JobWorker({ workerId, jobs: repos.jobs, run: runJob, heartbeatMs: Math.floor(options.leaseMs / 3), ...options });
+  const dispatch = async (jobId: string) => {
+    const rec = await repos.jobs.getRecord(jobId);
+    if (rec?.job.operationType === "analysis") return runAnalysisJob(jobId);
+    return runJob(jobId, workerId);
+  };
+  const worker = new JobWorker({ workerId, jobs: repos.jobs, run: dispatch, heartbeatMs: Math.floor(options.leaseMs / 3), ...options });
   console.log(`[worker] ${workerId} started concurrency=${options.concurrency} maxAttempts=${options.maxAttempts} leaseMs=${options.leaseMs}`);
   worker.start();
 

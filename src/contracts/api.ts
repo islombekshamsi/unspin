@@ -61,6 +61,10 @@ export const RowsQuerySchema = z.object({
   /** Case-insensitive substring filter on displayed text of one column. */
   filterColumnId: IdSchema.nullable().optional(),
   filterText: z.string().max(200).nullable().optional(),
+  /** Substring across every cell in a row. Applied on the server to the full version. */
+  search: z.string().max(200).nullable().optional(),
+  /** Named subset; omitted or "all" means every row (still subject to search/column filter). */
+  preset: z.enum(["all", "needs_review", "estimated", "edited"]).optional(),
   /** Only these rows, in sourceOrder. Comma-separated in the query string; at most MAX_ROW_IDS_PER_QUERY. */
   rowIds: z
     .preprocess((v) => (typeof v === "string" ? v.split(",").filter(Boolean) : v), z.array(IdSchema).min(1).max(100))

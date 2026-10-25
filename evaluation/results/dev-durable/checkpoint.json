@@ -1,0 +1,36 @@
+{
+  "phase": "before",
+  "health": {
+    "persistence": {
+      "mode": "postgres",
+      "durable": true,
+      "ready": true
+    },
+    "blobStorage": {
+      "mode": "filesystem",
+      "ready": true
+    },
+    "jobs": {
+      "mode": "worker"
+    }
+  },
+  "sourceId": "src_8f5cca5f17054c718ad904107f92efa6",
+  "selectionId": "sel_a4d709e5940544eeae1bb7b29b94dd68",
+  "datasetId": "ds_30eebc36dca74f34893c8ef1327a2fb5",
+  "v1": "ver_d4d8a21dd7f146c3a941f146729390f3",
+  "v2": "ver_45fe4026396841f4aa0308e30defeb3c",
+  "jobId": "job_6b52ae819cd14fc98abd4cbf0961b70c",
+  "inputSha256": "a653f1af074f08f25f7b51e97d4b93b2e5485269a10a11df167e73e5cd7e6fad",
+  "storedSha256": "a653f1af074f08f25f7b51e97d4b93b2e5485269a10a11df167e73e5cd7e6fad",
+  "storedBytes": 29804,
+  "blobFileCount": 1,
+  "blobFiles": [
+    {
+      "rel": "/sources/guest_95d7abfde1777166c5d5e8e85c12ec6b738fe2e46e97dd13/src_8f5cca5f17054c718ad904107f92efa6",
+      "bytes": 29804,
+      "mode": "600"
+    }
+  ],
+  "firstAverageAfterEdit": "ver_45fe4026396841f4aa0308e30defeb3c",
+  "cookieSet": true
+}

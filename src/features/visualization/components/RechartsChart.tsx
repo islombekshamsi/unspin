@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useMemo, useRef, useState, type PointerEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState, type PointerEvent, type ReactNode } from "react";
 import {
   CartesianGrid,
   ComposedChart,
@@ -20,12 +20,19 @@ import {
   ChartTooltip,
   type ChartConfig as RechartsChartConfig,
 } from "@/components/ui/chart";
-import { cx } from "@/components/ui";
+import { Button, cx } from "@/components/ui";
+import { downloadChartPng } from "../lib/export-chart";
+import { axisDistribution, safeSeriesDomain } from "../lib/auto-fit";
+import { axisNumber, hasNumericPlotPoint, numericAxisWidth } from "../lib/axis-layout";
+import { zoomAt, zoomDomain } from "../lib/zoom";
 import type { PointOrigin } from "../lib/presentation";
 import { shortLabel } from "../lib/presentation";
 import { isZeroY, strokeDasharray, type PlotModel, type PlotPoint } from "../lib/figure";
 
 export interface RechartsChartProps {
+  exportTitle?: string;
+  exportNote?: string;
+  exportBlocked?: boolean;
   model: PlotModel;
   /** Screen-reader summary; the navigator and data table are the accessible alternative. */
   label: string;
@@ -37,6 +44,10 @@ export interface RechartsChartProps {
 }
 
 type Row = Record<string, unknown>;
+
+function statNumber(value: number) {
+  return Number.isFinite(value) ? String(Number(value.toPrecision(5))) : "outside display precision";
+}
 
 function cssId(value: string) {
   return value.replace(/[^a-zA-Z0-9_-]/g, "_");
@@ -163,9 +174,11 @@ function PlotTooltip({
  * Recharts adapter for bar, line, and scatter. Values stay exact decimal strings
  * on the source points; this component only draws Numbers.
  */
-export function RechartsChart({ model, label, className, onPointClick, onPointsSelected, onDeselect, onHover }: RechartsChartProps) {
+export function RechartsChart({ model, label, exportTitle, exportNote, exportBlocked, className, onPointClick, onPointsSelected, onDeselect, onHover }: RechartsChartProps) {
   const uid = useId().replace(/:/g, "");
   const hostRef = useRef<HTMLDivElement>(null);
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
   const drag = useRef<{ x: number; y: number } | null>(null);
   const [box, setBox] = useState<{ left: number; top: number; width: number; height: number } | null>(null);
 
@@ -191,6 +204,71 @@ export function RechartsChart({ model, label, className, onPointClick, onPointsS
   }, [model, alignedData]);
 
   const numericX = model.xKind !== "category";
+  const [autoFit, setAutoFit] = useState(true);
+  const distributions = useMemo(() => {
+    const series = model.series.map((s) => s.plotPoints);
+    const xs = series.map((points) => points.map((p) => p.x).filter((x): x is number => typeof x === "number" && Number.isFinite(x)));
+    const ys = series.map((points) => points.map((p) => p.y).filter((y): y is number => y !== null && Number.isFinite(y)));
+    const x = model.xKind === "numeric" ? axisDistribution([...new Set(xs.flat())]) : null;
+    const y = axisDistribution(ys.flat(), model.yScale === "log");
+    const xDomain = model.xKind === "numeric" ? safeSeriesDomain(x?.domain ?? null, xs) : null;
+    let yDomain = model.clipToBounds ? null : safeSeriesDomain(y?.domain ?? null, ys);
+    if (yDomain && model.kind === "bar" && model.yScale === "linear") {
+      yDomain[0] = Math.min(0, yDomain[0]); yDomain[1] = Math.max(0, yDomain[1]);
+    }
+    if (xDomain && yDomain && series.some((points) => points.filter((p) =>
+      (typeof p.x !== "number" || (p.x >= xDomain[0] && p.x <= xDomain[1])) &&
+      (p.y === null || (p.y >= yDomain![0] && p.y <= yDomain![1]))).length < points.length * 0.9)) yDomain = null;
+    return { x, y, xDomain, yDomain, bySeries: ys.map((values, i) => ({ label: model.series[i].label, stats: axisDistribution(values, model.yScale === "log") })) };
+  }, [model]);
+  const fittedX = autoFit && distributions.xDomain ? distributions.xDomain : model.xDomain;
+  const fittedY = autoFit && distributions.yDomain ? distributions.yDomain : model.yDomain;
+  const focused = autoFit && !!(distributions.xDomain || distributions.yDomain);
+  const outside = focused ? model.series.flatMap((s) => s.plotPoints).filter((p) =>
+    (typeof p.x === "number" && fittedX && (p.x < fittedX[0] || p.x > fittedX[1])) ||
+    (p.y !== null && fittedY && (p.y < fittedY[0] || p.y > fittedY[1]))).length : 0;
+  const zoomKey = JSON.stringify([fittedX, fittedY, model.xTitle, model.yTitle, model.yScale, model.categories]);
+  const [viewport, setViewport] = useState({ key: zoomKey, x: 1, y: 1, offsetX: 0, offsetY: 0 });
+  const zoom = viewport.key === zoomKey ? viewport : { key: zoomKey, x: 1, y: 1, offsetX: 0, offsetY: 0 };
+  const magnify = (factor: number, x = 0.5, y = 0.5) => setViewport((previous) => {
+    const current = previous.key === zoomKey ? previous : { key: zoomKey, x: 1, y: 1, offsetX: 0, offsetY: 0 };
+    const nextX = zoomAt(current.x, current.offsetX, factor, x);
+    const nextY = zoomAt(current.y, current.offsetY, factor, y);
+    return { key: zoomKey, x: nextX.factor, y: nextY.factor, offsetX: nextX.offset, offsetY: nextY.offset };
+  });
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host) return;
+    const wheel = (event: WheelEvent) => {
+      const bounds = host.querySelector(".recharts-cartesian-grid")?.getBoundingClientRect();
+      if (!bounds || !bounds.width || !bounds.height || event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) return;
+      event.preventDefault();
+      const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? bounds.height : 1);
+      const factor = Math.exp(-Math.max(-120, Math.min(120, delta)) * 0.006);
+      setViewport((previous) => {
+        const current = previous.key === zoomKey ? previous : { key: zoomKey, x: 1, y: 1, offsetX: 0, offsetY: 0 };
+        const nextX = zoomAt(current.x, current.offsetX, factor, (event.clientX - bounds.left) / bounds.width);
+        const nextY = zoomAt(current.y, current.offsetY, factor, 1 - (event.clientY - bounds.top) / bounds.height);
+        return { key: zoomKey, x: nextX.factor, y: nextY.factor, offsetX: nextX.offset, offsetY: nextY.offset };
+      });
+    };
+    host.addEventListener("wheel", wheel, { passive: false });
+    return () => host.removeEventListener("wheel", wheel);
+  }, [zoomKey]);
+  const xDomain = useMemo(() => fittedX ? zoomDomain(fittedX, zoom.x, zoom.offsetX) : null, [fittedX, zoom.x, zoom.offsetX]);
+  const yDomain = useMemo(() => fittedY ? zoomDomain(fittedY, zoom.y, zoom.offsetY, model.yScale === "log") : null, [fittedY, zoom.y, zoom.offsetY, model.yScale]);
+  const categoryCount = Math.max(1, Math.ceil(alignedData.length / zoom.x));
+  const categoryStart = Math.max(0, Math.min(alignedData.length - categoryCount, Math.round((alignedData.length - categoryCount) / 2 + zoom.offsetX * alignedData.length)));
+  const visibleData = useMemo(() => numericX ? axisTicks : alignedData.slice(categoryStart, categoryStart + categoryCount), [numericX, axisTicks, alignedData, categoryStart, categoryCount]);
+  const seriesRenderers = useMemo(() => model.series.filter((series) => hasNumericPlotPoint(series.plotPoints)).map((series) => ({
+    ...series,
+    data: model.dataMode === "independent" ? independentRows(model.kind === "scatter" ? series.plotPoints.filter((p) => p.y !== null) : series.plotPoints, series.seriesId) : undefined,
+    marker: originDot(series.seriesId, series.symbol, series.color, model.highlighted),
+    barShape: originBar(series.seriesId, series.color, model.highlighted, uid),
+  })), [model.series, model.dataMode, model.kind, model.highlighted, uid]);
+  const rugData = useMemo(() => model.missing.map((p) => ({ ...p, rug: 0.03 })), [model.missing]);
+  const xLabel = useMemo(() => ({ value: model.xTitle, position: "insideBottom" as const, offset: -18, fill: "var(--ink-muted)", fontSize: 12 }), [model.xTitle]);
+  const yLabel = useMemo(() => ({ value: model.yTitle, angle: -90, position: "insideLeft" as const, fill: "var(--ink-muted)", fontSize: 12 }), [model.yTitle]);
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
     if (e.button !== 0) return;
@@ -236,29 +314,64 @@ export function RechartsChart({ model, label, className, onPointClick, onPointsS
     else onDeselect?.();
   };
 
-  const tickFormatter = (value: unknown) => {
+  const tickFormatter = useCallback((value: unknown) => {
     if (model.xKind === "category") return shortLabel(String(value));
     if (model.xKind === "date") {
       const n = typeof value === "number" ? value : Date.parse(String(value));
       if (Number.isFinite(n)) return new Date(n).toISOString().slice(0, 10);
     }
-    return String(value);
-  };
+    return typeof value === "number" ? axisNumber(value) : String(value);
+  }, [model.xKind]);
 
   return (
+    <div className="flex h-full min-h-0 flex-col gap-2">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-ink-muted">
+        <label className="flex items-center gap-2"><input type="checkbox" checked={autoFit} onChange={(e) => setAutoFit(e.target.checked)} />Auto fit data</label>
+        <span role="status">{focused ? `Focused on the main distribution · ${outside} plotted points outside the initial range. Turn off Auto fit to see the full range.` : "Full range shown."}</span>
+        <details className="relative"><summary className="cursor-pointer">Range statistics</summary>
+          <div className="absolute top-full left-0 z-40 w-72 rounded-lg border border-rule bg-surface p-3 shadow-overlay">
+            <p>Approximate statistics of plotted values; variance and SD use the sample formula. No values are changed or removed.</p>
+            {[{ label: 'X (distinct numeric positions)', stats: distributions.x }, ...distributions.bySeries].map(({ label, stats }) => stats && <p key={label} className="mt-2">{label}: n={stats.count}, range {statNumber(stats.min)}–{statNumber(stats.max)}, median {statNumber(stats.median)}, mean {statNumber(stats.mean)}, SD {stats.count > 1 ? statNumber(stats.sd) : "not defined for one value"}, variance {stats.count > 1 ? statNumber(stats.variance) : "not defined for one value"} (axis units squared).</p>)}
+            <p className="mt-2">Focus uses a 3× interquartile-range fence only when isolated extremes compress at least 90% of each series. Dates keep their full range; bars keep zero. Counts reflect plotted data, including any query sampling.</p>
+          </div>
+        </details>
+      </div>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <p className="text-xs text-ink-muted">Scroll over the plot to zoom toward your pointer · Double-click to reset.</p>
+        {exportTitle && <Button size="sm" disabled={exporting || exportBlocked} title={exportBlocked ? "Acknowledge partial coverage before exporting." : "Download the current chart as a PNG image"} onClick={async () => {
+          const svg = hostRef.current?.querySelector<SVGSVGElement>("svg.recharts-surface");
+          if (!svg) return;
+          setExporting(true); setExportError(null);
+          try {
+            await downloadChartPng(svg, { title: exportTitle, subtitle: label.split(". Use the point navigator")[0], note: `${exportNote ?? ""}${focused ? ` Automatic distribution fit: ${outside} plotted points outside the initial view; observations are retained in the data.` : ""}${zoom.x > 1 || zoom.y > 1 ? " Zoomed viewport; some observations are outside the visible range." : ""}`, legend: seriesRenderers.map((s) => ({ label: s.label, color: s.color })) });
+          } catch (e) { setExportError(e instanceof Error ? e.message : "The graph could not be exported."); }
+          finally { setExporting(false); }
+        }}>{exporting ? "Exporting…" : "Export graph"}</Button>}
+      </div>
+      {exportError && <p role="alert" className="text-xs text-danger">{exportError}</p>}
+      {exportBlocked && <p className="text-xs text-ink-muted">Acknowledge the dataset’s partial coverage before exporting.</p>}
     <div
       ref={hostRef}
-      className={cx("relative min-h-0 select-none", className)}
+      tabIndex={0}
+      role="group"
+      aria-label="Interactive chart. Scroll to zoom, double-click to reset. Keyboard: plus or minus to zoom, zero to reset."
+      onDoubleClick={() => setViewport({ key: zoomKey, x: 1, y: 1, offsetX: 0, offsetY: 0 })}
+      onKeyDown={(event) => {
+        if (event.key === "+" || event.key === "=") { event.preventDefault(); magnify(2); }
+        if (event.key === "-") { event.preventDefault(); magnify(0.5); }
+        if (event.key === "0") setViewport({ key: zoomKey, x: 1, y: 1, offsetX: 0, offsetY: 0 });
+      }}
+      className={cx("relative min-h-0 flex-1 select-none", className)}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerLeave={() => onHover?.(null)}
     >
       <p className="sr-only">{label}</p>
-      <ChartContainer config={config} className="h-full min-h-[200px] w-full" style={{ aspectRatio: "auto" }}>
+      <ChartContainer config={config} className="h-full min-h-0 w-full aspect-auto">
         <ComposedChart
           accessibilityLayer
-          data={axisTicks}
+          data={visibleData}
           margin={{ top: 12, right: 16, bottom: 28, left: 8 }}
           desc={label}
         >
@@ -283,30 +396,32 @@ export function RechartsChart({ model, label, className, onPointClick, onPointsS
           <XAxis
             dataKey="x"
             type={numericX ? "number" : "category"}
-            domain={numericX ? (model.xDomain ?? ["dataMin", "dataMax"]) : undefined}
+            domain={numericX ? (xDomain ?? ["dataMin", "dataMax"]) : undefined}
+            allowDataOverflow={numericX}
             tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={{ stroke: "var(--rule-strong)" }}
             interval="preserveStartEnd"
-            label={{ value: model.xTitle, position: "insideBottom", offset: -18, fill: "var(--ink-muted)", fontSize: 12 }}
+            label={xLabel}
           />
           <YAxis
             yAxisId="y"
             type="number"
             scale={model.yScale === "log" ? "log" : "linear"}
-            domain={model.yDomain ?? ["auto", "auto"]}
-            allowDataOverflow={model.clipToBounds}
-            width="auto"
+            domain={yDomain ?? ["auto", "auto"]}
+            allowDataOverflow={model.clipToBounds || focused || zoom.y > 1 || zoom.offsetY !== 0}
+            width={numericAxisWidth(yDomain)}
+            tickFormatter={axisNumber}
             tickLine={false}
             axisLine={{ stroke: "var(--rule-strong)" }}
-            label={{ value: model.yTitle, angle: -90, position: "insideLeft", fill: "var(--ink-muted)", fontSize: 12 }}
+            label={yLabel}
           />
           <YAxis yAxisId="rug" orientation="right" hide domain={[0, 1]} width={0} />
           {model.yScale === "linear" ? <ReferenceLine yAxisId="y" y={0} stroke="var(--ink-muted)" strokeWidth={1.5} ifOverflow="hidden" /> : null}
           <ChartTooltip content={<PlotTooltip />} />
-          <ChartLegend content={<ChartLegendContent />} />
+          <ChartLegend verticalAlign="top" content={<ChartLegendContent verticalAlign="top" />} />
           {model.kind === "bar"
-            ? model.series.map((s) => (
+            ? seriesRenderers.map((s) => (
                 <Bar
                   key={s.seriesId}
                   yAxisId="y"
@@ -315,60 +430,45 @@ export function RechartsChart({ model, label, className, onPointClick, onPointsS
                   fill={`var(--color-${s.seriesId})`}
                   isAnimationActive="auto"
                   maxBarSize={48}
-                  shape={originBar(s.seriesId, s.color, model.highlighted, uid)}
+                  shape={s.barShape}
                 >
                   <LabelList
                     dataKey={s.seriesId}
-                    content={(props) => {
-                      const { x, y, width, payload } = props as { x?: number; y?: number; width?: number; payload?: Row };
-                      if (!payload?.[`${s.seriesId}__zero`] || x == null || y == null || width == null) return null;
-                      return (
-                        <text x={x + width / 2} y={y - 4} textAnchor="middle" fill="var(--ink-muted)" fontSize={11}>
-                          0
-                        </text>
-                      );
-                    }}
+                    content={ZeroLabel}
                   />
                 </Bar>
               ))
             : null}
           {model.kind === "line"
-            ? model.series.map((s) => (
+            ? seriesRenderers.map((s) => (
                 <Line
                   key={s.seriesId}
                   yAxisId="y"
                   type="linear"
                   name={s.label}
                   dataKey={s.seriesId}
-                  data={model.dataMode === "independent" ? independentRows(s.plotPoints, s.seriesId) : undefined}
+                  data={s.data}
                   stroke={s.color}
                   strokeWidth={2}
                   strokeDasharray={strokeDasharray(s.dash)}
                   connectNulls={false}
                   isAnimationActive="auto"
-                  dot={originDot(s.seriesId, s.symbol, s.color, model.highlighted)}
-                  activeDot={originDot(s.seriesId, s.symbol, s.color, model.highlighted)}
+                  dot={s.marker}
+                  activeDot={s.marker}
                 />
               ))
             : null}
           {model.kind === "scatter"
-            ? model.series.map((s) => (
+            ? seriesRenderers.map((s) => (
                 <Scatter
                   key={s.seriesId}
                   yAxisId="y"
                   name={s.label}
                   dataKey={s.seriesId}
-                  data={
-                    model.dataMode === "independent"
-                      ? independentRows(
-                          s.plotPoints.filter((p) => p.y !== null),
-                          s.seriesId,
-                        )
-                      : undefined
-                  }
+                  data={s.data}
                   fill={s.color}
                   isAnimationActive="auto"
-                  shape={originDot(s.seriesId, s.symbol, s.color, model.highlighted)}
+                  shape={s.marker}
                 />
               ))
             : null}
@@ -377,7 +477,7 @@ export function RechartsChart({ model, label, className, onPointClick, onPointsS
               yAxisId="rug"
               name="Missing value (no y)"
               legendType="none"
-              data={model.missing.map((p) => ({ ...p, rug: 0.03 }))}
+              data={rugData}
               dataKey="rug"
               isAnimationActive={false}
               shape={(props) => {
@@ -393,7 +493,7 @@ export function RechartsChart({ model, label, className, onPointClick, onPointsS
             />
           ) : null}
           {model.focus && model.focus.y !== null ? (
-            <ReferenceDot yAxisId="y" x={model.focus.x} y={model.focus.y} r={11} fill="none" stroke="var(--ink)" strokeWidth={2} ifOverflow="visible" />
+            <ReferenceDot yAxisId="y" x={model.focus.x} y={model.focus.y} r={11} fill="none" stroke="var(--ink)" strokeWidth={2} ifOverflow="hidden" />
           ) : null}
           {model.focus && model.focus.y === null ? (
             <ReferenceDot yAxisId="rug" x={model.focus.x} y={0.03} r={11} fill="none" stroke="var(--ink)" strokeWidth={2} ifOverflow="visible" />
@@ -408,7 +508,14 @@ export function RechartsChart({ model, label, className, onPointClick, onPointsS
         />
       ) : null}
     </div>
+    </div>
   );
+}
+
+function ZeroLabel(props: unknown) {
+  const { x, y, width, payload } = props as { x?: number; y?: number; width?: number; payload?: Row };
+  if (!payload || (props as { value?: unknown }).value == null || !isZeroY(String((props as { value?: unknown }).value)) || x == null || y == null || width == null) return null;
+  return <text x={x + width / 2} y={y - 4} textAnchor="middle" fill="var(--ink-muted)" fontSize={11}>0</text>;
 }
 
 function originBar(seriesId: string, color: string, highlighted: Set<string>, uid: string) {

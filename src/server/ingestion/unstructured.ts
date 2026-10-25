@@ -36,6 +36,7 @@ export function resolveImageSelection(source: Source, input: ImageInput): Resolv
     sourceId: source.id,
     region: input.region,
     userHint: input.userHint,
+    extractionMode: input.extractionMode,
     transform: {
       originalWidth: info.originalWidth,
       originalHeight: info.originalHeight,
@@ -64,6 +65,7 @@ export async function resolvePdfSelection(source: Source, bytes: Uint8Array, inp
       pageNumber: input.pageNumber,
       region: input.region,
       userHint: input.userHint,
+      extractionMode: input.extractionMode,
       transform: plan.transform,
     };
   });
